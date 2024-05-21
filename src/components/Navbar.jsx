@@ -22,7 +22,9 @@ function Navbar() {
             <Link to="/projects" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>All Projects</Link>
           </div>
           <div style={{ display: 'flex' }}>
-            <Link to="/" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Login</Link>
+            <Link to="/signup" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Sign Up</Link>
+            <Link to="/login" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Log In</Link>
+
           </div>
         </nav>
       );

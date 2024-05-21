@@ -7,6 +7,8 @@ import AllProjectsPage from "./pages/AllProjectsPage"
 import ProjectDetailPage from "./pages/ProjectDetailPage"
 import AllCreatorsPage from "./pages/AllCreatorsPage"
 import CreatorDetailPage from "./pages/CreatorDetailPage"
+import SignUpPage from "./pages/SignUpPage";
+import LogInPage from "./pages/LogInPage";
 
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
@@ -23,7 +25,10 @@ function App() {
           <Route path="/projects/details/:id" element={<ProjectDetailPage />} />
           <Route path="/creators" element={<AllCreatorsPage />} />
           <Route path="/creators/details/:id" element={<CreatorDetailPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LogInPage />} />
         </Routes>
+
       </div>
     </>
   );
