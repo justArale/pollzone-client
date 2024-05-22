@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import SignUpForm from "../components/SignUpForm";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../context/auth.context";
 
 const API_URL = "http://localhost:5005";
 
@@ -13,6 +14,7 @@ function SignUpPage() {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
+  const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -21,18 +23,25 @@ function SignUpPage() {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    // Create an object representing the request body
     const requestBody = { email, password, name, role };
 
     axios
-      .post(`${API_URL}/auth/signup`, requestBody)
-      .then(() => {
-        navigate("/profile");
-      })
-      .catch((error) => {
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
-      });
+    .post(`${API_URL}/auth/signup`, requestBody)
+    .then(() => {
+      // After successful signup, perform login
+      const loginRequestBody = { email, password };
+      return axios.post(`${API_URL}/auth/login`, loginRequestBody);
+    })
+    .then((response) => {
+      const { authToken } = response.data;
+      storeToken(authToken);
+      authenticateUser();
+      navigate("/profile");
+    })
+    .catch((error) => {
+      const errorDescription = error.response?.data?.message || "An error occurred";
+      setErrorMessage(errorDescription);
+    });
   };
 
   return (

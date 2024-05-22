@@ -13,7 +13,7 @@ function UserProfilPage() {
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   useEffect(() => {
-    const getStudent = () => {
+    const getUser = () => {
       const storedToken = localStorage.getItem("authToken");
 
       if (storedToken) {
@@ -35,8 +35,8 @@ function UserProfilPage() {
       }
     };
 
-    getStudent();
-  }, [user._id]);
+    getUser();
+  }, [user._id, user.role]);
 
   if (errorMessage) return <div>{errorMessage}</div>;
 
@@ -53,6 +53,7 @@ function UserProfilPage() {
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             marginBottom: "24px",
             position: "relative",
+            textAlign: "center",
           }}
         >
           <img
@@ -64,6 +65,7 @@ function UserProfilPage() {
               height: "128px",
               objectFit: "cover",
               border: "2px solid #D1D5DB" /* gray-300 */,
+              margin: "0 auto",
             }}
           />
           <h1
@@ -71,18 +73,26 @@ function UserProfilPage() {
               fontSize: "24px",
               marginTop: "16px",
               fontWeight: "bold",
-              position: "absolute",
             }}
           >
             {userProfile.name}
           </h1>
+          <h2
+            style={{
+              fontSize: "18px",
+              marginTop: "8px",
+              color: "#555",
+            }}
+          >
+            {userProfile.role.charAt(0).toUpperCase() + userProfile.role.slice(1, userProfile.role.length-1)}
+          </h2>
 
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "1fr",
               gap: "24px",
-              marginTop: "96px",
+              marginTop: "16px",
               marginBottom: "16px",
               borderBottom: "1px solid #E5E7EB" /* gray-200 */,
               paddingBottom: "16px",
