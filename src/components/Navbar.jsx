@@ -1,7 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth.context";
 
 function Navbar() {
+
+    const location = useLocation();
+    const { isLoggedIn, logOutUser } = useContext(AuthContext);
+  
+    const getCurrentLinkText = (pathname) => {
+      const routes = {
+        "/dashboard": "Cohorts",
+        "/students": "Students",
+        "/cohorts/details/:cohortId": "Cohort Details",
+        "/cohorts/edit/:cohortId": "Edit Cohort",
+        "/cohorts/create": "Create Cohort",
+        "/students/details/:studentId": "Student Details",
+        "/students/edit/:studentId": "Edit Student",
+        "/profile": "User Profile",
+        "/login": "Log In",
+        "/signup": "Sign Up",
+      };
+  
+      for (let route in routes) {
+        let regexPattern = new RegExp("^" + route.replace(/:\w+/g, "\\w+") + "$");
+        if (regexPattern.test(pathname)) {
+          return routes[route];
+        }
+      }
+      return "";
+    };
+
     return (
         <nav
           style={{
@@ -26,6 +55,25 @@ function Navbar() {
             <Link to="/login" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Log In</Link>
 
           </div>
+          {/* <div>
+          {isLoggedIn && (
+            <button
+              className="px-4 py-1 rounded bg-blue-500 text-white hover:bg-blue-400"
+              onClick={logOutUser}
+            >
+              Log Out
+            </button>
+          )}
+          {!isLoggedIn &&
+            location.pathname !== "/login" &&
+            location.pathname !== "/signup" && (
+              <Link to="/login">
+                <button className="px-6 py-1 rounded bg-blue-500 text-white hover:bg-blue-400">
+                  Log In
+                </button>
+              </Link>
+            )}
+          </div> */}
         </nav>
       );
 }
