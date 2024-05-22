@@ -74,9 +74,9 @@ const SignUpForm = ({
             <input
               type="radio"
               name="role"
-              value="creator"
-              id="creator"
-              checked={role === "creator"}
+              value="creators"
+              id="creators"
+              checked={role === "creators"}
               onChange={handleRole}
               style={{
                 marginRight: "8px",
@@ -93,9 +93,9 @@ const SignUpForm = ({
             <input
               type="radio"
               name="role"
-              value="fan"
-              id="fan"
-              checked={role === "fan"}
+              value="fans"
+              id="fans"
+              checked={role === "fans"}
               onChange={handleRole}
               style={{
                 marginRight: "8px",
