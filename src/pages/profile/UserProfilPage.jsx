@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
 import { AuthContext } from "../../context/auth.context";
+import { Link, useNavigate } from "react-router-dom";
 
 // Import the string from the .env with URL of the API/server - http://localhost:5005
 const API_URL = import.meta.env.VITE_API_URL;
@@ -43,74 +44,100 @@ function UserProfilPage() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      {userProfile && (
-        <div
-          style={{
-            backgroundColor: "white",
-            padding: "20px",
-            borderRadius: "10px",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            marginBottom: "24px",
-            position: "relative",
-            textAlign: "center",
-          }}
-        >
-          <img
-            src=""
-            alt="profile-photo"
-            style={{
-              borderRadius: "50%",
-              width: "128px",
-              height: "128px",
-              objectFit: "cover",
-              border: "2px solid #D1D5DB" /* gray-300 */,
-              margin: "0 auto",
-            }}
-          />
-          <h1
-            style={{
-              fontSize: "24px",
-              marginTop: "16px",
-              fontWeight: "bold",
-            }}
-          >
-            {userProfile.name}
-          </h1>
-          <h2
-            style={{
-              fontSize: "18px",
-              marginTop: "8px",
-              color: "#555",
-            }}
-          >
-            {userProfile.role.charAt(0).toUpperCase() + userProfile.role.slice(1, userProfile.role.length-1)}
-          </h2>
-
+    <div>
+      <div style={{ padding: "20px" }}>
+        {userProfile && (
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: "24px",
-              marginTop: "16px",
-              marginBottom: "16px",
-              borderBottom: "1px solid #E5E7EB" /* gray-200 */,
-              paddingBottom: "16px",
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              marginBottom: "24px",
+              position: "relative",
+              textAlign: "center",
             }}
           >
-            <p
+            <img
+              src={userProfile.image || ""}
+              alt="profile-photo"
               style={{
-                textAlign: "left",
-                marginBottom: "8px",
-                borderBottom: "1px solid #E5E7EB" /* gray-200 */,
-                paddingBottom: "8px",
+                borderRadius: "50%",
+                width: "128px",
+                height: "128px",
+                objectFit: "cover",
+                border: "2px solid #D1D5DB" /* gray-300 */,
+                margin: "0 auto",
+              }}
+            />
+            <h1
+              style={{
+                fontSize: "24px",
+                marginTop: "16px",
+                fontWeight: "bold",
               }}
             >
-              <strong>Email:</strong> {userProfile.email}
-            </p>
+              {userProfile.name}
+            </h1>
+            <h2
+              style={{
+                fontSize: "18px",
+                marginTop: "8px",
+                color: "#555",
+              }}
+            >
+              {userProfile.role.charAt(0).toUpperCase() +
+                userProfile.role.slice(1, userProfile.role.length-1)}
+            </h2>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: "24px",
+                marginTop: "16px",
+                marginBottom: "16px",
+                borderBottom: "1px solid #E5E7EB" /* gray-200 */,
+                paddingBottom: "16px",
+              }}
+            >
+              <p
+                style={{
+                  textAlign: "left",
+                  marginBottom: "8px",
+                  borderBottom: "1px solid #E5E7EB" /* gray-200 */,
+                  paddingBottom: "8px",
+                }}
+              >
+                <strong>Email:</strong> {userProfile.email}
+              </p>
+            </div>
+
+            {userProfile.role === "creators" && (
+              <div
+                style={{
+                  textAlign: "left",
+                  marginTop: "16px",
+                }}
+              >
+                <p>Followers: {userProfile.fans.length}</p>
+                <p style={{ fontWeight: "bold" }}>Social Media</p>
+                <ul style={{ paddingLeft: "20px" }}>
+                  {userProfile.socialMedia &&
+                    userProfile.socialMedia.map((link, index) => (
+                      <li key={index} style={{ listStyleType: "disc" }}>
+                        {link}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
+            <Link to={"/profile/edit"}>
+              <button>Edit Profile</button>
+            </Link>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

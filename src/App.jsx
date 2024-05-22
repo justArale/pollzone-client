@@ -10,6 +10,7 @@ import CreatorDetailPage from "./pages/CreatorDetailPage"
 import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
 import UserProfilPage from "./pages/profile/UserProfilPage";
+import ProfileEditPage from "./pages/profile/ProfileEditPage";
 
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/login" element={<IsAnon><LogInPage /></IsAnon>} />
           <Route path="/signup" element={<IsAnon><SignUpPage /></IsAnon>} />
           <Route path="/profile" element={ <IsPrivate><UserProfilPage /></IsPrivate>} />
+          <Route path="/profile/edit" element={ <IsPrivate><ProfileEditPage /></IsPrivate>} />
         </Routes>
 
       </div>
