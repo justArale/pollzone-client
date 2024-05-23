@@ -78,20 +78,24 @@ function DashboardPage() {
               <div style={styles.projectsContainer}>
                 {projects.length > 0 ? (
                   projects.map((project) => (
-                    <Link to={`/projects/${project.creator}/${project._id}`}>
-                    <div key={project._id} style={styles.projectCard}>
-                      {project.image && (
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          style={styles.projectImage}
-                        />
-                      )}
-                      <h2 style={styles.projectTitle}>{project.title}</h2>
-                      <p style={styles.projectDescription}>
-                        {project.description}
-                      </p>
-                    </div>
+                    <Link
+                      key={project._id}
+                      to={`/projects/${project.creator}/${project._id}`}
+                      style={styles.link}
+                    >
+                      <div style={styles.projectCard}>
+                        {project.image && (
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            style={styles.projectImage}
+                          />
+                        )}
+                        <h2 style={styles.projectTitle}>{project.title}</h2>
+                        <p style={styles.projectDescription}>
+                          {project.description}
+                        </p>
+                      </div>
                     </Link>
                   ))
                 ) : (
@@ -151,14 +155,14 @@ const styles = {
   },
   projectsContainer: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", // Adjusted card size
     gap: "20px",
     marginTop: "20px",
   },
   projectCard: {
     border: "1px solid #ddd",
     borderRadius: "5px",
-    padding: "20px",
+    padding: "15px", // Reduced padding
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     transition: "transform 0.3s, box-shadow 0.3s",
   },
@@ -167,12 +171,12 @@ const styles = {
     boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
   },
   projectTitle: {
-    fontSize: "20px",
+    fontSize: "18px", // Adjusted font size
     fontWeight: "bold",
     marginBottom: "10px",
   },
   projectDescription: {
-    fontSize: "16px",
+    fontSize: "14px", // Adjusted font size
     marginBottom: "10px",
   },
   projectImage: {
@@ -190,6 +194,10 @@ const styles = {
   errorMessage: {
     color: "red",
     marginTop: "10px",
+  },
+  link: {
+    textDecoration: "none", // Removed link decoration
+    color: "inherit", // Inherit color
   },
 };
 

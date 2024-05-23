@@ -1,46 +1,22 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
-// Import the string from the .env with URL of the API/server - http://localhost:5005
 const API_URL = import.meta.env.VITE_API_URL;
 
 function ProjectDetailPage() {
   const { user, authenticateUser } = useContext(AuthContext);
   const { creatorId, projectId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [currentProject, setCurrentProject] = useState({});
-  const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     console.log("AuthContext user:", user); // Log the user object to debug
   }, [user]);
-
-  const fetchUserData = async () => {
-    const storedToken = localStorage.getItem("authToken");
-    if (!storedToken) {
-      setErrorMessage("No authentication token found");
-      setIsLoading(false);
-      return;
-    }
-    try {
-      const response = await axios.get(
-        `${API_URL}/api/${user.role}/${user._id}`,
-        {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        }
-      );
-      setCurrentUser(response.data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      const errorDescription =
-        error.response?.data?.message ||
-        "An error occurred while fetching user data";
-      setErrorMessage(errorDescription);
-    }
-  };
 
   const fetchProjectData = async () => {
     const storedToken = localStorage.getItem("authToken");
@@ -51,7 +27,7 @@ function ProjectDetailPage() {
     }
     try {
       const response = await axios.get(
-        `${API_URL}/api/creators/${creatorId}/projects/${projectId}`,
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}?populate=options`,
         {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
@@ -72,10 +48,13 @@ function ProjectDetailPage() {
     if (!user) {
       authenticateUser();
     } else if (user && user.role && user._id && creatorId && projectId) {
-      fetchUserData();
       fetchProjectData();
     }
-  }, [user, creatorId, projectId]);
+  }, [user, creatorId, projectId, location.pathname]);
+
+  const handleEditClick = () => {
+    navigate(`/projects/${creatorId}/${currentProject._id}/edit`, { state: { refresh: true } });
+  };
 
   return (
     <div style={styles.container}>
@@ -85,8 +64,6 @@ function ProjectDetailPage() {
         <div style={styles.errorMessage}>{errorMessage}</div>
       ) : (
         <div>
-          <h1>{currentProject.title}</h1>
-          <p>{currentProject.description}</p>
           {currentProject.image && (
             <img
               src={currentProject.image}
@@ -94,7 +71,9 @@ function ProjectDetailPage() {
               style={styles.projectImage}
             />
           )}
-          <h3>Options</h3>
+          <h1>{currentProject.title}</h1>
+          <p>{currentProject.description}</p>
+          <h3>Voting Options</h3>
           <div style={styles.optionsContainer}>
             {currentProject.options && currentProject.options.length > 0 ? (
               currentProject.options.map((option, index) => (
@@ -110,12 +89,11 @@ function ProjectDetailPage() {
               <p>No options available for this project.</p>
             )}
           </div>
-          {/* ONLY WHEN CREATOR */}
           <div>
-            {currentProject.creator === creatorId && (
-              <Link to={`/projects/${creatorId}/${currentProject._id}/edit`}>
-                <button style={styles.editButton}>Edit Project</button>
-              </Link>
+            {currentProject.creator && currentProject.creator === creatorId && (
+              <button style={styles.editButton} onClick={handleEditClick}>
+                Edit Project
+              </button>
             )}
           </div>
         </div>

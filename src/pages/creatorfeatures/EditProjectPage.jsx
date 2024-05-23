@@ -3,61 +3,47 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
 
-// Import the string from the .env with URL of the API/server - http://localhost:5005
 const API_URL = import.meta.env.VITE_API_URL;
 
 const DEFAULT_PROJECT_FORM_VALUES = {
   title: "",
   description: "",
   image: "",
-  options: [{ title: "", image: "", description: "" }], // Initialize with one empty option object
-  creator: "", // This will be set to currentUser._id
-  timeCount: 1, // Set a default valid value for timeCount
-  inProgress: false, // Add inProgress field to default values
+  options: [{ _id: "", title: "", image: "", description: "" }], // Include _id for updating options
+  creator: "",
+  timeCount: 1,
+  inProgress: false,
 };
 
 function EditProjectPage() {
   const { user } = useContext(AuthContext);
   const { creatorId, projectId } = useParams();
-  const [currentUser, setCurrentUser] = useState({});
   const [formValues, setFormValues] = useState(DEFAULT_PROJECT_FORM_VALUES);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const fetchUserData = async () => {
-    const storedToken = localStorage.getItem("authToken");
-    try {
-      const response = await axios.get(
-        `${API_URL}/api/${user.role}/${user._id}`,
-        {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        }
-      );
-      setCurrentUser(response.data);
-    } catch (error) {
-      const errorDescription =
-        error.response?.data?.message || "An error occurred";
-      setErrorMessage(errorDescription);
+  useEffect(() => {
+    if (user && user.role && user._id) {
+      fetchProjectData();
     }
-  };
+  }, [user]);
 
   const fetchProjectData = async () => {
     const storedToken = localStorage.getItem("authToken");
     try {
       const response = await axios.get(
-        `${API_URL}/api/creators/${creatorId}/projects/${projectId}`,
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}?populate=options`,
         {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
       );
-
       const projectData = response.data;
       setFormValues((prevValues) => ({
         ...prevValues,
         ...projectData,
         options: projectData.options.length
           ? projectData.options
-          : [{ title: "", image: "", description: "" }],
+          : [{ _id: "", title: "", image: "", description: "" }],
       }));
     } catch (error) {
       const errorDescription =
@@ -65,13 +51,6 @@ function EditProjectPage() {
       setErrorMessage(errorDescription);
     }
   };
-
-  useEffect(() => {
-    if (user && user.role && user._id) {
-      fetchUserData();
-      fetchProjectData();
-    }
-  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -98,7 +77,7 @@ function EditProjectPage() {
       ...prevValues,
       options: [
         ...prevValues.options,
-        { title: "", image: "", description: "" },
+        { _id: "", title: "", image: "", description: "" },
       ],
     }));
   };
@@ -111,20 +90,38 @@ function EditProjectPage() {
     }));
   };
 
+  const updateOptions = async () => {
+    const storedToken = localStorage.getItem("authToken");
+    const updatePromises = formValues.options.map((option) =>
+      axios.put(
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}/options/${option._id}`,
+        option,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
+    );
+    await Promise.all(updatePromises);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const storedToken = localStorage.getItem("authToken");
     try {
       // Update the project
       await axios.put(
-        `${API_URL}/api/projects/${projectId}`,
-        formValues,
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}`,
+        {
+          ...formValues,
+          options: formValues.options.map(option => option._id) // Only send the IDs to update the project
+        },
         {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
       );
-
-      navigate("/profile"); // Redirect to the profile page or wherever appropriate
+      // Update the options separately
+      await updateOptions();
+      navigate(`/projects/${creatorId}/${projectId}`, { state: { refresh: true } });
     } catch (error) {
       console.error("Error details:", error.response || error);
       const errorDescription =
@@ -333,7 +330,7 @@ const styles = {
     marginTop: "10px",
   },
   checkbox: {
-    marginRight: "5px",
+    marginRight: "10px",
   },
 };
 
