@@ -56,6 +56,7 @@ function UserProfilPage() {
               marginBottom: "24px",
               position: "relative",
               textAlign: "center",
+              fontFamily: "sans-serif",
             }}
           >
             <img
@@ -89,6 +90,28 @@ function UserProfilPage() {
               {userProfile.role.charAt(0).toUpperCase() +
                 userProfile.role.slice(1, userProfile.role.length-1)}
             </h2>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: "24px",
+                marginTop: "16px",
+                marginBottom: "16px",
+                borderBottom: "1px solid #E5E7EB" /* gray-200 */,
+                paddingBottom: "16px",
+              }}
+            >
+              <p
+                style={{
+                  textAlign: "left",
+                  marginBottom: "8px",
+                  borderBottom: "1px solid #E5E7EB" /* gray-200 */,
+                  paddingBottom: "8px",
+                }}
+              >
+                <strong>Description:</strong> {userProfile.description}
+              </p>
+            </div>
 
             <div
               style={{
@@ -120,20 +143,22 @@ function UserProfilPage() {
                   marginTop: "16px",
                 }}
               >
-                <p>Followers: {userProfile.fans.length}</p>
-                <p style={{ fontWeight: "bold" }}>Social Media</p>
+                <p><strong>Followers:</strong> {userProfile.fans.length}</p>
+                <p style={{ fontWeight: "bold" }}>Social Media:</p>
                 <ul style={{ paddingLeft: "20px" }}>
                   {userProfile.socialMedia &&
                     userProfile.socialMedia.map((link, index) => (
                       <li key={index} style={{ listStyleType: "disc" }}>
-                        {link}
+                        <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: "#007bff", textDecoration: "none" }}>
+                          {link}
+                        </a>
                       </li>
                     ))}
                 </ul>
               </div>
             )}
             <Link to={"/profile/edit"}>
-              <button>Edit Profile</button>
+              <button style={{ fontWeight: "bold", padding: "10px", background: "purple", color: "white" }}>Edit Profile</button>
             </Link>
           </div>
         )}

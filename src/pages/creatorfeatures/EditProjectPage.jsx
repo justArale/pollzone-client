@@ -9,7 +9,7 @@ const DEFAULT_PROJECT_FORM_VALUES = {
   title: "",
   description: "",
   image: "",
-  options: [{ _id: "", title: "", image: "", description: "" }], // Include _id for updating options
+  options: [{ _id: "", title: "", image: "", description: "" }],
   creator: "",
   timeCount: 1,
   inProgress: false,

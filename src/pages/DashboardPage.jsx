@@ -57,7 +57,7 @@ function DashboardPage() {
     <div style={styles.container}>
       <div style={styles.header}>
         {currentUser.name ? (
-          <div style={styles.greeting}>Hi {currentUser.name}</div>
+          <h1 style={styles.headline}>Hi {currentUser.name}!</h1>
         ) : (
           <div style={styles.loading}>Loading...</div>
         )}

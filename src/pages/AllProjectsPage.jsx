@@ -30,7 +30,7 @@ function AllProjectsPage() {
       {errorMessage && <p>{errorMessage}</p>}
       {allProjects &&
         allProjects.map((project) => (
-          <Link to={`/projects/${project.creator}/${project._id}`}>
+          <Link to={`/projects/${project.creator}/${project._id}`} style={styles.link}>
             <div key={project._id} style={styles.projectCard}>
               {project.image ? (
                 <img
@@ -93,6 +93,10 @@ const styles = {
   followers: {
     fontSize: "1rem",
     color: "#777",
+  },
+  link: {
+    textDecoration: "none", // Removed link decoration
+    color: "inherit", // Inherit color
   },
 };
 

@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
 
-// Import the string from the .env with URL of the API/server - http://localhost:5005
 const API_URL = import.meta.env.VITE_API_URL;
 
 const DEFAULT_USER_FORM_VALUES = {
   name: "",
   image: "",
+  description: "",
   socialMedia: [""],
 };
 
@@ -27,6 +27,7 @@ function ProfileEditPage() {
       setFormValues({
         name: response.data.name || "",
         image: response.data.image || "",
+        description: response.data.description || "",
         socialMedia: response.data.socialMedia && response.data.socialMedia.length ? response.data.socialMedia : [""],
       });
     } catch (error) {
@@ -115,6 +116,25 @@ function ProfileEditPage() {
             value={formValues.image}
             onChange={handleInputChange}
             style={{ marginLeft: "8px" }}
+          />
+        </div>
+        <div style={{ marginBottom: "16px" }}>
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={formValues.description}
+            onChange={handleInputChange}
+            style={{
+              width: "100%",
+              padding: "10px",
+              boxSizing: "border-box",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              fontFamily: "sans-serif",
+              minHeight: "100px",
+              marginLeft: "8px"
+            }}
           />
         </div>
         <div style={{ marginBottom: "16px" }}>

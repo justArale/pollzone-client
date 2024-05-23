@@ -31,7 +31,7 @@ function App() {
           <Route path="/projects/:creatorId/:projectId" element={<ProjectDetailPage />} />
           <Route path="/projects/:creatorId/:projectId/edit" element={<EditProjectPage />} />
           <Route path="/creators" element={<AllCreatorsPage />} />
-          <Route path="/creators/details/:id" element={<CreatorDetailPage />} />
+          <Route path="/creators/:creatorId/" element={<CreatorDetailPage />} />
           <Route path="/login" element={<IsAnon><LogInPage /></IsAnon>} />
           <Route path="/signup" element={<IsAnon><SignUpPage /></IsAnon>} />
           <Route path="/profile" element={ <IsPrivate><UserProfilPage /></IsPrivate>} />
