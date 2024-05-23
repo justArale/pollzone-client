@@ -9,13 +9,7 @@ function Navbar() {
 
   const getCurrentLinkText = (pathname) => {
     const routes = {
-      "/dashboard": "Cohorts",
-      "/students": "Students",
-      "/cohorts/details/:cohortId": "Cohort Details",
-      "/cohorts/edit/:cohortId": "Edit Cohort",
-      "/cohorts/create": "Create Cohort",
-      "/students/details/:studentId": "Student Details",
-      "/students/edit/:studentId": "Edit Student",
+      "/dashboard": "Startpage",
       "/profile": "User Profile",
       "/login": "Log In",
       "/signup": "Sign Up",
@@ -39,12 +33,28 @@ function Navbar() {
         backgroundColor: "#6a0dad", // Purple color
         padding: "10px 20px",
         color: "white",
+        fontFamily: "Arial, sans-serif",
       }}
     >
-      <div style={{ fontSize: "24px", fontWeight: "bold" }}>
-        <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-          POLLZONE
-        </Link>
+      <div style={{ display: "flex" }}>
+        {/* <Link to="/signup" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Sign Up</Link>
+            <Link to="/login" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Log In</Link> */}
+        {isLoggedIn && (
+          <div style={{ fontSize: "24px", fontWeight: "bold" }}>
+          <Link to="/dashboard" style={{ color: "white", textDecoration: "none" }}>
+            POLLZONE
+          </Link>
+        </div>
+        )}
+        <div>
+          {!isLoggedIn && (
+            <div style={{ fontSize: "24px", fontWeight: "bold" }}>
+              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                POLLZONE
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
       <div>
         <Link
