@@ -3,21 +3,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
 
-// Import the string from the .env with URL of the API/server - http://localhost:5005
 const API_URL = import.meta.env.VITE_API_URL;
 
 const DEFAULT_PROJECT_FORM_VALUES = {
   title: "",
   description: "",
   image: "",
-  options: [{ title: "", image: "", description: "" }], // Initialize with one empty option object
-  creator: "", // This will be set to currentUser._id
-  timeCount: 1, // Set a default valid value for timeCount
-  inProgress: false, // Add inProgress field to default values
+  options: [{ title: "", image: "", description: "" }],
+  creator: "",
+  timeCount: 1,
+  inProgress: false,
 };
 
 function CreateProjectPage() {
-  const { user, authenticateUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState({});
   const [formValues, setFormValues] = useState(DEFAULT_PROJECT_FORM_VALUES);
   const [errorMessage, setErrorMessage] = useState("");
@@ -69,6 +68,7 @@ function CreateProjectPage() {
       ...newOptions[index],
       [field]: value,
     };
+    console.log("Updated options:", newOptions); // Debugging statement
     setFormValues((prevValues) => ({
       ...prevValues,
       options: newOptions,
@@ -96,46 +96,54 @@ function CreateProjectPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const storedToken = localStorage.getItem("authToken");
+    console.log("Form values on submit:", formValues); // Debugging statement
+
     try {
-      // Create the project
-      const projectResponse = await axios.post(
-        `${API_URL}/api/creators/${currentUser._id}/projects`,
-        {
-          title: formValues.title,
-          description: formValues.description,
-          image: formValues.image,
-          creator: formValues.creator,
-          timeCount: formValues.timeCount,
-          inProgress: formValues.inProgress,
-        },
-        {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        }
-      );
-
-      const projectId = projectResponse.data._id;
-
-      // Create options
-      await Promise.all(
-        formValues.options.map((option) =>
-          axios.post(
-            `${API_URL}/api/creators/${formValues.creator}/projects/${projectId}/options`,
-            option,
+        // Step 1: Create the project
+        const projectResponse = await axios.post(
+            `${API_URL}/api/creators/${currentUser._id}/projects`,
             {
-              headers: { Authorization: `Bearer ${storedToken}` },
+                title: formValues.title,
+                description: formValues.description,
+                image: formValues.image,
+                creator: formValues.creator,
+                timeCount: formValues.timeCount,
+                inProgress: formValues.inProgress,
+            },
+            {
+                headers: { Authorization: `Bearer ${storedToken}` },
             }
-          )
-        )
-      );
+        );
 
-      navigate("/profile"); // Redirect to the projects page or wherever appropriate
+        const projectId = projectResponse.data._id;
+        console.log("Project created:", projectResponse.data);
+
+        // Step 2: Create options and associate them with the project
+        await Promise.all(
+            formValues.options.map((option) =>
+                axios.post(
+                    `${API_URL}/api/creators/${formValues.creator}/projects/${projectId}/options`,
+                    {
+                        title: option.title,
+                        description: option.description,
+                        image: option.image, // Include the image URL
+                    },
+                    {
+                        headers: { Authorization: `Bearer ${storedToken}` },
+                    }
+                )
+            )
+        );
+
+        // Step 3: Redirect to the dashboard or appropriate page
+        navigate("/dashboard");
     } catch (error) {
-      console.error("Error details:", error.response || error);
-      const errorDescription =
-        error.response?.data?.message || "An error occurred";
-      setErrorMessage(errorDescription);
+        console.error("Error details:", error.response || error);
+        const errorDescription =
+            error.response?.data?.message || "An error occurred";
+        setErrorMessage(errorDescription);
     }
-  };
+};
 
   return (
     <div style={styles.container}>

@@ -92,36 +92,52 @@ function EditProjectPage() {
 
   const updateOptions = async () => {
     const storedToken = localStorage.getItem("authToken");
-    const updatePromises = formValues.options.map((option) =>
-      axios.put(
-        `${API_URL}/api/creators/${creatorId}/projects/${projectId}/options/${option._id}`,
-        option,
-        {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        }
-      )
-    );
+    const updatePromises = formValues.options.map(async (option) => {
+      if (option._id) {
+        return axios.put(
+          `${API_URL}/api/creators/${creatorId}/projects/${projectId}/options/${option._id}`,
+          option,
+          {
+            headers: { Authorization: `Bearer ${storedToken}` },
+          }
+        );
+      } else {
+        const newOptionResponse = await axios.post(
+          `${API_URL}/api/creators/${creatorId}/projects/${projectId}/options`,
+          option,
+          {
+            headers: { Authorization: `Bearer ${storedToken}` },
+          }
+        );
+        // Update the option with the new _id
+        option._id = newOptionResponse.data._id;
+        return newOptionResponse;
+      }
+    });
     await Promise.all(updatePromises);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form values on submit:", formValues);
     const storedToken = localStorage.getItem("authToken");
     try {
       // Update the project
+      await updateOptions();
       await axios.put(
         `${API_URL}/api/creators/${creatorId}/projects/${projectId}`,
         {
           ...formValues,
-          options: formValues.options.map(option => option._id) // Only send the IDs to update the project
+          options: formValues.options.map((option) => option._id), // Only send the IDs to update the project
         },
         {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
       );
       // Update the options separately
-      await updateOptions();
-      navigate(`/projects/${creatorId}/${projectId}`, { state: { refresh: true } });
+      navigate(`/projects/${creatorId}/${projectId}`, {
+        state: { refresh: true },
+      });
     } catch (error) {
       console.error("Error details:", error.response || error);
       const errorDescription =

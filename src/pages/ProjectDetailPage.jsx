@@ -6,7 +6,7 @@ import { AuthContext } from "../context/auth.context";
 const API_URL = import.meta.env.VITE_API_URL;
 
 function ProjectDetailPage() {
-  const { user, authenticateUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { creatorId, projectId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,19 +19,11 @@ function ProjectDetailPage() {
   }, [user]);
 
   const fetchProjectData = async () => {
-    const storedToken = localStorage.getItem("authToken");
-    if (!storedToken) {
-      setErrorMessage("No authentication token found");
-      setIsLoading(false);
-      return;
-    }
     try {
       const response = await axios.get(
-        `${API_URL}/api/creators/${creatorId}/projects/${projectId}?populate=options`,
-        {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        }
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}?populate=options`
       );
+      console.log("Project data fetched:", response.data); // Log the project data
       setCurrentProject(response.data);
     } catch (error) {
       console.error("Error fetching project data:", error);
@@ -45,15 +37,13 @@ function ProjectDetailPage() {
   };
 
   useEffect(() => {
-    if (!user) {
-      authenticateUser();
-    } else if (user && user.role && user._id && creatorId && projectId) {
-      fetchProjectData();
-    }
-  }, [user, creatorId, projectId, location.pathname]);
+    fetchProjectData();
+  }, [projectId]);
 
   const handleEditClick = () => {
-    navigate(`/projects/${creatorId}/${currentProject._id}/edit`, { state: { refresh: true } });
+    navigate(`/projects/${creatorId}/${currentProject._id}/edit`, {
+      state: { refresh: true },
+    });
   };
 
   return (
@@ -78,10 +68,12 @@ function ProjectDetailPage() {
             {currentProject.options && currentProject.options.length > 0 ? (
               currentProject.options.map((option, index) => (
                 <div key={index} style={styles.optionCard}>
+                  <img
+                    src={option.image}
+                    alt={option.title}
+                    style={styles.optionImage}
+                  />
                   <h4>{option.title}</h4>
-                  {option.image && (
-                    <img src={option.image} alt={option.title} style={styles.optionImage} />
-                  )}
                   <p>{option.description}</p>
                 </div>
               ))
@@ -90,11 +82,13 @@ function ProjectDetailPage() {
             )}
           </div>
           <div>
-            {currentProject.creator && currentProject.creator === creatorId && (
-              <button style={styles.editButton} onClick={handleEditClick}>
-                Edit Project
-              </button>
-            )}
+            {user &&
+              currentProject.creator &&
+              user._id === currentProject.creator && (
+                <button style={styles.editButton} onClick={handleEditClick}>
+                  Edit Project
+                </button>
+              )}
           </div>
         </div>
       )}
