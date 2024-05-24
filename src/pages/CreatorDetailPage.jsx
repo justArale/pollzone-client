@@ -105,7 +105,7 @@ function CreatorDetailPage() {
           {link}
         </a>
       ))}
-      {user && (
+      {user && user.role === "fans" && (
         <button onClick={handleFollowToggle}>
           {isFollowing ? "Unfollow" : `Follow ${currentCreator.name} on Pollzone!`}
         </button>

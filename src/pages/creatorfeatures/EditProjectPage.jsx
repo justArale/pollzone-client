@@ -240,7 +240,7 @@ function EditProjectPage() {
         </div>
         <div style={styles.formGroup}>
           <label htmlFor="timeCount" style={styles.label}>
-            For how long can your fans vote? (in hr)
+            For how long can your fans vote? (in days)
           </label>
           <select
             id="timeCount"
