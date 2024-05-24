@@ -88,16 +88,17 @@ function UserProfilPage() {
               }}
             >
               {userProfile.role.charAt(0).toUpperCase() +
-                userProfile.role.slice(1, userProfile.role.length-1)}
+                userProfile.role.slice(1, userProfile.role.length - 1)}
             </h2>
-            <div
+            
+            {/* <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr",
                 gap: "24px",
                 marginTop: "16px",
                 marginBottom: "16px",
-                borderBottom: "1px solid #E5E7EB" /* gray-200 */,
+                borderBottom: "1px solid #E5E7EB" ,
                 paddingBottom: "16px",
               }}
             >
@@ -105,13 +106,13 @@ function UserProfilPage() {
                 style={{
                   textAlign: "left",
                   marginBottom: "8px",
-                  borderBottom: "1px solid #E5E7EB" /* gray-200 */,
+                  borderBottom: "1px solid #E5E7EB" ,
                   paddingBottom: "8px",
                 }}
               >
                 <strong>Description:</strong> {userProfile.description}
               </p>
-            </div>
+            </div> */}
 
             <div
               style={{
@@ -135,16 +136,64 @@ function UserProfilPage() {
                 <strong>Email:</strong> {userProfile.email}
               </p>
             </div>
+            <div
+              style={{
+                textAlign: "left",
+                marginTop: "16px",
+              }}
+            >
+              <p style={{ fontWeight: "bold" }}>Social Media:</p>
+              <ul style={{ paddingLeft: "20px" }}>
+                {userProfile.socialMedia &&
+                  userProfile.socialMedia.map((link, index) => (
+                    <li key={index} style={{ listStyleType: "disc" }}>
+                      <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#007bff", textDecoration: "none" }}
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
 
             {userProfile.role === "creators" && (
-              <div
-                style={{
-                  textAlign: "left",
-                  marginTop: "16px",
-                }}
-              >
-                <p><strong>Followers:</strong> {userProfile.fans.length}</p>
-                <p style={{ fontWeight: "bold" }}>Social Media:</p>
+              <div>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr",
+                    gap: "24px",
+                    marginTop: "16px",
+                    marginBottom: "16px",
+                    borderBottom: "1px solid #E5E7EB" /* gray-200 */,
+                    paddingBottom: "16px",
+                  }}
+                >
+                  <p
+                    style={{
+                      textAlign: "left",
+                      marginBottom: "8px",
+                      borderBottom: "1px solid #E5E7EB" /* gray-200 */,
+                      paddingBottom: "8px",
+                    }}
+                  >
+                    <strong>Description:</strong> {userProfile.description}
+                  </p>
+                </div>
+                <div
+                  style={{
+                    textAlign: "left",
+                    marginTop: "16px",
+                  }}
+                >
+                  <p>
+                    <strong>Followers:</strong> {userProfile.fans.length}
+                  </p>
+                  {/* <p style={{ fontWeight: "bold" }}>Social Media:</p>
                 <ul style={{ paddingLeft: "20px" }}>
                   {userProfile.socialMedia &&
                     userProfile.socialMedia.map((link, index) => (
@@ -154,11 +203,21 @@ function UserProfilPage() {
                         </a>
                       </li>
                     ))}
-                </ul>
+                </ul> */}
+                </div>
               </div>
             )}
             <Link to={"/profile/edit"}>
-              <button style={{ fontWeight: "bold", padding: "10px", background: "purple", color: "white" }}>Edit Profile</button>
+              <button
+                style={{
+                  fontWeight: "bold",
+                  padding: "10px",
+                  background: "purple",
+                  color: "white",
+                }}
+              >
+                Edit Profile
+              </button>
             </Link>
           </div>
         )}

@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 
-// Import the string from the .env with URL of the API/server - http://localhost:5005
 const API_URL = import.meta.env.VITE_API_URL;
 
 function DashboardPage() {
   const { user } = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState({});
   const [projects, setProjects] = useState([]);
+  const [fan, setFan] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
 
   const fetchUserData = async () => {
@@ -46,10 +46,31 @@ function DashboardPage() {
     }
   };
 
+  const fetchFanData = async () => {
+    const storedToken = localStorage.getItem("authToken");
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/fans/${user._id}`,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
+      setFan(response.data);
+    } catch (error) {
+      const errorDescription =
+        error.response?.data?.message || "An error occurred";
+      setErrorMessage(errorDescription);
+    }
+  };
+
   useEffect(() => {
     if (user && user.role && user._id) {
       fetchUserData();
-      fetchUserProjects();
+      if (user.role === "creators") {
+        fetchUserProjects();
+      } else {
+        fetchFanData();
+      }
     }
   }, [user]);
 
@@ -105,7 +126,34 @@ function DashboardPage() {
             </div>
           </div>
         ) : (
-          <div>Fans Dashboard</div>
+          <div>
+            <h1 style={styles.headline}>My Votes</h1>
+            <div style={styles.projectsContainer}>
+              {fan.votes && fan.votes.length > 0 ? (
+                fan.votes.map((vote) => (
+                  <div key={vote._id} style={styles.projectCard}>
+                    <h2 style={styles.projectTitle}>{vote.title}</h2>
+                    <p style={styles.projectDescription}>{vote.description}</p>
+                  </div>
+                ))
+              ) : (
+                <p style={styles.noProjectsMessage}>No votes found.</p>
+              )}
+            </div>
+            <div style={styles.projectsContainer}>
+              {fan.favoritCreators && fan.favoritCreators.length > 0 ? (
+                fan.favoritCreators.map((creator) => (
+                  <div key={creator._id} style={styles.projectCard}>
+                    <h2 style={styles.projectTitle}>{creator.name}</h2>
+                    <p style={styles.projectDescription}>{creator.description}</p>
+                    <img src={creator.image} alt={creator.name} style={styles.projectImage} />
+                  </div>
+                ))
+              ) : (
+                <p style={styles.noProjectsMessage}>No favorite creators found.</p>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </div>
@@ -155,14 +203,14 @@ const styles = {
   },
   projectsContainer: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", // Adjusted card size
+    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
     gap: "20px",
     marginTop: "20px",
   },
   projectCard: {
     border: "1px solid #ddd",
     borderRadius: "5px",
-    padding: "15px", // Reduced padding
+    padding: "15px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     transition: "transform 0.3s, box-shadow 0.3s",
   },
@@ -171,12 +219,12 @@ const styles = {
     boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
   },
   projectTitle: {
-    fontSize: "18px", // Adjusted font size
+    fontSize: "18px",
     fontWeight: "bold",
     marginBottom: "10px",
   },
   projectDescription: {
-    fontSize: "14px", // Adjusted font size
+    fontSize: "14px",
     marginBottom: "10px",
   },
   projectImage: {
@@ -196,8 +244,8 @@ const styles = {
     marginTop: "10px",
   },
   link: {
-    textDecoration: "none", // Removed link decoration
-    color: "inherit", // Inherit color
+    textDecoration: "none",
+    color: "inherit",
   },
 };
 

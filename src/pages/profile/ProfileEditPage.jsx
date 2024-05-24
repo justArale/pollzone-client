@@ -21,17 +21,24 @@ function ProfileEditPage() {
   const fetchUserData = async () => {
     const storedToken = localStorage.getItem("authToken");
     try {
-      const response = await axios.get(`${API_URL}/api/${user.role}/${user._id}`, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      });
+      const response = await axios.get(
+        `${API_URL}/api/${user.role}/${user._id}`,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
       setFormValues({
         name: response.data.name || "",
         image: response.data.image || "",
         description: response.data.description || "",
-        socialMedia: response.data.socialMedia && response.data.socialMedia.length ? response.data.socialMedia : [""],
+        socialMedia:
+          response.data.socialMedia && response.data.socialMedia.length
+            ? response.data.socialMedia
+            : [""],
       });
     } catch (error) {
-      const errorDescription = error.response?.data?.message || "An error occurred";
+      const errorDescription =
+        error.response?.data?.message || "An error occurred";
       setErrorMessage(errorDescription);
     }
   };
@@ -82,11 +89,12 @@ function ProfileEditPage() {
       await axios.put(`${API_URL}/api/${user.role}/${user._id}`, formValues, {
         headers: { Authorization: `Bearer ${storedToken}` },
       });
-      await authenticateUser();  // Update user context
-      await fetchUserData();  // Fetch updated user data
+      await authenticateUser(); // Update user context
+      await fetchUserData(); // Fetch updated user data
       navigate("/profile");
     } catch (error) {
-      const errorDescription = error.response?.data?.message || "An error occurred";
+      const errorDescription =
+        error.response?.data?.message || "An error occurred";
       setErrorMessage(errorDescription);
     }
   };
@@ -118,25 +126,27 @@ function ProfileEditPage() {
             style={{ marginLeft: "8px" }}
           />
         </div>
-        <div style={{ marginBottom: "16px" }}>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formValues.description}
-            onChange={handleInputChange}
-            style={{
-              width: "100%",
-              padding: "10px",
-              boxSizing: "border-box",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-              fontFamily: "sans-serif",
-              minHeight: "100px",
-              marginLeft: "8px"
-            }}
-          />
-        </div>
+        {user.role === "creators" && (
+          <div style={{ marginBottom: "16px" }}>
+            <label htmlFor="description">Description:</label>
+            <textarea
+              id="description"
+              name="description"
+              value={formValues.description}
+              onChange={handleInputChange}
+              style={{
+                width: "100%",
+                padding: "10px",
+                boxSizing: "border-box",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+                fontFamily: "sans-serif",
+                minHeight: "100px",
+                marginLeft: "8px",
+              }}
+            />
+          </div>
+        )}
         <div style={{ marginBottom: "16px" }}>
           <label>Social Media Links:</label>
           {formValues.socialMedia.map((link, index) => (
@@ -147,7 +157,10 @@ function ProfileEditPage() {
                 onChange={(e) => handleSocialMediaChange(index, e.target.value)}
                 style={{ marginRight: "8px" }}
               />
-              <button type="button" onClick={() => handleRemoveSocialMedia(index)}>
+              <button
+                type="button"
+                onClick={() => handleRemoveSocialMedia(index)}
+              >
                 Remove
               </button>
             </div>
