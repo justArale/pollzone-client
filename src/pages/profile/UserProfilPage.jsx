@@ -56,7 +56,6 @@ function UserProfilPage() {
               marginBottom: "24px",
               position: "relative",
               textAlign: "center",
-              fontFamily: "sans-serif",
             }}
           >
             <img
@@ -90,7 +89,7 @@ function UserProfilPage() {
               {userProfile.role.charAt(0).toUpperCase() +
                 userProfile.role.slice(1, userProfile.role.length - 1)}
             </h2>
-            
+
             {/* <div
               style={{
                 display: "grid",

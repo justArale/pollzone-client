@@ -33,7 +33,6 @@ function Navbar() {
         backgroundColor: "#6a0dad", // Purple color
         padding: "10px 20px",
         color: "white",
-        fontFamily: "Arial, sans-serif",
       }}
     >
       <div style={{ display: "flex" }}>
@@ -41,10 +40,13 @@ function Navbar() {
             <Link to="/login" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Log In</Link> */}
         {isLoggedIn && (
           <div style={{ fontSize: "24px", fontWeight: "bold" }}>
-          <Link to="/dashboard" style={{ color: "white", textDecoration: "none" }}>
-            POLLZONE
-          </Link>
-        </div>
+            <Link
+              to="/dashboard"
+              style={{ color: "white", textDecoration: "none" }}
+            >
+              POLLZONE
+            </Link>
+          </div>
         )}
         <div>
           {!isLoggedIn && (

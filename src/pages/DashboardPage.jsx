@@ -49,12 +49,9 @@ function DashboardPage() {
   const fetchFanData = async () => {
     const storedToken = localStorage.getItem("authToken");
     try {
-      const response = await axios.get(
-        `${API_URL}/api/fans/${user._id}`,
-        {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        }
-      );
+      const response = await axios.get(`${API_URL}/api/fans/${user._id}`, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      });
       setFan(response.data);
     } catch (error) {
       const errorDescription =
@@ -145,12 +142,20 @@ function DashboardPage() {
                 fan.favoritCreators.map((creator) => (
                   <div key={creator._id} style={styles.projectCard}>
                     <h2 style={styles.projectTitle}>{creator.name}</h2>
-                    <p style={styles.projectDescription}>{creator.description}</p>
-                    <img src={creator.image} alt={creator.name} style={styles.projectImage} />
+                    <p style={styles.projectDescription}>
+                      {creator.description}
+                    </p>
+                    <img
+                      src={creator.image}
+                      alt={creator.name}
+                      style={styles.projectImage}
+                    />
                   </div>
                 ))
               ) : (
-                <p style={styles.noProjectsMessage}>No favorite creators found.</p>
+                <p style={styles.noProjectsMessage}>
+                  No favorite creators found.
+                </p>
               )}
             </div>
           </div>
@@ -165,7 +170,6 @@ const styles = {
     maxWidth: "1000px",
     margin: "0 auto",
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
   },
   header: {
     marginBottom: "20px",
