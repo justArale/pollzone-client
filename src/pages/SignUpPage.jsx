@@ -11,6 +11,7 @@ function SignUpPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+  const [category, setCategory] = useState("")
   const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
@@ -20,10 +21,12 @@ function SignUpPage() {
   const handlePassword = (e) => setPassword(e.target.value);
   const handleName = (e) => setName(e.target.value);
   const handleRole = (e) => setRole(e.target.value);
+  const handleCategory = (e) => setCategory(e.target.value);
+
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { email, password, name, role };
+    const requestBody = { email, password, name, role, category };
 
     axios
       .post(`${API_URL}/auth/signup`, requestBody)
@@ -52,10 +55,12 @@ function SignUpPage() {
       handlePassword={handlePassword}
       handleName={handleName}
       handleRole={handleRole}
+      handleCategory={handleCategory}
       email={email}
       password={password}
       name={name}
       role={role}
+      category={category}
       errorMessage={errorMessage}
     />
   );

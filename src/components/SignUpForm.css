@@ -11,8 +11,8 @@
 }
 
 .formOne {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   margin-top: 10px;
 }
@@ -22,11 +22,13 @@
   font-weight: 600;
   color: #333;
   margin-bottom: 24px;
+  text-align: center;
 }
 
 .formTwo {
   display: flex;
   flex-direction: column;
+  gap: 16px;
   margin-bottom: 24px;
 }
 
@@ -39,6 +41,8 @@
 .formThree {
   display: flex;
   align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .roleInput {
@@ -52,6 +56,7 @@
 .formFour {
   display: flex;
   flex-direction: column;
+  margin-bottom: 16px;
 }
 
 .typeInput {
@@ -73,6 +78,10 @@
   transition: background-color 0.3s ease;
 }
 
+.createAccountButton:hover {
+  background-color: #0056b3;
+}
+
 .errorMessage {
   color: red;
   margin-top: 6px;
@@ -80,4 +89,21 @@
 
 .logIn {
   margin-top: 40px;
+  text-align: center;
+}
+
+.formFourGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.category-container {
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  max-height: 0;
+}
+
+.category-container.open {
+  max-height: 1000px; /* Arbitrary large value to ensure the full height */
 }
