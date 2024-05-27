@@ -26,22 +26,23 @@ function SignUpPage() {
     const requestBody = { email, password, name, role };
 
     axios
-    .post(`${API_URL}/auth/signup`, requestBody)
-    .then(() => {
-      // After successful signup, perform login
-      const loginRequestBody = { email, password };
-      return axios.post(`${API_URL}/auth/login`, loginRequestBody);
-    })
-    .then((response) => {
-      const { authToken } = response.data;
-      storeToken(authToken);
-      authenticateUser();
-      navigate("/profile");
-    })
-    .catch((error) => {
-      const errorDescription = error.response?.data?.message || "An error occurred";
-      setErrorMessage(errorDescription);
-    });
+      .post(`${API_URL}/auth/signup`, requestBody)
+      .then(() => {
+        // After successful signup, perform login
+        const loginRequestBody = { email, password };
+        return axios.post(`${API_URL}/auth/login`, loginRequestBody);
+      })
+      .then((response) => {
+        const { authToken } = response.data;
+        storeToken(authToken);
+        authenticateUser();
+        navigate("/profile");
+      })
+      .catch((error) => {
+        const errorDescription =
+          error.response?.data?.message || "An error occurred";
+        setErrorMessage(errorDescription);
+      });
   };
 
   return (

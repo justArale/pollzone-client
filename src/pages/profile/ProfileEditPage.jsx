@@ -140,7 +140,6 @@ function ProfileEditPage() {
                 boxSizing: "border-box",
                 borderRadius: "5px",
                 border: "1px solid #ccc",
-                fontFamily: "sans-serif",
                 minHeight: "100px",
                 marginLeft: "8px",
               }}

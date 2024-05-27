@@ -21,7 +21,11 @@ function CreatorDetailPage() {
       setCurrentCreator(response.data);
 
       // Ensure that user.favoriteCreators is defined before using it
-      if (user && user.favoriteCreators && user.favoriteCreators.includes(creatorId)) {
+      if (
+        user &&
+        user.favoriteCreators &&
+        user.favoriteCreators.includes(creatorId)
+      ) {
         setIsFollowing(true);
       }
     } catch (error) {
@@ -94,20 +98,23 @@ function CreatorDetailPage() {
         Followers: {currentCreator.fans?.length || 0}
       </h2>
       <h2 style={styles.subheader}>Social Media</h2>
-      {currentCreator.socialMedia && currentCreator.socialMedia.map((link, index) => (
-        <a
-          key={index}
-          href={link}
-          style={styles.socialLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {link}
-        </a>
-      ))}
+      {currentCreator.socialMedia &&
+        currentCreator.socialMedia.map((link, index) => (
+          <a
+            key={index}
+            href={link}
+            style={styles.socialLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {link}
+          </a>
+        ))}
       {user && user.role === "fans" && (
         <button onClick={handleFollowToggle}>
-          {isFollowing ? "Unfollow" : `Follow ${currentCreator.name} on Pollzone!`}
+          {isFollowing
+            ? "Unfollow"
+            : `Follow ${currentCreator.name} on Pollzone!`}
         </button>
       )}
     </div>
@@ -119,7 +126,6 @@ const styles = {
     maxWidth: "600px",
     margin: "0 auto",
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
     textAlign: "center",
   },
   image: {

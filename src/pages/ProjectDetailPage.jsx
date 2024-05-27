@@ -214,6 +214,9 @@ function ProjectDetailPage() {
             <button style={styles.closeButton} onClick={closeModal}>
               X
             </button>
+            <button style={styles.closeButton} onClick={closeModal}>
+              X
+            </button>
             <div style={styles.optionsContainer}>
               {currentProject.options.map((option, index) => (
                 <div key={index} style={styles.optionCardSmall}>
@@ -255,7 +258,6 @@ const styles = {
     maxWidth: "800px",
     margin: "0 auto",
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
   },
   projectImage: {
     width: "100%",

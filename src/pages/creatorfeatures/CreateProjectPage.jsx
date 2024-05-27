@@ -99,51 +99,51 @@ function CreateProjectPage() {
     console.log("Form values on submit:", formValues); // Debugging statement
 
     try {
-        // Step 1: Create the project
-        const projectResponse = await axios.post(
-            `${API_URL}/api/creators/${currentUser._id}/projects`,
+      // Step 1: Create the project
+      const projectResponse = await axios.post(
+        `${API_URL}/api/creators/${currentUser._id}/projects`,
+        {
+          title: formValues.title,
+          description: formValues.description,
+          image: formValues.image,
+          creator: formValues.creator,
+          timeCount: formValues.timeCount,
+          inProgress: formValues.inProgress,
+        },
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
+
+      const projectId = projectResponse.data._id;
+      console.log("Project created:", projectResponse.data);
+
+      // Step 2: Create options and associate them with the project
+      await Promise.all(
+        formValues.options.map((option) =>
+          axios.post(
+            `${API_URL}/api/creators/${formValues.creator}/projects/${projectId}/options`,
             {
-                title: formValues.title,
-                description: formValues.description,
-                image: formValues.image,
-                creator: formValues.creator,
-                timeCount: formValues.timeCount,
-                inProgress: formValues.inProgress,
+              title: option.title,
+              description: option.description,
+              image: option.image, // Include the image URL
             },
             {
-                headers: { Authorization: `Bearer ${storedToken}` },
+              headers: { Authorization: `Bearer ${storedToken}` },
             }
-        );
+          )
+        )
+      );
 
-        const projectId = projectResponse.data._id;
-        console.log("Project created:", projectResponse.data);
-
-        // Step 2: Create options and associate them with the project
-        await Promise.all(
-            formValues.options.map((option) =>
-                axios.post(
-                    `${API_URL}/api/creators/${formValues.creator}/projects/${projectId}/options`,
-                    {
-                        title: option.title,
-                        description: option.description,
-                        image: option.image, // Include the image URL
-                    },
-                    {
-                        headers: { Authorization: `Bearer ${storedToken}` },
-                    }
-                )
-            )
-        );
-
-        // Step 3: Redirect to the dashboard or appropriate page
-        navigate("/dashboard");
+      // Step 3: Redirect to the dashboard or appropriate page
+      navigate("/dashboard");
     } catch (error) {
-        console.error("Error details:", error.response || error);
-        const errorDescription =
-            error.response?.data?.message || "An error occurred";
-        setErrorMessage(errorDescription);
+      console.error("Error details:", error.response || error);
+      const errorDescription =
+        error.response?.data?.message || "An error occurred";
+      setErrorMessage(errorDescription);
     }
-};
+  };
 
   return (
     <div style={styles.container}>
@@ -286,7 +286,6 @@ const styles = {
     maxWidth: "600px",
     margin: "0 auto",
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
   },
   form: {
     display: "flex",

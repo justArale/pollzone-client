@@ -172,7 +172,6 @@ const styles = {
     maxWidth: "1000px",
     margin: "0 auto",
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
   },
   header: {
     marginBottom: "20px",
