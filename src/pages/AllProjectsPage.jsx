@@ -30,7 +30,10 @@ function AllProjectsPage() {
       {errorMessage && <p>{errorMessage}</p>}
       {allProjects &&
         allProjects.map((project) => (
-          <Link to={`/projects/${project.creator}/${project._id}`} style={styles.link}>
+          <Link
+            to={`/projects/${project.creator}/${project._id}`}
+            style={styles.link}
+          >
             <div key={project._id} style={styles.projectCard}>
               {project.image ? (
                 <img
