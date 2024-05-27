@@ -30,7 +30,7 @@ function Navbar() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "#6a0dad", // Purple color
+        backgroundColor: "#006bb3", // Purple color
         padding: "10px 20px",
         color: "white",
       }}
@@ -44,7 +44,7 @@ function Navbar() {
               to="/dashboard"
               style={{ color: "white", textDecoration: "none" }}
             >
-              POLLZONE
+              PollZone
             </Link>
           </div>
         )}
@@ -52,7 +52,7 @@ function Navbar() {
           {!isLoggedIn && (
             <div style={{ fontSize: "24px", fontWeight: "bold" }}>
               <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                POLLZONE
+                PollZone
               </Link>
             </div>
           )}

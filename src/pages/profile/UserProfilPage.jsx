@@ -211,8 +211,9 @@ function UserProfilPage() {
                 style={{
                   fontWeight: "bold",
                   padding: "10px",
-                  background: "purple",
+                  background: "#006bb3",
                   color: "white",
+                  fontFamily: "Unbounded",
                 }}
               >
                 Edit Profile
