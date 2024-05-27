@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -16,6 +18,9 @@ function ProjectDetailPage() {
   const [chosenVote, setChosenVote] = useState("");
   const [hasVoted, setHasVoted] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const notifySubmit = () =>
+    toast("You submitted your vote successfully, SWEET!");
+  const notifyDelete = () => toast("Successfully deleted!");
 
   useEffect(() => {
     if (user) {
@@ -43,7 +48,8 @@ function ProjectDetailPage() {
     } catch (error) {
       console.error("Error fetching user data:", error);
       const errorDescription =
-        error.response?.data?.message || "An error occurred while fetching user data";
+        error.response?.data?.message ||
+        "An error occurred while fetching user data";
       setErrorMessage(errorDescription);
       setIsLoading(false);
     }
@@ -68,7 +74,7 @@ function ProjectDetailPage() {
 
   const checkIfUserHasVoted = (options) => {
     if (currentUser && currentUser.votes) {
-      const userVotes = currentUser.votes.map(vote => vote._id.toString());
+      const userVotes = currentUser.votes.map((vote) => vote._id.toString());
       const userHasVoted = options.some((option) => {
         const optionId = option._id.toString();
         return userVotes.includes(optionId);
@@ -101,6 +107,24 @@ function ProjectDetailPage() {
     });
   };
 
+  const handleDeleteClick = async () => {
+    try {
+      const storedToken = localStorage.getItem("authToken");
+      const response = await axios.delete(
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}`,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
+      console.log("Deleted:", response.data); // Log the response data
+      notifyDelete();
+      navigate(`/dashboard`); // Navigate to the creator's page or any relevant page
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      setErrorMessage("An error occurred while deleting the project.");
+    }
+  };
+
   const handleVoteClick = () => {
     setIsVotingModalOpen(true);
   };
@@ -121,12 +145,7 @@ function ProjectDetailPage() {
       );
       console.log("Vote submitted:", response.data); // Log the response data
       setHasVoted(true); // Set hasVoted to true after successful vote submission
-
-      // Update the user's votes in the local user profile state
-      setCurrentUser((prevProfile) => ({
-        ...prevProfile,
-        votes: [...prevProfile.votes, optionId],
-      }));
+      notifySubmit();
     } catch (error) {
       console.error("Error submitting vote:", error);
       setErrorMessage("An error occurred while submitting your vote.");
@@ -184,9 +203,17 @@ function ProjectDetailPage() {
             {user &&
               currentProject.creator &&
               user._id === currentProject.creator._id && (
-                <button style={styles.editButton} onClick={handleEditClick}>
-                  Edit Project
-                </button>
+                <div>
+                  <button style={styles.editButton} onClick={handleEditClick}>
+                    Edit Project
+                  </button>
+                  <button
+                    style={styles.deleteButton}
+                    onClick={handleDeleteClick}
+                  >
+                    Delete Project
+                  </button>
+                </div>
               )}
           </div>
           <div>
@@ -211,9 +238,6 @@ function ProjectDetailPage() {
         <div style={styles.overlay}>
           <div style={styles.modal}>
             <h2>Vote for an Option</h2>
-            <button style={styles.closeButton} onClick={closeModal}>
-              X
-            </button>
             <button style={styles.closeButton} onClick={closeModal}>
               X
             </button>
@@ -297,6 +321,16 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
     marginTop: "20px",
+  },
+  deleteButton: {
+    padding: "10px",
+    backgroundColor: "red",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginTop: "20px",
+    marginLeft: "10px",
   },
   overlay: {
     position: "fixed",
