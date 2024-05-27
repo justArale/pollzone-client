@@ -49,12 +49,9 @@ function DashboardPage() {
   const fetchFanData = async () => {
     const storedToken = localStorage.getItem("authToken");
     try {
-      const response = await axios.get(
-        `${API_URL}/api/fans/${user._id}`,
-        {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        }
-      );
+      const response = await axios.get(`${API_URL}/api/fans/${user._id}`, {
+        headers: { Authorization: `Bearer ${storedToken}` },
+      });
       setFan(response.data);
     } catch (error) {
       const errorDescription =
@@ -78,7 +75,7 @@ function DashboardPage() {
     <div style={styles.container}>
       <div style={styles.header}>
         {currentUser.name ? (
-          <h1 style={styles.headline}>Hi {currentUser.name}!</h1>
+          <h1 style={styles.headline}>Hi {currentUser.name} :) </h1>
         ) : (
           <div style={styles.loading}>Loading...</div>
         )}
@@ -127,6 +124,7 @@ function DashboardPage() {
           </div>
         ) : (
           <div>
+            <p style={styles.greeting}>A new day to make decisions!</p>
             <h1 style={styles.headline}>My Votes</h1>
             <div style={styles.projectsContainer}>
               {fan.votes && fan.votes.length > 0 ? (
@@ -140,17 +138,26 @@ function DashboardPage() {
                 <p style={styles.noProjectsMessage}>No votes found.</p>
               )}
             </div>
+            <h1 style={styles.headline}>My Favorite Creators</h1>
             <div style={styles.projectsContainer}>
               {fan.favoritCreators && fan.favoritCreators.length > 0 ? (
                 fan.favoritCreators.map((creator) => (
                   <div key={creator._id} style={styles.projectCard}>
                     <h2 style={styles.projectTitle}>{creator.name}</h2>
-                    <p style={styles.projectDescription}>{creator.description}</p>
-                    <img src={creator.image} alt={creator.name} style={styles.projectImage} />
+                    <p style={styles.projectDescription}>
+                      {creator.description}
+                    </p>
+                    <img
+                      src={creator.image}
+                      alt={creator.name}
+                      style={styles.projectImage}
+                    />
                   </div>
                 ))
               ) : (
-                <p style={styles.noProjectsMessage}>No favorite creators found.</p>
+                <p style={styles.noProjectsMessage}>
+                  No favorite creators found.
+                </p>
               )}
             </div>
           </div>
@@ -172,8 +179,9 @@ const styles = {
     textAlign: "center",
   },
   greeting: {
-    fontSize: "24px",
+    fontSize: "20px",
     fontWeight: "bold",
+    textAlign: "center",
   },
   loading: {
     fontSize: "24px",
