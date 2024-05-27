@@ -30,10 +30,9 @@ function Navbar() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "#6a0dad", // Purple color
+        backgroundColor: "#006bb3", // Purple color
         padding: "10px 20px",
         color: "white",
-        fontFamily: "Arial, sans-serif",
       }}
     >
       <div style={{ display: "flex" }}>
@@ -41,16 +40,19 @@ function Navbar() {
             <Link to="/login" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Log In</Link> */}
         {isLoggedIn && (
           <div style={{ fontSize: "24px", fontWeight: "bold" }}>
-          <Link to="/dashboard" style={{ color: "white", textDecoration: "none" }}>
-            POLLZONE
-          </Link>
-        </div>
+            <Link
+              to="/dashboard"
+              style={{ color: "white", textDecoration: "none" }}
+            >
+              PollZone
+            </Link>
+          </div>
         )}
         <div>
           {!isLoggedIn && (
             <div style={{ fontSize: "24px", fontWeight: "bold" }}>
               <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                POLLZONE
+                PollZone
               </Link>
             </div>
           )}

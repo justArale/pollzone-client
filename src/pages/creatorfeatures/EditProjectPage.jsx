@@ -287,7 +287,6 @@ const styles = {
     maxWidth: "600px",
     margin: "0 auto",
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
   },
   form: {
     display: "flex",

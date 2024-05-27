@@ -30,8 +30,12 @@ function AllCreatorsPage() {
       {errorMessage && <p>{errorMessage}</p>}
       {allCreators &&
         allCreators.map((creator) => (
-          <Link to={`/creators/${creator._id}`} style={styles.link}>
-            <div key={creator._id} style={styles.creatorCard}>
+          <Link
+            to={`/creators/${creator._id}`}
+            style={styles.link}
+            key={creator._id}
+          >
+            <div style={styles.creatorCard}>
               {creator.image ? (
                 <img
                   src={creator.image}

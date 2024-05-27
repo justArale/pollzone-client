@@ -77,7 +77,12 @@ function ProjectDetailPage() {
           )}
           <h1>{currentProject.title}</h1>
           <p>{currentProject.description}</p>
-          <h3>Created by: <Link to={`/creators/${currentProject.creator._id}`}>{currentProject.creator?.name}</Link></h3> 
+          <h3>
+            Created by:{" "}
+            <Link to={`/creators/${currentProject.creator._id}`}>
+              {currentProject.creator?.name}
+            </Link>
+          </h3>
           <h3>Voting Options</h3>
           <div style={styles.optionsContainer}>
             {currentProject.options && currentProject.options.length > 0 ? (
@@ -107,10 +112,10 @@ function ProjectDetailPage() {
           </div>
           <div>
             {user && user.role === "fans" && (
-                <button style={styles.editButton} onClick={handleVoteClick}>
-                  Vote Now!
-                </button>
-              )}
+              <button style={styles.editButton} onClick={handleVoteClick}>
+                Vote Now!
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -119,7 +124,9 @@ function ProjectDetailPage() {
         <div style={styles.overlay}>
           <div style={styles.modal}>
             <h2>Vote for an Option</h2>
-            <button style={styles.closeButton} onClick={closeModal}>X</button>
+            <button style={styles.closeButton} onClick={closeModal}>
+              X
+            </button>
             <div style={styles.optionsContainer}>
               {currentProject.options.map((option, index) => (
                 <div key={index} style={styles.optionCard}>
@@ -130,7 +137,12 @@ function ProjectDetailPage() {
                   />
                   <h4>{option.title}</h4>
                   <p>{option.description}</p>
-                  <button style={styles.voteButton} onClick={() => submitVote(option._id)}>Vote for this option</button>
+                  <button
+                    style={styles.voteButton}
+                    onClick={() => submitVote(option._id)}
+                  >
+                    Vote for this option
+                  </button>
                 </div>
               ))}
             </div>
@@ -146,7 +158,6 @@ const styles = {
     maxWidth: "800px",
     margin: "0 auto",
     padding: "20px",
-    fontFamily: "Arial, sans-serif",
   },
   projectImage: {
     width: "100%",
