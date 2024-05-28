@@ -1,8 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './LogInForm.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./LogInForm.css";
 
-const LogInForm = ({ handleLoginSubmit, handleEmail, handlePassword, email, password, errorMessage, onSwitch }) => {
+const LogInForm = ({
+  handleLoginSubmit,
+  handleEmail,
+  handlePassword,
+  email,
+  password,
+  errorMessage,
+  onSwitch,
+}) => {
   return (
     <div className="login-form-container">
       <form onSubmit={handleLoginSubmit} className="login-form">
@@ -32,14 +40,19 @@ const LogInForm = ({ handleLoginSubmit, handleEmail, handlePassword, email, pass
           />
         </div>
 
-        <button type="submit" className='button'>Log In</button>
+        <button type="submit" className="button buttonLarge">
+          Log In
+        </button>
       </form>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p>Don't have an account? <a href="#" onClick={onSwitch}>
+      <p>
+        Don't have an account?{" "}
+        <a href="#" onClick={onSwitch}>
           Sign Up
-        </a></p>
+        </a>
+      </p>
     </div>
   );
 };
