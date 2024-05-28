@@ -112,19 +112,18 @@ function CreatorDetailPage() {
   }
 
   return (
-
-    <div style={styles.container}>
+    <div className="container">
       {currentCreator.image && (
         <img
           src={currentCreator.image}
           alt={currentCreator.name}
-          style={styles.image}
+          className="image"
         />
       )}
 
-      <h1 style={styles.name}>{currentCreator.name}</h1>
-      <p style={styles.description}>{currentCreator.description}</p>
-      <h2 style={styles.subheader}>
+      <h1 className="name">{currentCreator.name}</h1>
+      <p className="description">{currentCreator.description}</p>
+      <h2 className="subheader">
         Followers: {currentCreator.fans?.length || 0}
       </h2>
       <h2 className="subheader">Social Media</h2>
