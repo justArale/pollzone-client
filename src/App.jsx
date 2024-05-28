@@ -23,7 +23,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 function App() {
   return (
-    <>
+    <div className="page">
       <Navbar />
       <div>
         <ToastContainer />
@@ -77,7 +77,7 @@ function App() {
           <Route path="/projects/create" element={<CreateProjectPage />} />
         </Routes>
       </div>
-    </>
+    </div>
   );
 }
 
