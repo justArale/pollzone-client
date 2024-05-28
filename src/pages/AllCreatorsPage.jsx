@@ -6,13 +6,16 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function AllCreatorsPage() {
   const [allCreators, setAllCreators] = useState([]);
+  const [filteredCreators, setFilteredCreators] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const getAllCreators = () => {
     axios
       .get(`${API_URL}/api/creators`)
       .then((response) => {
         setAllCreators(response.data);
+        setFilteredCreators(response.data); // Initially, show all creators
       })
       .catch((error) => {
         const errorDescription =
@@ -25,11 +28,53 @@ function AllCreatorsPage() {
     getAllCreators();
   }, []);
 
+  useEffect(() => {
+    if (selectedCategory) {
+      const filtered = allCreators.filter(
+        (creator) => creator.category === selectedCategory
+      );
+      setFilteredCreators(filtered);
+    } else {
+      setFilteredCreators(allCreators);
+    }
+  }, [selectedCategory, allCreators]);
+
   return (
-    <div style={styles.container}>
+    <div>
       {errorMessage && <p>{errorMessage}</p>}
-      {allCreators &&
-        allCreators.map((creator) => (
+
+      <div style={styles.filterContainer}>
+        <label htmlFor="category" style={styles.label}>
+          Filter by Category:
+        </label>
+        <select
+          id="category"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          style={styles.select}
+        >
+          <option value="">All</option>
+          {[
+            "Music",
+            "Sports",
+            "Art",
+            "Gaming",
+            "Beauty",
+            "Culinary",
+            "Travel",
+            "Fitness",
+            "Film & Video",
+            "Audio & Podcasts",
+          ].map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div style={styles.container}>
+        {filteredCreators.map((creator) => (
           <Link
             to={`/creators/${creator._id}`}
             style={styles.link}
@@ -50,11 +95,28 @@ function AllCreatorsPage() {
             </div>
           </Link>
         ))}
+      </div>
     </div>
   );
 }
 
 const styles = {
+  filterContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "20px",
+    marginBottom: "20px",
+  },
+  label: {
+    marginRight: "10px",
+    fontWeight: "bold",
+  },
+  select: {
+    padding: "8px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+  },
   container: {
     display: "flex",
     flexWrap: "wrap",

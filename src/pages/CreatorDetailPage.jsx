@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
+import "./CreatorDetailPage.css"; // Import the CSS file
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -10,6 +11,7 @@ function CreatorDetailPage() {
   const { creatorId } = useParams();
   const navigate = useNavigate();
   const [currentCreator, setCurrentCreator] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -19,15 +21,6 @@ function CreatorDetailPage() {
       const response = await axios.get(`${API_URL}/api/creators/${creatorId}`);
       console.log("Creator data fetched:", response.data);
       setCurrentCreator(response.data);
-
-      // Ensure that user.favoriteCreators is defined before using it
-      if (
-        user &&
-        user.favoriteCreators &&
-        user.favoriteCreators.includes(creatorId)
-      ) {
-        setIsFollowing(true);
-      }
     } catch (error) {
       console.error("Error fetching creator data:", error);
       const errorDescription =
@@ -39,10 +32,44 @@ function CreatorDetailPage() {
     }
   };
 
+  const fetchUserData = async () => {
+    const storedToken = localStorage.getItem("authToken");
+    if (!user || !user.role || !user._id) {
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/${user.role}/${user._id}`,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
+      setCurrentUser(response.data);
+      console.log("User: ", response.data);
+
+      if (response.data.favoritCreators) {
+        const favoriteCreatorIds = response.data.favoritCreators.map(
+          (creator) => creator._id
+        );
+        if (favoriteCreatorIds.includes(creatorId)) {
+          setIsFollowing(true);
+        } else {
+          setIsFollowing(false);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      const errorDescription =
+        error.response?.data?.message || "An error occurred while fetching user data";
+      setErrorMessage(errorDescription);
+      setIsLoading(false);
+    }
+  };
+
   const handleFollowToggle = async () => {
     const storedToken = localStorage.getItem("authToken");
     try {
-      const response = await axios.put(
+      await axios.put(
         `${API_URL}/api/creators/${creatorId}/fans/${user._id}/toggleFollow`,
         {},
         {
@@ -56,14 +83,6 @@ function CreatorDetailPage() {
 
       // Update the user's favoriteCreators in AuthContext
       authenticateUser();
-
-      // Update the currentCreator's fans count
-      setCurrentCreator((prevCreator) => ({
-        ...prevCreator,
-        fans: updatedIsFollowing
-          ? [...prevCreator.fans, user._id]
-          : prevCreator.fans.filter((fanId) => fanId !== user._id),
-      }));
     } catch (error) {
       console.error("Error updating follow status:", error);
       const errorDescription =
@@ -74,7 +93,14 @@ function CreatorDetailPage() {
   };
 
   useEffect(() => {
-    fetchCreatorData();
+    const fetchData = async () => {
+      await fetchCreatorData();
+      await fetchUserData();
+    };
+
+    if (user) {
+      fetchData();
+    }
   }, [creatorId, user]);
 
   if (isLoading) {
@@ -86,6 +112,7 @@ function CreatorDetailPage() {
   }
 
   return (
+
     <div style={styles.container}>
       {currentCreator.image && (
         <img
@@ -100,13 +127,13 @@ function CreatorDetailPage() {
       <h2 style={styles.subheader}>
         Followers: {currentCreator.fans?.length || 0}
       </h2>
-      <h2 style={styles.subheader}>Social Media</h2>
+      <h2 className="subheader">Social Media</h2>
       {currentCreator.socialMedia &&
         currentCreator.socialMedia.map((link, index) => (
           <a
             key={index}
             href={link}
-            style={styles.socialLink}
+            className="socialLink"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -114,7 +141,10 @@ function CreatorDetailPage() {
           </a>
         ))}
       {user && user.role === "fans" && (
-        <button onClick={handleFollowToggle}>
+        <button
+          onClick={handleFollowToggle}
+          className={`followButton ${isFollowing ? "unfollow" : "follow"}`}
+        >
           {isFollowing
             ? "Unfollow"
             : `Follow ${currentCreator.name} on PollZone!`}
@@ -123,37 +153,5 @@ function CreatorDetailPage() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "600px",
-    margin: "0 auto",
-    padding: "20px",
-    textAlign: "center",
-  },
-  image: {
-    width: "100%",
-    height: "auto",
-    borderRadius: "10px",
-  },
-  name: {
-    fontSize: "2em",
-    margin: "20px 0",
-  },
-  description: {
-    fontSize: "1.2em",
-    margin: "20px 0",
-  },
-  subheader: {
-    fontSize: "1.2em",
-    margin: "20px 0 10px 0",
-  },
-  socialLink: {
-    display: "block",
-    margin: "5px 0",
-    color: "#007bff",
-    textDecoration: "none",
-  },
-};
 
 export default CreatorDetailPage;

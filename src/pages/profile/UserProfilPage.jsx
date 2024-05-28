@@ -161,6 +161,14 @@ function UserProfilPage() {
 
             {userProfile.role === "creators" && (
               <div>
+                <p
+                  style={{
+                    textAlign: "left",
+                    marginTop: "16px",
+                  }}
+                >
+                  <strong>Category:</strong> {userProfile.category}
+                </p>
                 <div
                   style={{
                     display: "grid",
@@ -192,17 +200,6 @@ function UserProfilPage() {
                   <p>
                     <strong>Followers:</strong> {userProfile.fans.length}
                   </p>
-                  {/* <p style={{ fontWeight: "bold" }}>Social Media:</p>
-                <ul style={{ paddingLeft: "20px" }}>
-                  {userProfile.socialMedia &&
-                    userProfile.socialMedia.map((link, index) => (
-                      <li key={index} style={{ listStyleType: "disc" }}>
-                        <a href={link} target="_blank" rel="noopener noreferrer" style={{ color: "#007bff", textDecoration: "none" }}>
-                          {link}
-                        </a>
-                      </li>
-                    ))}
-                </ul> */}
                 </div>
               </div>
             )}
@@ -214,6 +211,9 @@ function UserProfilPage() {
                   background: "#006bb3",
                   color: "white",
                   fontFamily: "Unbounded",
+                  borderRadius: "6px",
+                  border: "black solid 1px",
+                  cursor: "pointer",
                 }}
               >
                 Edit Profile

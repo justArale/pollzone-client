@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./SignUpForm.css";
 import { useEffect } from "react";
@@ -9,14 +9,17 @@ const SignUpForm = ({
   handlePassword,
   handleName,
   handleRole,
+  handleCategory,
   email,
   password,
   name,
   role,
+  category,
   errorMessage,
   // isOpen,
   // onClose,
 }) => {
+
   // useEffect(() => {
   //   // Event-Listener to close the overlay if you click outside
   //   const handleClickOutside = (event) => {
@@ -29,6 +32,16 @@ const SignUpForm = ({
   //     document.removeEventListener("mousedown", handleClickOutside);
   //   };
   // }, [isOpen, onClose]);
+
+  const categoryContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (role === "creators") {
+      categoryContainerRef.current.style.maxHeight = `${categoryContainerRef.current.scrollHeight}px`;
+    } else {
+      categoryContainerRef.current.style.maxHeight = "0";
+    }
+  }, [role]);
 
   return (
     <>
@@ -114,6 +127,7 @@ const SignUpForm = ({
                   autoComplete="off"
                 />
               </div>
+
 
               <button type="submit" className="createAccountButton">
                 Create Account

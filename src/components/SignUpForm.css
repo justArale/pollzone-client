@@ -39,8 +39,8 @@
 }
 
 .formOne {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   width: 100%;
 }
@@ -50,11 +50,13 @@
   font-weight: 600;
   color: #333;
   margin-bottom: 24px;
+  text-align: center;
 }
 
 .formTwo {
   display: flex;
   flex-direction: column;
+  gap: 16px;
   margin-bottom: 24px;
 }
 
@@ -67,6 +69,8 @@
 .formThree {
   display: flex;
   align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 .roleInput {
@@ -80,6 +84,7 @@
 .formFour {
   display: flex;
   flex-direction: column;
+  margin-bottom: 16px;
 }
 
 .typeInput {
@@ -102,10 +107,12 @@
 }
 
 .createAccountButton:hover {
+
   background-color: rgb(0, 87, 159);
   transform: scale(1.05);
 }
 
 .errorMessage {
   color: red;
+
 }
