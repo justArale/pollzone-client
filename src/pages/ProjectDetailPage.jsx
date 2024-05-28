@@ -1,3 +1,4 @@
+import "../components/ProjectDetailPage.css";
 import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -107,16 +108,18 @@ function ProjectDetailPage() {
   useEffect(() => {
     if (currentProject.startDate && currentProject.timeCount) {
       const startDate = new Date(currentProject.startDate);
-      const endDate = new Date(startDate.getTime() + currentProject.timeCount * 3600000);
-      
+      const endDate = new Date(
+        startDate.getTime() + currentProject.timeCount * 3600000
+      );
+
       const updateTimer = () => {
         const now = new Date();
-        
+
         if (now < startDate) {
           setTimer("Voting period has not started yet");
         } else {
           const timeRemaining = endDate - now;
-          
+
           if (timeRemaining > 0) {
             const hours = Math.floor(timeRemaining / 3600000);
             const minutes = Math.floor((timeRemaining % 3600000) / 60000);
@@ -194,29 +197,53 @@ function ProjectDetailPage() {
   };
 
   const formatDate = (dateString) => {
-    const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
-    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const dateOptions = { year: "numeric", month: "numeric", day: "numeric" };
+    const timeOptions = { hour: "2-digit", minute: "2-digit" };
     const date = new Date(dateString);
-    return `${date.toLocaleDateString(undefined, dateOptions)}, ${date.toLocaleTimeString(undefined, timeOptions)}`;
+    return `${date.toLocaleDateString(
+      undefined,
+      dateOptions
+    )}, ${date.toLocaleTimeString(undefined, timeOptions)}`;
   };
 
   return (
-    <div style={styles.container}>
+    <div>
       {isLoading ? (
         <div>Loading...</div>
       ) : errorMessage ? (
         <div style={styles.errorMessage}>{errorMessage}</div>
       ) : (
         <div>
-          {currentProject.image && (
-            <img
-              src={currentProject.image}
-              alt={currentProject.title}
-              style={styles.projectImage}
-            />
-          )}
-          <h1>{currentProject.title}</h1>
-          <p>{currentProject.description}</p>
+          <div className="projectBox">
+            <div className="projectHeaderBox">
+              <div className="rectangle"></div>
+              <div className="projectHeadline">
+                <h1 className="projectHeader">{currentProject.title}</h1>
+                <p className="projectDescription">
+                  {currentProject.description}
+                </p>
+              </div>
+            </div>
+            {user &&
+              currentProject.creator &&
+              user._id === currentProject.creator._id && (
+                <div className="detailPageButtons">
+                  <button
+                    className="button buttonSmall buttonReverse"
+                    onClick={handleEditClick}
+                  >
+                    Edit Project
+                  </button>
+                  <button
+                    className="button buttonSmall buttonDelete"
+                    onClick={handleDeleteClick}
+                  >
+                    Delete Project
+                  </button>
+                </div>
+              )}
+          </div>
+
           <h3>
             Created by:{" "}
             <Link to={`/creators/${currentProject.creator._id}`}>
@@ -224,7 +251,9 @@ function ProjectDetailPage() {
             </Link>
           </h3>
           <h3>Voting Start: {formatDate(currentProject.startDate)}</h3>
-          <h3>TIME LEFT TO VOTE: <span style={styles.highlight}>{timer}</span></h3>
+          <h3>
+            TIME LEFT TO VOTE: <span style={styles.highlight}>{timer}</span>
+          </h3>
           <h2>Voting Options</h2>
           <div style={styles.optionsContainer}>
             {currentProject.options && currentProject.options.length > 0 ? (
@@ -245,35 +274,21 @@ function ProjectDetailPage() {
               <p>No options available for this project.</p>
             )}
           </div>
-          <div>
-            {user &&
-              currentProject.creator &&
-              user._id === currentProject.creator._id && (
-                <div>
-                  <button style={styles.editButton} onClick={handleEditClick}>
-                    Edit Project
-                  </button>
-                  <button
-                    style={styles.deleteButton}
-                    onClick={handleDeleteClick}
-                  >
-                    Delete Project
-                  </button>
-                </div>
-              )}
-          </div>
+          <div></div>
           <div>
             {user && user.role === "fans" && (
               <button
-                style={{
-                  ...styles.editButton,
-                  backgroundColor: hasVoted || isVotingClosed ? "#ccc" : "#007bff",
-                  cursor: hasVoted || isVotingClosed ? "not-allowed" : "pointer",
-                }}
+                className={`button buttonSmall ${
+                  hasVoted || isVotingClosed ? "buttonClosed" : ""
+                }`}
                 onClick={hasVoted || isVotingClosed ? null : handleVoteClick}
                 disabled={hasVoted || isVotingClosed}
               >
-                {hasVoted ? "You already voted" : isVotingClosed ? "Voting Closed" : "Vote Now!"}
+                {hasVoted
+                  ? "You already voted"
+                  : isVotingClosed
+                  ? "Voting Closed"
+                  : "Vote Now!"}
               </button>
             )}
           </div>
@@ -324,11 +339,6 @@ function ProjectDetailPage() {
 }
 
 const styles = {
-  container: {
-    maxWidth: "800px",
-    margin: "0 auto",
-    padding: "20px",
-  },
   projectImage: {
     width: "100%",
     height: "auto",
@@ -359,25 +369,7 @@ const styles = {
     borderRadius: "5px",
     marginTop: "10px",
   },
-  editButton: {
-    padding: "10px",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    marginTop: "20px",
-  },
-  deleteButton: {
-    padding: "10px",
-    backgroundColor: "red",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    marginTop: "20px",
-    marginLeft: "10px",
-  },
+
   overlay: {
     position: "fixed",
     top: 0,
@@ -436,7 +428,7 @@ const styles = {
   },
   highlight: {
     color: "teal",
-  }
+  },
 };
 
 export default ProjectDetailPage;

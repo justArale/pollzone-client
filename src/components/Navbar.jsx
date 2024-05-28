@@ -60,7 +60,10 @@ function Navbar() {
 
           <div>
             {isLoggedIn && (
-              <button onClick={logOutUser} className="button buttonSmall">
+              <button
+                onClick={logOutUser}
+                className="button buttonSmall buttonReverse"
+              >
                 Log Out
               </button>
             )}

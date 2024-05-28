@@ -1,0 +1,48 @@
+.projectBox {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  /* box-sizing: border-box; */
+}
+
+.projectHeaderBox {
+  display: flex;
+  gap: 32px;
+  /* box-sizing: border-box; */
+}
+
+.rectangle {
+  width: 8px;
+  background-color: var(--highlight-color);
+  border-radius: 10px;
+}
+
+.projectHeadline {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  /* box-sizing: border-box; */
+}
+
+.projectHeader {
+  font-size: 56px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+
+.projectDescription {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+
+.detailPageButtons {
+  display: flex;
+  gap: 12px;
+}
