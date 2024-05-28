@@ -112,18 +112,19 @@ function CreatorDetailPage() {
   }
 
   return (
-    <div className="container">
-      <img
-        src={currentCreator.image}
-        alt={currentCreator.name}
-        className="image"
-      />
-      <h1 className="name">{currentCreator.name}</h1>
-      <h2 className="subheader">
-        Category: {currentCreator.category}
-      </h2>
-      <p className="description">{currentCreator.description}</p>
-      <h2 className="subheader">
+
+    <div style={styles.container}>
+      {currentCreator.image && (
+        <img
+          src={currentCreator.image}
+          alt={currentCreator.name}
+          style={styles.image}
+        />
+      )}
+
+      <h1 style={styles.name}>{currentCreator.name}</h1>
+      <p style={styles.description}>{currentCreator.description}</p>
+      <h2 style={styles.subheader}>
         Followers: {currentCreator.fans?.length || 0}
       </h2>
       <h2 className="subheader">Social Media</h2>
@@ -146,7 +147,7 @@ function CreatorDetailPage() {
         >
           {isFollowing
             ? "Unfollow"
-            : `Follow ${currentCreator.name} on Pollzone!`}
+            : `Follow ${currentCreator.name} on PollZone!`}
         </button>
       )}
     </div>
