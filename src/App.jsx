@@ -7,8 +7,8 @@ import AllProjectsPage from "./pages/AllProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import AllCreatorsPage from "./pages/AllCreatorsPage";
 import CreatorDetailPage from "./pages/CreatorDetailPage";
-import SignUpPage from "./pages/SignUpPage";
-import LogInPage from "./pages/LogInPage";
+// import SignUpPage from "./pages/SignUpPage";
+// import LogInPage from "./pages/LogInPage";
 import UserProfilPage from "./pages/profile/UserProfilPage";
 import ProfileEditPage from "./pages/profile/ProfileEditPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -42,7 +42,7 @@ function App() {
           />
           <Route path="/creators" element={<AllCreatorsPage />} />
           <Route path="/creators/:creatorId/" element={<CreatorDetailPage />} />
-          <Route
+          {/* <Route
             path="/login"
             element={
               <IsAnon>
@@ -57,7 +57,7 @@ function App() {
                 <SignUpPage />
               </IsAnon>
             }
-          />
+          /> */}
           <Route
             path="/profile"
             element={

@@ -108,9 +108,9 @@ function ProjectDetailPage() {
   useEffect(() => {
     if (currentProject.startDate && currentProject.timeCount) {
       const startDate = new Date(currentProject.startDate);
-      const endDate = new Date(
-        startDate.getTime() + currentProject.timeCount * 3600000
-      );
+
+      const endDate = new Date(startDate.getTime() + currentProject.timeCount * 3600000);
+
 
       const updateTimer = () => {
         const now = new Date();
@@ -134,10 +134,12 @@ function ProjectDetailPage() {
         }
       };
 
+      updateTimer(); // Initialize timer immediately
+
       const timerInterval = setInterval(updateTimer, 1000);
       return () => clearInterval(timerInterval);
     }
-  }, [currentProject]);
+  }, [currentProject.startDate, currentProject.timeCount]);
 
   const handleEditClick = () => {
     navigate(`/projects/${creatorId}/${currentProject._id}/edit`, {
