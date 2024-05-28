@@ -62,7 +62,6 @@ function CreatorDetailPage() {
       const errorDescription =
         error.response?.data?.message || "An error occurred while fetching user data";
       setErrorMessage(errorDescription);
-      setIsLoading(false);
     }
   };
 
@@ -93,13 +92,9 @@ function CreatorDetailPage() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchCreatorData();
-      await fetchUserData();
-    };
-
+    fetchCreatorData();
     if (user) {
-      fetchData();
+      fetchUserData();
     }
   }, [creatorId, user]);
 
