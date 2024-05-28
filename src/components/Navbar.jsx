@@ -59,7 +59,11 @@ function Navbar() {
           </Link>
 
           <div>
-            {isLoggedIn && <button onClick={logOutUser}>Log Out</button>}
+            {isLoggedIn && (
+              <button onClick={logOutUser} className="button buttonSmall">
+                Log Out
+              </button>
+            )}
             <div>
               {!isLoggedIn &&
                 location.pathname !== "/login" &&

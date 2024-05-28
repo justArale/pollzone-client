@@ -1,0 +1,9 @@
+.page {
+  display: grid;
+  grid-template-rows: 0fr 2fr;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+  max-width: 1024px;
+}

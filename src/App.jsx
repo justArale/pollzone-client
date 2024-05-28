@@ -20,7 +20,7 @@ import IsAnon from "./components/IsAnon";
 
 function App() {
   return (
-    <>
+    <div className="page">
       <Navbar />
       <div>
         <Routes>
@@ -73,7 +73,7 @@ function App() {
           <Route path="/projects/create" element={<CreateProjectPage />} />
         </Routes>
       </div>
-    </>
+    </div>
   );
 }
 
