@@ -88,11 +88,14 @@ function ProjectDetailPage() {
             {currentProject.options && currentProject.options.length > 0 ? (
               currentProject.options.map((option, index) => (
                 <div key={index} style={styles.optionCard}>
-                  <img
-                    src={option.image}
-                    alt={option.title}
-                    style={styles.optionImage}
-                  />
+                  {option.image && (
+                    <img
+                      src={option.image}
+                      alt={option.title}
+                      style={styles.optionImage}
+                    />
+                  )}
+
                   <h4>{option.title}</h4>
                   <p>{option.description}</p>
                 </div>

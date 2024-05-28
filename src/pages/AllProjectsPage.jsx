@@ -33,8 +33,9 @@ function AllProjectsPage() {
           <Link
             to={`/projects/${project.creator}/${project._id}`}
             style={styles.link}
+            key={project._id}
           >
-            <div key={project._id} style={styles.projectCard}>
+            <div style={styles.projectCard}>
               {project.image ? (
                 <img
                   src={project.image}

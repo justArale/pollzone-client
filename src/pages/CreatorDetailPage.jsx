@@ -87,11 +87,14 @@ function CreatorDetailPage() {
 
   return (
     <div style={styles.container}>
-      <img
-        src={currentCreator.image}
-        alt={currentCreator.name}
-        style={styles.image}
-      />
+      {currentCreator.image && (
+        <img
+          src={currentCreator.image}
+          alt={currentCreator.name}
+          style={styles.image}
+        />
+      )}
+
       <h1 style={styles.name}>{currentCreator.name}</h1>
       <p style={styles.description}>{currentCreator.description}</p>
       <h2 style={styles.subheader}>
@@ -114,7 +117,7 @@ function CreatorDetailPage() {
         <button onClick={handleFollowToggle}>
           {isFollowing
             ? "Unfollow"
-            : `Follow ${currentCreator.name} on Pollzone!`}
+            : `Follow ${currentCreator.name} on PollZone!`}
         </button>
       )}
     </div>
