@@ -19,6 +19,7 @@ function ProjectDetailPage() {
   const [hasVoted, setHasVoted] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [timer, setTimer] = useState("");
+  const [isVotingClosed, setIsVotingClosed] = useState(false);
 
   const notifySubmit = () =>
     toast("You submitted your vote successfully, SWEET!");
@@ -26,9 +27,9 @@ function ProjectDetailPage() {
 
   useEffect(() => {
     if (user) {
-      console.log("AuthContext user:", user); // Log the user object to debug
+      console.log("AuthContext user:", user);
       if (user.votes) {
-        console.log("User votes:", user.votes); // Log user votes to debug
+        console.log("User votes:", user.votes);
       }
     }
   }, [user]);
@@ -122,8 +123,10 @@ function ProjectDetailPage() {
             const seconds = Math.floor((timeRemaining % 60000) / 1000);
 
             setTimer(`${hours}h ${minutes}m ${seconds}s`);
+            setIsVotingClosed(false);
           } else {
             setTimer("Voting closed");
+            setIsVotingClosed(true);
           }
         }
       };
@@ -148,9 +151,9 @@ function ProjectDetailPage() {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
       );
-      console.log("Deleted:", response.data); // Log the response data
+      console.log("Deleted:", response.data);
       notifyDelete();
-      navigate(`/dashboard`); // Navigate to the creator's page or any relevant page
+      navigate(`/dashboard`);
     } catch (error) {
       console.error("Error deleting project:", error);
       setErrorMessage("An error occurred while deleting the project.");
@@ -175,8 +178,8 @@ function ProjectDetailPage() {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
       );
-      console.log("Vote submitted:", response.data); // Log the response data
-      setHasVoted(true); // Set hasVoted to true after successful vote submission
+      console.log("Vote submitted:", response.data);
+      setHasVoted(true);
       notifySubmit();
     } catch (error) {
       console.error("Error submitting vote:", error);
@@ -234,7 +237,6 @@ function ProjectDetailPage() {
                       style={styles.optionImage}
                     />
                   )}
-
                   <h4>{option.title}</h4>
                   <p>{option.description}</p>
                 </div>
@@ -265,13 +267,13 @@ function ProjectDetailPage() {
               <button
                 style={{
                   ...styles.editButton,
-                  backgroundColor: hasVoted ? "#ccc" : "#007bff",
-                  cursor: hasVoted ? "not-allowed" : "pointer",
+                  backgroundColor: hasVoted || isVotingClosed ? "#ccc" : "#007bff",
+                  cursor: hasVoted || isVotingClosed ? "not-allowed" : "pointer",
                 }}
-                onClick={hasVoted ? null : handleVoteClick}
-                disabled={hasVoted}
+                onClick={hasVoted || isVotingClosed ? null : handleVoteClick}
+                disabled={hasVoted || isVotingClosed}
               >
-                {hasVoted ? "You already voted" : "Vote Now!"}
+                {hasVoted ? "You already voted" : isVotingClosed ? "Voting Closed" : "Vote Now!"}
               </button>
             )}
           </div>
