@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./SignUpForm.css";
-import { useEffect } from "react";
 
 const SignUpForm = ({
   handleSignupSubmit,
