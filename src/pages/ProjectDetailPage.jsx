@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,37 +15,114 @@ function ProjectDetailPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isVotingModalOpen, setIsVotingModalOpen] = useState(false);
+  const [chosenVote, setChosenVote] = useState("");
+  const [hasVoted, setHasVoted] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const notifySubmit = () =>
+    toast("You submitted your vote successfully, SWEET!");
+  const notifyDelete = () => toast("Successfully deleted!");
 
   useEffect(() => {
-    console.log("AuthContext user:", user); // Log the user object to debug
+    if (user) {
+      console.log("AuthContext user:", user); // Log the user object to debug
+      if (user.votes) {
+        console.log("User votes:", user.votes); // Log user votes to debug
+      }
+    }
   }, [user]);
+
+  const fetchUserData = async () => {
+    const storedToken = localStorage.getItem("authToken");
+    if (!user || !user.role || !user._id) {
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/${user.role}/${user._id}`,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
+      setCurrentUser(response.data);
+      console.log("User: ", response.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      const errorDescription =
+        error.response?.data?.message ||
+        "An error occurred while fetching user data";
+      setErrorMessage(errorDescription);
+      setIsLoading(false);
+    }
+  };
 
   const fetchProjectData = async () => {
     try {
       const response = await axios.get(
         `${API_URL}/api/creators/${creatorId}/projects/${projectId}?populate=options&populate=creator`
       );
-      console.log("Project data fetched:", response.data); // Log the project data
       setCurrentProject(response.data);
+      console.log("Project: ", response.data);
     } catch (error) {
       console.error("Error fetching project data:", error);
       const errorDescription =
         error.response?.data?.message ||
         "An error occurred while fetching project data";
       setErrorMessage(errorDescription);
-    } finally {
       setIsLoading(false);
     }
   };
 
+  const checkIfUserHasVoted = (options) => {
+    if (currentUser && currentUser.votes) {
+      const userVotes = currentUser.votes.map((vote) => vote._id.toString());
+      const userHasVoted = options.some((option) => {
+        const optionId = option._id.toString();
+        return userVotes.includes(optionId);
+      });
+      setHasVoted(userHasVoted);
+    }
+  };
+
   useEffect(() => {
-    fetchProjectData();
-  }, [projectId]);
+    const fetchData = async () => {
+      await fetchUserData();
+      await fetchProjectData();
+      setIsLoading(false);
+    };
+
+    if (user) {
+      fetchData();
+    }
+  }, [projectId, user]);
+
+  useEffect(() => {
+    if (currentUser && currentProject.options) {
+      checkIfUserHasVoted(currentProject.options);
+    }
+  }, [currentUser, currentProject]);
 
   const handleEditClick = () => {
     navigate(`/projects/${creatorId}/${currentProject._id}/edit`, {
       state: { refresh: true },
     });
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      const storedToken = localStorage.getItem("authToken");
+      const response = await axios.delete(
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}`,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
+      console.log("Deleted:", response.data); // Log the response data
+      notifyDelete();
+      navigate(`/dashboard`); // Navigate to the creator's page or any relevant page
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      setErrorMessage("An error occurred while deleting the project.");
+    }
   };
 
   const handleVoteClick = () => {
@@ -54,10 +133,29 @@ function ProjectDetailPage() {
     setIsVotingModalOpen(false);
   };
 
-  const submitVote = (optionId) => {
-    // Implement vote submission logic here
-    console.log("Voted for option:", optionId);
-    closeModal();
+  const submitVote = async (optionId) => {
+    try {
+      const storedToken = localStorage.getItem("authToken");
+      const response = await axios.put(
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}/options/${optionId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
+      console.log("Vote submitted:", response.data); // Log the response data
+      setHasVoted(true); // Set hasVoted to true after successful vote submission
+      notifySubmit();
+    } catch (error) {
+      console.error("Error submitting vote:", error);
+      setErrorMessage("An error occurred while submitting your vote.");
+    } finally {
+      closeModal();
+    }
+  };
+
+  const chooseVote = (optionId) => {
+    setChosenVote(optionId);
   };
 
   return (
@@ -108,15 +206,31 @@ function ProjectDetailPage() {
             {user &&
               currentProject.creator &&
               user._id === currentProject.creator._id && (
-                <button style={styles.editButton} onClick={handleEditClick}>
-                  Edit Project
-                </button>
+                <div>
+                  <button style={styles.editButton} onClick={handleEditClick}>
+                    Edit Project
+                  </button>
+                  <button
+                    style={styles.deleteButton}
+                    onClick={handleDeleteClick}
+                  >
+                    Delete Project
+                  </button>
+                </div>
               )}
           </div>
           <div>
             {user && user.role === "fans" && (
-              <button style={styles.editButton} onClick={handleVoteClick}>
-                Vote Now!
+              <button
+                style={{
+                  ...styles.editButton,
+                  backgroundColor: hasVoted ? "#ccc" : "#007bff",
+                  cursor: hasVoted ? "not-allowed" : "pointer",
+                }}
+                onClick={hasVoted ? null : handleVoteClick}
+                disabled={hasVoted}
+              >
+                {hasVoted ? "You already voted" : "Vote Now!"}
               </button>
             )}
           </div>
@@ -132,7 +246,7 @@ function ProjectDetailPage() {
             </button>
             <div style={styles.optionsContainer}>
               {currentProject.options.map((option, index) => (
-                <div key={index} style={styles.optionCard}>
+                <div key={index} style={styles.optionCardSmall}>
                   <img
                     src={option.image}
                     alt={option.title}
@@ -141,13 +255,23 @@ function ProjectDetailPage() {
                   <h4>{option.title}</h4>
                   <p>{option.description}</p>
                   <button
-                    style={styles.voteButton}
-                    onClick={() => submitVote(option._id)}
+                    style={{
+                      ...styles.voteButton,
+                      backgroundColor:
+                        chosenVote === option._id ? "green" : "aquamarine",
+                    }}
+                    onClick={() => chooseVote(option._id)}
                   >
-                    Vote for this option
+                    Choose this option
                   </button>
                 </div>
               ))}
+              <button
+                style={styles.submitButton}
+                onClick={() => submitVote(chosenVote)}
+              >
+                Submit Vote
+              </button>
             </div>
           </div>
         </div>
@@ -201,6 +325,16 @@ const styles = {
     cursor: "pointer",
     marginTop: "20px",
   },
+  deleteButton: {
+    padding: "10px",
+    backgroundColor: "red",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginTop: "20px",
+    marginLeft: "10px",
+  },
   overlay: {
     position: "fixed",
     top: 0,
@@ -221,6 +355,15 @@ const styles = {
     width: "100%",
     position: "relative",
   },
+  optionCardSmall: {
+    border: "1px solid #ddd",
+    borderRadius: "5px",
+    padding: "10px",
+    width: "calc(50% - 20px)",
+    boxSizing: "border-box",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    maxWidth: "180px",
+  },
   closeButton: {
     position: "absolute",
     top: "10px",
@@ -232,7 +375,16 @@ const styles = {
   },
   voteButton: {
     padding: "10px",
-    backgroundColor: "#28a745",
+    backgroundColor: "aquamarine",
+    color: "black",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginTop: "10px",
+  },
+  submitButton: {
+    padding: "10px",
+    backgroundColor: "blue",
     color: "white",
     border: "none",
     borderRadius: "5px",

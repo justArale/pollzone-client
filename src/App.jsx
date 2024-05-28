@@ -18,11 +18,15 @@ import EditProjectPage from "./pages/creatorfeatures/EditProjectPage";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 
+import { ToastContainer, toast } from "react-toastify";
+
+
 function App() {
   return (
     <div className="page">
       <Navbar />
       <div>
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
