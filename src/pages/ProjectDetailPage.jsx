@@ -108,15 +108,15 @@ function ProjectDetailPage() {
     if (currentProject.startDate && currentProject.timeCount) {
       const startDate = new Date(currentProject.startDate);
       const endDate = new Date(startDate.getTime() + currentProject.timeCount * 3600000);
-      
+
       const updateTimer = () => {
         const now = new Date();
-        
+
         if (now < startDate) {
           setTimer("Voting period has not started yet");
         } else {
           const timeRemaining = endDate - now;
-          
+
           if (timeRemaining > 0) {
             const hours = Math.floor(timeRemaining / 3600000);
             const minutes = Math.floor((timeRemaining % 3600000) / 60000);
@@ -131,10 +131,12 @@ function ProjectDetailPage() {
         }
       };
 
+      updateTimer(); // Initialize timer immediately
+
       const timerInterval = setInterval(updateTimer, 1000);
       return () => clearInterval(timerInterval);
     }
-  }, [currentProject]);
+  }, [currentProject.startDate, currentProject.timeCount]);
 
   const handleEditClick = () => {
     navigate(`/projects/${creatorId}/${currentProject._id}/edit`, {
