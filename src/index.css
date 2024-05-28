@@ -4,6 +4,12 @@ body {
   font-family: "Unbounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji";
+  line-height: 150%;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 48px;
+  margin: 0;
 }
 
 h1 {
@@ -12,4 +18,21 @@ h1 {
 
 p {
   font-weight: 300;
+}
+
+.button {
+  background-color: #000;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 40px;
+}
+
+.buttonSmall {
+  padding: 4px 16px;
+}
+
+.buttonBig {
+  padding: 12px 24px;
 }
