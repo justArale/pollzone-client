@@ -12,6 +12,7 @@ const DEFAULT_PROJECT_FORM_VALUES = {
   options: [{ title: "", image: "", description: "" }],
   creator: "",
   timeCount: 1,
+  startDate: "",
   inProgress: false,
 };
 
@@ -99,6 +100,10 @@ function CreateProjectPage() {
     console.log("Form values on submit:", formValues); // Debugging statement
 
     try {
+      // Convert local start date and time to UTC
+      const localStartDate = new Date(formValues.startDate);
+      const utcStartDate = localStartDate.toISOString();
+
       // Step 1: Create the project
       const projectResponse = await axios.post(
         `${API_URL}/api/creators/${currentUser._id}/projects`,
@@ -108,6 +113,7 @@ function CreateProjectPage() {
           image: formValues.image,
           creator: formValues.creator,
           timeCount: formValues.timeCount,
+          startDate: utcStartDate,
           inProgress: formValues.inProgress,
         },
         {
@@ -237,23 +243,36 @@ function CreateProjectPage() {
             Add Option
           </button>
         </div>
+        <h3>Schedule Voting</h3>
         <div style={styles.formGroup}>
           <label htmlFor="timeCount" style={styles.label}>
-            For how long can your fans vote? (in days)
+            For how long can your fans vote? (in hours)
           </label>
-          <select
+          <input
+            type="number"
             id="timeCount"
             name="timeCount"
             value={formValues.timeCount}
             onChange={handleInputChange}
+            min="1"
+            required
             style={styles.input}
-          >
-            {[1, 2, 3, 5, 7, 14, 21, 28].map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
+          />
+        </div>
+
+        <div style={styles.formGroup}>
+          <label htmlFor="startDate" style={styles.label}>
+            When should your voting start?
+          </label>
+          <input
+            type="datetime-local"
+            id="startDate"
+            name="startDate"
+            value={formValues.startDate}
+            onChange={handleInputChange}
+            required
+            style={styles.input}
+          />
         </div>
         <div style={styles.formGroup}>
           <label style={styles.label}>
@@ -269,7 +288,7 @@ function CreateProjectPage() {
               }
               style={styles.checkbox}
             />
-            Release immediately after creating
+            Hide project from fans until release date
           </label>
         </div>
         <button type="submit" style={styles.submitButton}>

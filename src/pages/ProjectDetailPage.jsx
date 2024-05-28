@@ -18,6 +18,8 @@ function ProjectDetailPage() {
   const [chosenVote, setChosenVote] = useState("");
   const [hasVoted, setHasVoted] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [timer, setTimer] = useState("");
+
   const notifySubmit = () =>
     toast("You submitted your vote successfully, SWEET!");
   const notifyDelete = () => toast("Successfully deleted!");
@@ -62,6 +64,7 @@ function ProjectDetailPage() {
       );
       setCurrentProject(response.data);
       console.log("Project: ", response.data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching project data:", error);
       const errorDescription =
@@ -85,14 +88,13 @@ function ProjectDetailPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchUserData();
+      if (user) {
+        await fetchUserData();
+      }
       await fetchProjectData();
-      setIsLoading(false);
     };
 
-    if (user) {
-      fetchData();
-    }
+    fetchData();
   }, [projectId, user]);
 
   useEffect(() => {
@@ -100,6 +102,36 @@ function ProjectDetailPage() {
       checkIfUserHasVoted(currentProject.options);
     }
   }, [currentUser, currentProject]);
+
+  useEffect(() => {
+    if (currentProject.startDate && currentProject.timeCount) {
+      const startDate = new Date(currentProject.startDate);
+      const endDate = new Date(startDate.getTime() + currentProject.timeCount * 3600000);
+      
+      const updateTimer = () => {
+        const now = new Date();
+        
+        if (now < startDate) {
+          setTimer("Voting period has not started yet");
+        } else {
+          const timeRemaining = endDate - now;
+          
+          if (timeRemaining > 0) {
+            const hours = Math.floor(timeRemaining / 3600000);
+            const minutes = Math.floor((timeRemaining % 3600000) / 60000);
+            const seconds = Math.floor((timeRemaining % 60000) / 1000);
+
+            setTimer(`${hours}h ${minutes}m ${seconds}s`);
+          } else {
+            setTimer("Voting closed");
+          }
+        }
+      };
+
+      const timerInterval = setInterval(updateTimer, 1000);
+      return () => clearInterval(timerInterval);
+    }
+  }, [currentProject]);
 
   const handleEditClick = () => {
     navigate(`/projects/${creatorId}/${currentProject._id}/edit`, {
@@ -158,6 +190,13 @@ function ProjectDetailPage() {
     setChosenVote(optionId);
   };
 
+  const formatDate = (dateString) => {
+    const dateOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const timeOptions = { hour: '2-digit', minute: '2-digit' };
+    const date = new Date(dateString);
+    return `${date.toLocaleDateString(undefined, dateOptions)}, ${date.toLocaleTimeString(undefined, timeOptions)}`;
+  };
+
   return (
     <div style={styles.container}>
       {isLoading ? (
@@ -181,7 +220,9 @@ function ProjectDetailPage() {
               {currentProject.creator?.name}
             </Link>
           </h3>
-          <h3>Voting Options</h3>
+          <h3>Voting Start: {formatDate(currentProject.startDate)}</h3>
+          <h3>TIME LEFT TO VOTE: <span style={styles.highlight}>{timer}</span></h3>
+          <h2>Voting Options</h2>
           <div style={styles.optionsContainer}>
             {currentProject.options && currentProject.options.length > 0 ? (
               currentProject.options.map((option, index) => (
@@ -388,6 +429,9 @@ const styles = {
     cursor: "pointer",
     marginTop: "10px",
   },
+  highlight: {
+    color: "teal",
+  }
 };
 
 export default ProjectDetailPage;

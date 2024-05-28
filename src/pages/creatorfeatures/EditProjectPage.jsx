@@ -12,6 +12,7 @@ const DEFAULT_PROJECT_FORM_VALUES = {
   options: [{ _id: "", title: "", image: "", description: "" }],
   creator: "",
   timeCount: 1,
+  startDate: "",
   inProgress: false,
 };
 
@@ -20,6 +21,7 @@ function EditProjectPage() {
   const { creatorId, projectId } = useParams();
   const [formValues, setFormValues] = useState(DEFAULT_PROJECT_FORM_VALUES);
   const [errorMessage, setErrorMessage] = useState("");
+  const [optionsToDelete, setOptionsToDelete] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,6 +43,7 @@ function EditProjectPage() {
       setFormValues((prevValues) => ({
         ...prevValues,
         ...projectData,
+        startDate: new Date(projectData.startDate).toISOString().slice(0, 16), // Set initial value for datetime-local input
         options: projectData.options.length
           ? projectData.options
           : [{ _id: "", title: "", image: "", description: "" }],
@@ -83,11 +86,28 @@ function EditProjectPage() {
   };
 
   const removeOption = (index) => {
+    const optionId = formValues.options[index]._id;
+    if (optionId) {
+      setOptionsToDelete((prevOptions) => [...prevOptions, optionId]);
+    }
     const newOptions = formValues.options.filter((_, i) => i !== index);
     setFormValues((prevValues) => ({
       ...prevValues,
       options: newOptions,
     }));
+  };
+
+  const deleteOptions = async () => {
+    const storedToken = localStorage.getItem("authToken");
+    const deletePromises = optionsToDelete.map((optionId) =>
+      axios.delete(
+        `${API_URL}/api/creators/${creatorId}/projects/${projectId}/options/${optionId}`,
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      )
+    );
+    await Promise.all(deletePromises);
   };
 
   const updateOptions = async () => {
@@ -122,19 +142,27 @@ function EditProjectPage() {
     console.log("Form values on submit:", formValues);
     const storedToken = localStorage.getItem("authToken");
     try {
-      // Update the project
+      // Convert local start date and time to UTC
+      const localStartDate = new Date(formValues.startDate);
+      const utcStartDate = localStartDate.toISOString();
+
+      // Delete the options that were removed
+      await deleteOptions();
+      // Update the remaining options
       await updateOptions();
+      // Update the project
       await axios.put(
         `${API_URL}/api/creators/${creatorId}/projects/${projectId}`,
         {
           ...formValues,
+          startDate: utcStartDate, // Use UTC start date
           options: formValues.options.map((option) => option._id), // Only send the IDs to update the project
         },
         {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
       );
-      // Update the options separately
+      // Navigate to the project detail page
       navigate(`/projects/${creatorId}/${projectId}`, {
         state: { refresh: true },
       });
@@ -238,23 +266,35 @@ function EditProjectPage() {
             Add Option
           </button>
         </div>
+        <h3>Schedule Voting</h3>
         <div style={styles.formGroup}>
           <label htmlFor="timeCount" style={styles.label}>
-            For how long can your fans vote? (in days)
+            For how long can your fans vote? (in hours)
           </label>
-          <select
+          <input
+            type="number"
             id="timeCount"
             name="timeCount"
             value={formValues.timeCount}
             onChange={handleInputChange}
+            min="1"
+            required
             style={styles.input}
-          >
-            {[1, 2, 3, 5, 7, 14, 21, 28].map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
+          />
+        </div>
+        <div style={styles.formGroup}>
+          <label htmlFor="startDate" style={styles.label}>
+            When should your voting start?
+          </label>
+          <input
+            type="datetime-local"
+            id="startDate"
+            name="startDate"
+            value={formValues.startDate}
+            onChange={handleInputChange}
+            required
+            style={styles.input}
+          />
         </div>
         <div style={styles.formGroup}>
           <label style={styles.label}>
