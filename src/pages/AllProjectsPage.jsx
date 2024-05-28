@@ -36,14 +36,12 @@ function AllProjectsPage() {
             key={project._id}
           >
             <div style={styles.projectCard}>
-              {project.image ? (
+              {project.image && (
                 <img
                   src={project.image}
                   alt={`${project.title}'s profile`}
                   style={styles.image}
                 />
-              ) : (
-                <div style={styles.placeholderImage}>No Image Available</div>
               )}
               <h1 style={styles.name}>{project.title}</h1>
             </div>

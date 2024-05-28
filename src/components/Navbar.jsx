@@ -49,9 +49,10 @@ function Navbar() {
             <Link className="link" to="/profile">
               My Profile
             </Link>
+
             <div>
               {isLoggedIn ? (
-                <button onClick={logOutUser} className="button buttonSmall">
+                <button onClick={logOutUser} className="button buttonSmall buttonReverse">
                   Log Out
                 </button>
               ) : (
