@@ -158,8 +158,8 @@ function DashboardPage() {
             {fan.favoritCreators && fan.favoritCreators.length > 0 ? (
               fan.favoritCreators.map((creator) => (
                 <Link to={`/creators/${creator._id}`} key={creator._id} className="projectCard">
-                  <div >
-                  <img src={creator.image} alt={creator.name} />
+                  <div>
+                    <img src={creator.image} alt={creator.name} />
                     <h2>{creator.name}</h2>
                     <p>{creator.description}</p>
                   </div>
