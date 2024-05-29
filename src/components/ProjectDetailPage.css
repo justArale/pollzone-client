@@ -95,12 +95,13 @@
 }
 
 .countdown {
-  display: flex;
+  display: block;
   align-items: center;
   gap: 4px;
   font-size: var(--font-size-large);
   font-weight: var(--font-weight-semiBold);
-  /* width: 110px; */
+  width: 5em;
+  text-align: left;
 }
 
 .optionImage {
