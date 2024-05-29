@@ -5,6 +5,9 @@ import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import deleteIcon from "../assets/icons/delete.svg";
+import editIcon from "../assets/icons/edit.svg";
+import CreatorCard from "../components/CreatorCard";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -109,8 +112,9 @@ function ProjectDetailPage() {
     if (currentProject.startDate && currentProject.timeCount) {
       const startDate = new Date(currentProject.startDate);
 
-      const endDate = new Date(startDate.getTime() + currentProject.timeCount * 3600000);
-
+      const endDate = new Date(
+        startDate.getTime() + currentProject.timeCount * 3600000
+      );
 
       const updateTimer = () => {
         const now = new Date();
@@ -125,7 +129,13 @@ function ProjectDetailPage() {
             const minutes = Math.floor((timeRemaining % 3600000) / 60000);
             const seconds = Math.floor((timeRemaining % 60000) / 1000);
 
-            setTimer(`${hours}h ${minutes}m ${seconds}s`);
+            const formattedHours = ("0" + hours).slice(-2);
+            const formattedMinutes = ("0" + minutes).slice(-2);
+            const formattedSeconds = ("0" + seconds).slice(-2);
+
+            setTimer(
+              `${formattedHours}:${formattedMinutes}:${formattedSeconds}`
+            );
             setIsVotingClosed(false);
           } else {
             setTimer("Voting closed");
@@ -213,9 +223,9 @@ function ProjectDetailPage() {
       {isLoading ? (
         <div>Loading...</div>
       ) : errorMessage ? (
-        <div style={styles.errorMessage}>{errorMessage}</div>
+        <div>{errorMessage}</div>
       ) : (
-        <div>
+        <div className="PollDetails">
           <div className="projectBox">
             <div className="projectHeaderBox">
               <div className="rectangle"></div>
@@ -234,70 +244,89 @@ function ProjectDetailPage() {
                     className="button buttonSmall buttonReverse"
                     onClick={handleEditClick}
                   >
-                    Edit Project
+                    <img src={editIcon} alt="Edit Icon" />
+                    Edit
                   </button>
                   <button
                     className="button buttonSmall buttonDelete"
                     onClick={handleDeleteClick}
                   >
-                    Delete Project
+                    <img src={deleteIcon} alt="Delete Icon" />
+                    Delete
                   </button>
                 </div>
               )}
           </div>
 
-          <h3>
-            Created by:{" "}
-            <Link to={`/creators/${currentProject.creator._id}`}>
-              {currentProject.creator?.name}
-            </Link>
-          </h3>
-          <h3>Voting Start: {formatDate(currentProject.startDate)}</h3>
-          <h3>
-            TIME LEFT TO VOTE: <span style={styles.highlight}>{timer}</span>
-          </h3>
-          <h2>Voting Options</h2>
-          <div style={styles.optionsContainer}>
-            {currentProject.options && currentProject.options.length > 0 ? (
-              currentProject.options.map((option, index) => (
-                <div key={index} style={styles.optionCard}>
-                  {option.image && (
-                    <img
-                      src={option.image}
-                      alt={option.title}
-                      style={styles.optionImage}
-                    />
-                  )}
-                  <h4>{option.title}</h4>
-                  <p>{option.description}</p>
-                </div>
-              ))
-            ) : (
-              <p>No options available for this project.</p>
-            )}
-          </div>
-          <div></div>
-          <div>
-            {user && user.role === "fans" && (
-              <button
-                className={`button buttonSmall ${
-                  hasVoted || isVotingClosed ? "buttonClosed" : ""
-                }`}
-                onClick={hasVoted || isVotingClosed ? null : handleVoteClick}
-                disabled={hasVoted || isVotingClosed}
-              >
-                {hasVoted
-                  ? "You already voted"
-                  : isVotingClosed
-                  ? "Voting Closed"
-                  : "Vote Now!"}
-              </button>
-            )}
+          {currentProject.creator._id !== currentUser._id && (
+            <CreatorCard currentProject={currentProject} />
+          )}
+          <div className="voteDetails">
+            <div className="voteInfoBox">
+              {(user &&
+                currentProject.creator &&
+                user._id === currentProject.creator._id) ||
+              (isVotingClosed &&
+                new Date(currentProject.startDate) < new Date()) ? (
+                <h3 className="voteInfo">Results</h3>
+              ) : !isVotingClosed &&
+                new Date(currentProject.startDate) > new Date() ? (
+                <h3 className="voteInfo">
+                  Voting Start: {formatDate(currentProject.startDate)}
+                </h3>
+              ) : (
+                <h3 className="voteInfo">Vote now</h3>
+              )}
+              {!isVotingClosed &&
+                new Date(currentProject.startDate) < new Date() && (
+                  <div className="timeWrapper">
+                    <span className="spanTime">time left:</span>
+                    <div className="countdown">{timer}</div>
+                  </div>
+                )}
+            </div>
+            <div>
+              {currentProject.options && currentProject.options.length > 0 ? (
+                currentProject.options.map((option, index) => (
+                  <div key={index}>
+                    {option.image && (
+                      <img
+                        src={option.image}
+                        alt={option.title}
+                        className="optionImage"
+                      />
+                    )}
+                    <h4>{option.title}</h4>
+                    <p>{option.description}</p>
+                  </div>
+                ))
+              ) : (
+                <p>No options available for this project.</p>
+              )}
+            </div>
+            <div></div>
+            <div>
+              {user && user.role === "fans" && (
+                <button
+                  className={`button buttonSmall ${
+                    hasVoted || isVotingClosed ? "buttonClosed" : ""
+                  }`}
+                  onClick={hasVoted || isVotingClosed ? null : handleVoteClick}
+                  disabled={hasVoted || isVotingClosed}
+                >
+                  {hasVoted
+                    ? "You already voted"
+                    : isVotingClosed
+                    ? "Voting Closed"
+                    : "Vote Now!"}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {isVotingModalOpen && (
+      {/* {isVotingModalOpen && (
         <div style={styles.overlay}>
           <div style={styles.modal}>
             <h2>Vote for an Option</h2>
@@ -335,102 +364,99 @@ function ProjectDetailPage() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
 
-const styles = {
-  projectImage: {
-    width: "100%",
-    height: "auto",
-    borderRadius: "5px",
-    marginTop: "10px",
-  },
-  errorMessage: {
-    color: "red",
-    marginTop: "10px",
-  },
-  optionsContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "20px",
-    marginTop: "20px",
-  },
-  optionCard: {
-    border: "1px solid #ddd",
-    borderRadius: "5px",
-    padding: "10px",
-    width: "calc(50% - 20px)",
-    boxSizing: "border-box",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  },
-  optionImage: {
-    width: "100%",
-    height: "auto",
-    borderRadius: "5px",
-    marginTop: "10px",
-  },
+// const styles = {
+//   projectImage: {
+//     width: "100%",
+//     height: "auto",
+//     borderRadius: "5px",
+//     marginTop: "10px",
+//   },
+//   errorMessage: {
+//     color: "red",
+//     marginTop: "10px",
+//   },
+//   optionsContainer: {
+//     display: "flex",
+//     flexWrap: "wrap",
+//     gap: "20px",
+//     marginTop: "20px",
+//   },
+//   optionCard: {
+//     border: "1px solid #ddd",
+//     borderRadius: "5px",
+//     padding: "10px",
+//     width: "calc(50% - 20px)",
+//     boxSizing: "border-box",
+//     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//   },
+//   optionImage: {
+//     width: "100%",
+//     height: "auto",
+//     borderRadius: "5px",
+//     marginTop: "10px",
+//   },
 
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
-  },
-  modal: {
-    backgroundColor: "white",
-    padding: "20px",
-    borderRadius: "5px",
-    maxWidth: "600px",
-    width: "100%",
-    position: "relative",
-  },
-  optionCardSmall: {
-    border: "1px solid #ddd",
-    borderRadius: "5px",
-    padding: "10px",
-    width: "calc(50% - 20px)",
-    boxSizing: "border-box",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    maxWidth: "180px",
-  },
-  closeButton: {
-    position: "absolute",
-    top: "10px",
-    right: "10px",
-    background: "none",
-    border: "none",
-    fontSize: "16px",
-    cursor: "pointer",
-  },
-  voteButton: {
-    padding: "10px",
-    backgroundColor: "aquamarine",
-    color: "black",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    marginTop: "10px",
-  },
-  submitButton: {
-    padding: "10px",
-    backgroundColor: "blue",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    marginTop: "10px",
-  },
-  highlight: {
-    color: "teal",
-  },
-};
+//   overlay: {
+//     position: "fixed",
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     backgroundColor: "rgba(0, 0, 0, 0.5)",
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     zIndex: 1000,
+//   },
+//   modal: {
+//     backgroundColor: "white",
+//     padding: "20px",
+//     borderRadius: "5px",
+//     maxWidth: "600px",
+//     width: "100%",
+//     position: "relative",
+//   },
+//   optionCardSmall: {
+//     border: "1px solid #ddd",
+//     borderRadius: "5px",
+//     padding: "10px",
+//     width: "calc(50% - 20px)",
+//     boxSizing: "border-box",
+//     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//     maxWidth: "180px",
+//   },
+//   closeButton: {
+//     position: "absolute",
+//     top: "10px",
+//     right: "10px",
+//     background: "none",
+//     border: "none",
+//     fontSize: "16px",
+//     cursor: "pointer",
+//   },
+//   voteButton: {
+//     padding: "10px",
+//     backgroundColor: "aquamarine",
+//     color: "black",
+//     border: "none",
+//     borderRadius: "5px",
+//     cursor: "pointer",
+//     marginTop: "10px",
+//   },
+//   submitButton: {
+//     padding: "10px",
+//     backgroundColor: "blue",
+//     color: "white",
+//     border: "none",
+//     borderRadius: "5px",
+//     cursor: "pointer",
+//     marginTop: "10px",
+//   },
+// };
 
 export default ProjectDetailPage;

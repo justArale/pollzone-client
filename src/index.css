@@ -8,6 +8,7 @@
   --color-white: #fff;
 
   --font-weight-normal: 300;
+  --font-weight-semiBold: 500;
   --font-weight-bold: bold;
   --font-weight-extraBold: 700;
   --font-weight-black: 900;
@@ -36,6 +37,11 @@ body {
   width: 100%;
   max-width: 1024px;
   box-sizing: border-box;
+  /* display: flex; */
+}
+
+.h3 {
+  margin: 0;
 }
 
 .button {

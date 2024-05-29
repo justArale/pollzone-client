@@ -1,3 +1,9 @@
+.PollDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
 .projectBox {
   display: flex;
   flex-direction: column;
@@ -45,4 +51,62 @@
 .detailPageButtons {
   display: flex;
   gap: 12px;
+}
+
+.detailPageButtons > button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voteDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.voteInfoBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.voteInfo {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-extraBold);
+  margin: 0;
+}
+
+.timeWrapper {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+}
+
+.spanTime {
+  color: var(--overlay-background-color);
+  text-transform: uppercase;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semiBold);
+  margin: 0;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-semiBold);
+  /* width: 110px; */
+}
+
+.optionImage {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin: 0;
 }

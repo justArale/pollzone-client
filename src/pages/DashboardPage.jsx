@@ -130,7 +130,7 @@ function DashboardPage() {
               {fan.votes && fan.votes.length > 0 ? (
                 fan.votes.map((vote) => (
                   <div key={vote._id} style={styles.projectCard}>
-                    <img src={vote.image} style={styles.projectImage}/>
+                    <img src={vote.image} style={styles.projectImage} />
                     <h2 style={styles.projectTitle}>{vote.title}</h2>
                     <p style={styles.projectDescription}>{vote.description}</p>
                   </div>
@@ -176,9 +176,7 @@ function DashboardPage() {
 
 const styles = {
   container: {
-    maxWidth: "1000px",
-    margin: "0 auto",
-    padding: "20px",
+    display: "flex",
   },
   header: {
     marginBottom: "20px",
