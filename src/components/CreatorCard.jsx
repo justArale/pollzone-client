@@ -14,30 +14,16 @@ function CreatorCard({ currentProject }) {
       day: "numeric",
       year: "numeric",
     };
-    const formattedDate = date.toLocaleDateString("en-US", options);
-
-    // Get the day with the suffix
-    const day = date.getDate();
-    const suffix =
-      day === 1 || day === 21 || day === 31
-        ? "st"
-        : day === 2 || day === 22
-        ? "nd"
-        : day === 3 || day === 23
-        ? "rd"
-        : "th";
-
-    return `${formattedDate} ${day}${suffix}, ${date.getFullYear()}`;
+    return date.toLocaleDateString("en-US", options);
   }
 
   function formatTime(date) {
-    // Get the time in 12h format with AM/PM
-    const time = date.toLocaleDateString("en-US", {
+    // Get the time in 12-hour format with AM/PM
+    return date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
     });
-    return `${time}`;
   }
 
   return (
