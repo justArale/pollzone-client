@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import deleteIcon from "../assets/icons/delete.svg";
 import editIcon from "../assets/icons/edit.svg";
+import searchIcon from "../assets/icons/search.svg";
 import closeIcon from "../assets/icons/close.svg";
 import CreatorCard from "../components/CreatorCard";
 
@@ -20,7 +21,9 @@ function ProjectDetailPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isVotingModalOpen, setIsVotingModalOpen] = useState(false);
+  const [isImageFocusOpen, setIsImageFocusOpen] = useState(false);
   const [chosenVote, setChosenVote] = useState("");
+  const [bigImage, setBigImage] = useState("");
   const [hasVoted, setHasVoted] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [timer, setTimer] = useState("");
@@ -86,6 +89,7 @@ function ProjectDetailPage() {
       const userVotes = currentUser.votes.map((vote) => vote._id.toString());
       const userHasVoted = options.some((option) => {
         const optionId = option._id.toString();
+        console.log("User voted:", optionId);
         return userVotes.includes(optionId);
       });
       setHasVoted(userHasVoted);
@@ -177,14 +181,20 @@ function ProjectDetailPage() {
   };
 
   const handleVoteClick = (option) => {
-    console.log(option);
-    console.log("option");
     setChosenVote(option);
     setIsVotingModalOpen(true);
   };
 
+  const handleImageFocus = (image) => {
+    console.log("Big Image!");
+    console.log("Image:", image);
+    setBigImage(image);
+    setIsImageFocusOpen(true);
+  };
+
   const closeModal = () => {
     setIsVotingModalOpen(false);
+    setIsImageFocusOpen(false);
   };
 
   useEffect(() => {
@@ -198,7 +208,12 @@ function ProjectDetailPage() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isVotingModalOpen, !isVotingModalOpen]);
+  }, [
+    isVotingModalOpen,
+    !isVotingModalOpen,
+    isImageFocusOpen,
+    !isImageFocusOpen,
+  ]);
 
   const submitVote = async (optionId) => {
     try {
@@ -291,46 +306,60 @@ function ProjectDetailPage() {
                 <h3 className="voteInfo">Vote now</h3>
               )}
               {!isVotingClosed &&
-                new Date(currentProject.startDate) < new Date() && (
-                  <div className="timeWrapper">
-                    <span className="spanTime">time left:</span>
-                    <div className="countdown">{timer}</div>
-                  </div>
-                )}
+              new Date(currentProject.startDate) < new Date() ? (
+                <div className="timeWrapper">
+                  <span className="spanTime">time left:</span>
+                  <div className="countdown">{timer}</div>
+                </div>
+              ) : (
+                <span className="spanTime">Voting ended</span>
+              )}
             </div>
-            <div>
+            <div className="optionsContainer">
               {currentProject.options && currentProject.options.length > 0 ? (
                 currentProject.options.map((option, index) => (
-                  <div key={index}>
+                  <div key={index} className="optionCard">
                     {option.image && (
-                      <img
-                        src={option.image}
-                        alt={option.title}
-                        className="optionImage"
-                      />
+                      <div className="optionImage">
+                        <img src={option.image} alt={option.title} />
+                      </div>
                     )}
-                    <h4 className="optionTitle">{option.title}</h4>
-                    <p className="optionDescription">{option.description}</p>
-                    <div>
-                      {user && user.role === "fans" && (
-                        <button
-                          className={`button buttonSmall buttonVote ${
-                            hasVoted || isVotingClosed ? "buttonClosed" : ""
-                          }`}
-                          onClick={
-                            hasVoted || isVotingClosed
-                              ? null
-                              : () => handleVoteClick(option)
-                          }
-                          disabled={hasVoted || isVotingClosed}
-                        >
-                          {hasVoted
-                            ? "You already voted"
-                            : isVotingClosed
-                            ? "Voting Closed"
-                            : "Vote this!"}
-                        </button>
-                      )}
+
+                    {option.image && (
+                      <div
+                        className="searchIcon"
+                        onClick={() => {
+                          handleImageFocus(option.image);
+                        }}
+                      >
+                        <img src={searchIcon} />
+                      </div>
+                    )}
+                    <div className="optionInfoBox">
+                      <h4 className="optionTitle">{option.title}</h4>
+                      <p className="optionDescription">{option.description}</p>
+                      <div className="spacer"></div>
+                      <div>
+                        {user && user.role === "fans" && (
+                          <button
+                            className={`button buttonSmall buttonVote ${
+                              hasVoted || isVotingClosed ? "buttonClosed" : ""
+                            }`}
+                            onClick={
+                              hasVoted || isVotingClosed
+                                ? null
+                                : () => handleVoteClick(option)
+                            }
+                            disabled={hasVoted || isVotingClosed}
+                          >
+                            {hasVoted
+                              ? "You already voted"
+                              : isVotingClosed
+                              ? "Voting Closed"
+                              : "Vote this!"}
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))
@@ -362,6 +391,21 @@ function ProjectDetailPage() {
                 Submit Vote
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {isImageFocusOpen && (
+        <div className="submitOverlay" onClick={closeModal}>
+          <div className="submitModal">
+            <img
+              src={closeIcon}
+              alt="close Icon"
+              className="closeIcon"
+              onClick={closeModal}
+            />
+
+            <img src={bigImage} />
           </div>
         </div>
       )}
