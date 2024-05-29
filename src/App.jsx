@@ -7,19 +7,17 @@ import AllProjectsPage from "./pages/AllProjectsPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import AllCreatorsPage from "./pages/AllCreatorsPage";
 import CreatorDetailPage from "./pages/CreatorDetailPage";
-// import SignUpPage from "./pages/SignUpPage";
-// import LogInPage from "./pages/LogInPage";
 import UserProfilPage from "./pages/profile/UserProfilPage";
 import ProfileEditPage from "./pages/profile/ProfileEditPage";
 import DashboardPage from "./pages/DashboardPage";
 import CreateProjectPage from "./pages/creatorfeatures/CreateProjectPage";
 import EditProjectPage from "./pages/creatorfeatures/EditProjectPage";
+import ErrorPage from "./pages/ErrorPage";
 
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 
 import { ToastContainer, toast } from "react-toastify";
-
 
 function App() {
   return (
@@ -42,22 +40,6 @@ function App() {
           />
           <Route path="/creators" element={<AllCreatorsPage />} />
           <Route path="/creators/:creatorId/" element={<CreatorDetailPage />} />
-          {/* <Route
-            path="/login"
-            element={
-              <IsAnon>
-                <LogInPage />
-              </IsAnon>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <IsAnon>
-                <SignUpPage />
-              </IsAnon>
-            }
-          /> */}
           <Route
             path="/profile"
             element={
@@ -75,6 +57,7 @@ function App() {
             }
           />
           <Route path="/projects/create" element={<CreateProjectPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </div>
