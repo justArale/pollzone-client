@@ -296,7 +296,7 @@ function EditProjectPage() {
             style={styles.input}
           />
         </div>
-        <div style={styles.formGroup}>
+        {/* <div style={styles.formGroup}>
           <label style={styles.label}>
             <input
               type="checkbox"
@@ -312,7 +312,7 @@ function EditProjectPage() {
             />
             Release immediately after creating
           </label>
-        </div>
+        </div> */}
         <button type="submit" style={styles.submitButton}>
           Update Project
         </button>

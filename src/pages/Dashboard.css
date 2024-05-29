@@ -1,0 +1,199 @@
+/* Dashboard.css */
+
+.containerDashboardPage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.headerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.projectsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+h1 {
+    font-size: var(--font-size-xlarge);
+    font-weight: var(--font-weight-extraBold);
+    color: var(--color-black);
+    margin: 20px 0;
+}
+
+.projectCard {
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 32px;
+    margin: 50px 0;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: var(--box-color);
+    width: calc(33% - 20px);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+
+.projectCard:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.projectCard img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.projectCard h2 {
+    font-size: var(--font-size-ml);
+    font-weight: var(--font-weight-normal);
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.projectCard p {
+    font-size: var(--font-size-small);
+}
+
+.projectDescription {
+    color: #525C66;
+    font-weight: var(--font-weight-thin);
+    margin-bottom: 6px;
+}
+
+.noProjectsMessage {
+    font-size: var(--font-size-large);
+    color: #777;
+    text-align: center;
+    width: 100%;
+}
+
+.optionContainer {
+    margin-top: 30px;
+}
+
+.optionbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1px 15px;
+    color: var(--color-black);
+    background-color: #D3DBE3;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-weight: var(--font-weight-normal);
+}
+
+.highestOption {
+    background-color: #b8e6d6; /* Highlight color for the highest option */
+}
+
+.optionHeadline {
+    font-weight: var(--font-weight-normal);
+    color: var(--color-black);
+}
+
+.voteCard {
+    background-color: #eef2f7;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: calc(50% - 20px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.voteCard h3 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.voteCard p {
+    color: #555;
+}
+
+.voteCard .voteResult {
+    font-weight: bold;
+    color: #000;
+    margin-top: 10px;
+}
+
+.voteCard img {
+    width: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .projectCard {
+        width: calc(50% - 20px);
+    }
+
+    .voteCard {
+        width: calc(100% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .headerContainer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .projectsContainer {
+        flex-direction: column;
+    }
+
+    .projectCard {
+        width: 100%;
+    }
+
+    .voteCard {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .headerContainer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    h1 {
+        font-size: var(--font-size-large);
+    }
+
+    .projectCard {
+        width: 100%;
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .voteCard {
+        width: 100%;
+        padding: 15px;
+        margin: 15px 0;
+    }
+
+    .projectCard h2 {
+        font-size: var(--font-size-medium);
+    }
+
+    .projectCard p,
+    .optionbox p {
+        font-size: var(--font-size-small);
+    }
+}

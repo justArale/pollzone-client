@@ -44,7 +44,7 @@ function UserProfilPage() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div >
       <div style={{ padding: "20px" }}>
         {userProfile && (
           <div

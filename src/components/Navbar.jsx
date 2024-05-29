@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import "./Navbar.css";
 import logo from "../assets/images/LogoPollZone.png";
@@ -101,6 +101,8 @@ function Overlay({ isLogin, onClose, onSwitch }) {
   const handleRole = (e) => setRole(e.target.value);
   const handleCategory = (e) => setCategory(e.target.value);
 
+  const navigate = useNavigate();
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password };
@@ -111,6 +113,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
         storeToken(response.data.authToken);
         authenticateUser();
         onClose();
+        navigate("/dashboard")
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
@@ -134,6 +137,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
             storeToken(response.data.authToken);
             authenticateUser();
             onClose();
+            navigate("/dashboard")
           })
           .catch((error) => {
             const errorDescription = error.response.data.message;
