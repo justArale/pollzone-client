@@ -31,11 +31,11 @@ function Navbar() {
           <div>
             {isLoggedIn ? (
               <Link to="/dashboard">
-                <img src={logo} alt="PollZone Logo" />
+                <img src={logo} alt="PollZone Logo" className="logo" />
               </Link>
             ) : (
               <Link to="/">
-                <img src={logo} alt="PollZone Logo" />
+                <img src={logo} alt="PollZone Logo" className="logo" />
               </Link>
             )}
           </div>
@@ -52,7 +52,10 @@ function Navbar() {
 
             <div>
               {isLoggedIn ? (
-                <button onClick={logOutUser} className="button buttonSmall buttonReverse">
+                <button
+                  onClick={logOutUser}
+                  className="button buttonSmall buttonReverse"
+                >
                   Log Out
                 </button>
               ) : (
@@ -154,7 +157,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
     <div className="overlay">
       <div className="overlay-background" onClick={onClose}></div>
       <div className="overlay-content">
-      {isLogin ? (
+        {isLogin ? (
           <LoginForm
             handleLoginSubmit={handleLoginSubmit}
             handleEmail={handleEmail}

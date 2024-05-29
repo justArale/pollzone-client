@@ -57,9 +57,7 @@
   width: 100%;
 }
 
-.buttonSmall {
-  margin: 0 5px;
+.logo {
+  height: 32px;
+  width: auto;
 }
-
-
-

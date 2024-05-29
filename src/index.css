@@ -6,6 +6,7 @@
   --overlay-background-color: #525c66;
   --color-black: #000;
   --color-white: #fff;
+  --color-attention: #cc0044;
 
   --font-weight-thin: 100;
   --font-weight-normal: 300;
@@ -71,12 +72,23 @@ html {
   background-color: var(--color-white);
 }
 
+.buttonVote {
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-bold);
+}
+
+.buttonSubmit {
+  background-color: var(--highlight-color);
+  border: none;
+  color: var(--color-black);
+}
+
 .buttonClosed {
   background-color: var(--overlay-background-color);
   cursor: not-allowed;
 }
 
 .buttonDelete {
-  background-color: #cc0044;
+  background-color: var(--color-attention);
   border: none;
 }
