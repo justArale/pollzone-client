@@ -274,7 +274,7 @@ function CreateProjectPage() {
             style={styles.input}
           />
         </div>
-        <div style={styles.formGroup}>
+        {/* <div style={styles.formGroup}>
           <label style={styles.label}>
             <input
               type="checkbox"
@@ -290,7 +290,7 @@ function CreateProjectPage() {
             />
             Hide project from fans until release date
           </label>
-        </div>
+        </div> */}
         <button type="submit" style={styles.submitButton}>
           Create Project
         </button>

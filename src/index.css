@@ -7,6 +7,7 @@
   --color-black: #000;
   --color-white: #fff;
 
+  --font-weight-thin: 100;
   --font-weight-normal: 300;
   --font-weight-bold: bold;
   --font-weight-extraBold: 700;
@@ -37,6 +38,7 @@ body {
   max-width: 1024px;
   box-sizing: border-box;
 }
+
 
 .button {
   display: inline-block;

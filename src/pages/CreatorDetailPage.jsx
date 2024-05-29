@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
-import "./CreatorDetailPage.css"; // Import the CSS file
+import "../components/CreatorDetailPage.css"; // Import the CSS file
 
 const API_URL = import.meta.env.VITE_API_URL;
 
