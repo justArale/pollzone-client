@@ -1,5 +1,3 @@
-/* Dashboard.css */
-
 .containerDashboardPage {
     display: flex;
     flex-direction: column;
@@ -21,13 +19,6 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 24px;
-}
-
-h1 {
-    font-size: var(--font-size-xlarge);
-    font-weight: var(--font-weight-extraBold);
-    color: var(--color-black);
-    margin: 20px 0;
 }
 
 .projectCard {
@@ -135,65 +126,4 @@ h1 {
     width: 100%;
 }
 
-/* Responsive styles */
-@media (max-width: 1200px) {
-    .projectCard {
-        width: calc(50% - 20px);
-    }
 
-    .voteCard {
-        width: calc(100% - 20px);
-    }
-}
-
-@media (max-width: 768px) {
-    .headerContainer {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .projectsContainer {
-        flex-direction: column;
-    }
-
-    .projectCard {
-        width: 100%;
-    }
-
-    .voteCard {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .headerContainer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    h1 {
-        font-size: var(--font-size-large);
-    }
-
-    .projectCard {
-        width: 100%;
-        padding: 20px;
-        margin: 20px 0;
-    }
-
-    .voteCard {
-        width: 100%;
-        padding: 15px;
-        margin: 15px 0;
-    }
-
-    .projectCard h2 {
-        font-size: var(--font-size-medium);
-    }
-
-    .projectCard p,
-    .optionbox p {
-        font-size: var(--font-size-small);
-    }
-}
