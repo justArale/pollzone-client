@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import deleteIcon from "../assets/icons/delete.svg";
 import editIcon from "../assets/icons/edit.svg";
+import closeIcon from "../assets/icons/close.svg";
 import CreatorCard from "../components/CreatorCard";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -175,13 +176,29 @@ function ProjectDetailPage() {
     }
   };
 
-  const handleVoteClick = () => {
+  const handleVoteClick = (option) => {
+    console.log(option);
+    console.log("option");
+    setChosenVote(option);
     setIsVotingModalOpen(true);
   };
 
   const closeModal = () => {
     setIsVotingModalOpen(false);
   };
+
+  useEffect(() => {
+    // Event-Listener to close the overlay if you click outside
+    const handleClickOutside = (event) => {
+      if (isVotingModalOpen && !event.target.closest(".submitModal")) {
+        closeModal();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isVotingModalOpen, !isVotingModalOpen]);
 
   const submitVote = async (optionId) => {
     try {
@@ -202,10 +219,6 @@ function ProjectDetailPage() {
     } finally {
       closeModal();
     }
-  };
-
-  const chooseVote = (optionId) => {
-    setChosenVote(optionId);
   };
 
   const formatDate = (dateString) => {
@@ -296,8 +309,29 @@ function ProjectDetailPage() {
                         className="optionImage"
                       />
                     )}
-                    <h4>{option.title}</h4>
-                    <p>{option.description}</p>
+                    <h4 className="optionTitle">{option.title}</h4>
+                    <p className="optionDescription">{option.description}</p>
+                    <div>
+                      {user && user.role === "fans" && (
+                        <button
+                          className={`button buttonSmall buttonVote ${
+                            hasVoted || isVotingClosed ? "buttonClosed" : ""
+                          }`}
+                          onClick={
+                            hasVoted || isVotingClosed
+                              ? null
+                              : () => handleVoteClick(option)
+                          }
+                          disabled={hasVoted || isVotingClosed}
+                        >
+                          {hasVoted
+                            ? "You already voted"
+                            : isVotingClosed
+                            ? "Voting Closed"
+                            : "Vote this!"}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))
               ) : (
@@ -305,158 +339,34 @@ function ProjectDetailPage() {
               )}
             </div>
             <div></div>
-            <div>
-              {user && user.role === "fans" && (
-                <button
-                  className={`button buttonSmall ${
-                    hasVoted || isVotingClosed ? "buttonClosed" : ""
-                  }`}
-                  onClick={hasVoted || isVotingClosed ? null : handleVoteClick}
-                  disabled={hasVoted || isVotingClosed}
-                >
-                  {hasVoted
-                    ? "You already voted"
-                    : isVotingClosed
-                    ? "Voting Closed"
-                    : "Vote Now!"}
-                </button>
-              )}
-            </div>
           </div>
         </div>
       )}
 
-      {/* {isVotingModalOpen && (
-        <div style={styles.overlay}>
-          <div style={styles.modal}>
-            <h2>Vote for an Option</h2>
-            <button style={styles.closeButton} onClick={closeModal}>
-              X
-            </button>
-            <div style={styles.optionsContainer}>
-              {currentProject.options.map((option, index) => (
-                <div key={index} style={styles.optionCardSmall}>
-                  <img
-                    src={option.image}
-                    alt={option.title}
-                    style={styles.optionImage}
-                  />
-                  <h4>{option.title}</h4>
-                  <p>{option.description}</p>
-                  <button
-                    style={{
-                      ...styles.voteButton,
-                      backgroundColor:
-                        chosenVote === option._id ? "green" : "aquamarine",
-                    }}
-                    onClick={() => chooseVote(option._id)}
-                  >
-                    Choose this option
-                  </button>
-                </div>
-              ))}
+      {isVotingModalOpen && (
+        <div className="submitOverlay" onClick={closeModal}>
+          <div className="submitModal">
+            <img
+              src={closeIcon}
+              alt="close Icon"
+              className="closeIcon"
+              onClick={closeModal}
+            />
+
+            <h2>Vote for: {chosenVote.title} </h2>
+            <div>
               <button
-                style={styles.submitButton}
-                onClick={() => submitVote(chosenVote)}
+                className="button buttonLarge buttonSubmit"
+                onClick={() => submitVote(chosenVote._id)}
               >
                 Submit Vote
               </button>
             </div>
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 }
-
-// const styles = {
-//   projectImage: {
-//     width: "100%",
-//     height: "auto",
-//     borderRadius: "5px",
-//     marginTop: "10px",
-//   },
-//   errorMessage: {
-//     color: "red",
-//     marginTop: "10px",
-//   },
-//   optionsContainer: {
-//     display: "flex",
-//     flexWrap: "wrap",
-//     gap: "20px",
-//     marginTop: "20px",
-//   },
-//   optionCard: {
-//     border: "1px solid #ddd",
-//     borderRadius: "5px",
-//     padding: "10px",
-//     width: "calc(50% - 20px)",
-//     boxSizing: "border-box",
-//     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-//   },
-//   optionImage: {
-//     width: "100%",
-//     height: "auto",
-//     borderRadius: "5px",
-//     marginTop: "10px",
-//   },
-
-//   overlay: {
-//     position: "fixed",
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     backgroundColor: "rgba(0, 0, 0, 0.5)",
-//     display: "flex",
-//     justifyContent: "center",
-//     alignItems: "center",
-//     zIndex: 1000,
-//   },
-//   modal: {
-//     backgroundColor: "white",
-//     padding: "20px",
-//     borderRadius: "5px",
-//     maxWidth: "600px",
-//     width: "100%",
-//     position: "relative",
-//   },
-//   optionCardSmall: {
-//     border: "1px solid #ddd",
-//     borderRadius: "5px",
-//     padding: "10px",
-//     width: "calc(50% - 20px)",
-//     boxSizing: "border-box",
-//     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-//     maxWidth: "180px",
-//   },
-//   closeButton: {
-//     position: "absolute",
-//     top: "10px",
-//     right: "10px",
-//     background: "none",
-//     border: "none",
-//     fontSize: "16px",
-//     cursor: "pointer",
-//   },
-//   voteButton: {
-//     padding: "10px",
-//     backgroundColor: "aquamarine",
-//     color: "black",
-//     border: "none",
-//     borderRadius: "5px",
-//     cursor: "pointer",
-//     marginTop: "10px",
-//   },
-//   submitButton: {
-//     padding: "10px",
-//     backgroundColor: "blue",
-//     color: "white",
-//     border: "none",
-//     borderRadius: "5px",
-//     cursor: "pointer",
-//     marginTop: "10px",
-//   },
-// };
 
 export default ProjectDetailPage;
