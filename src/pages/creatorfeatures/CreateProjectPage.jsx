@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
+import "../../components/CreateNewProject.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -69,7 +70,6 @@ function CreateProjectPage() {
       ...newOptions[index],
       [field]: value,
     };
-    console.log("Updated options:", newOptions); // Debugging statement
     setFormValues((prevValues) => ({
       ...prevValues,
       options: newOptions,
@@ -97,7 +97,6 @@ function CreateProjectPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const storedToken = localStorage.getItem("authToken");
-    console.log("Form values on submit:", formValues); // Debugging statement
 
     try {
       // Convert local start date and time to UTC
@@ -122,7 +121,6 @@ function CreateProjectPage() {
       );
 
       const projectId = projectResponse.data._id;
-      console.log("Project created:", projectResponse.data);
 
       // Step 2: Create options and associate them with the project
       await Promise.all(
@@ -144,7 +142,6 @@ function CreateProjectPage() {
       // Step 3: Redirect to the dashboard or appropriate page
       navigate("/dashboard");
     } catch (error) {
-      console.error("Error details:", error.response || error);
       const errorDescription =
         error.response?.data?.message || "An error occurred";
       setErrorMessage(errorDescription);
@@ -152,11 +149,11 @@ function CreateProjectPage() {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="containerCreatePage">
       <h2>Create Project</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.formGroup}>
-          <label htmlFor="title" style={styles.label}>
+      <form onSubmit={handleSubmit} className="form">
+        <div className="formGroup">
+          <label htmlFor="title" className="label">
             What's your new project's name?
           </label>
           <input
@@ -166,11 +163,11 @@ function CreateProjectPage() {
             value={formValues.title}
             onChange={handleInputChange}
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="description" style={styles.label}>
+        <div className="formGroup">
+          <label htmlFor="description" className="label">
             How would you describe it?
           </label>
           <textarea
@@ -179,11 +176,11 @@ function CreateProjectPage() {
             value={formValues.description}
             onChange={handleInputChange}
             required
-            style={styles.textarea}
+            className="textarea"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="image" style={styles.label}>
+        <div className="formGroup">
+          <label htmlFor="image" className="label">
             Here, you can paste the URL to a header image:
           </label>
           <input
@@ -192,16 +189,16 @@ function CreateProjectPage() {
             name="image"
             value={formValues.image}
             onChange={handleInputChange}
-            style={styles.input}
+            className="input"
           />
         </div>
         <h3>Voting Options</h3>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>
+        <div className="formGroup">
+          <label className="label">
             Here, you can add as many options as you like:
           </label>
           {formValues.options.map((option, index) => (
-            <div key={index} style={styles.optionGroup}>
+            <div key={index} className="optionGroup">
               <input
                 type="text"
                 placeholder="Option Title"
@@ -210,7 +207,7 @@ function CreateProjectPage() {
                   handleOptionChange(index, "title", e.target.value)
                 }
                 required
-                style={styles.input}
+                className="input"
               />
               <input
                 type="text"
@@ -219,7 +216,7 @@ function CreateProjectPage() {
                 onChange={(e) =>
                   handleOptionChange(index, "image", e.target.value)
                 }
-                style={styles.input}
+                className="input"
               />
               <textarea
                 placeholder="Option Description"
@@ -228,24 +225,24 @@ function CreateProjectPage() {
                   handleOptionChange(index, "description", e.target.value)
                 }
                 required
-                style={styles.textarea}
+                className="textarea"
               />
               <button
                 type="button"
                 onClick={() => removeOption(index)}
-                style={styles.removeButton}
+                className="button"
               >
                 Remove
               </button>
             </div>
           ))}
-          <button type="button" onClick={addOption} style={styles.addButton}>
+          <button type="button" onClick={addOption} className="button buttonSmall">
             Add Option
           </button>
         </div>
         <h3>Schedule Voting</h3>
-        <div style={styles.formGroup}>
-          <label htmlFor="timeCount" style={styles.label}>
+        <div className="formGroup">
+          <label htmlFor="timeCount" className="label">
             For how long can your fans vote? (in hours)
           </label>
           <input
@@ -256,12 +253,12 @@ function CreateProjectPage() {
             onChange={handleInputChange}
             min="1"
             required
-            style={styles.input}
+            className="input"
           />
         </div>
 
-        <div style={styles.formGroup}>
-          <label htmlFor="startDate" style={styles.label}>
+        <div className="formGroup">
+          <label htmlFor="startDate" className="label">
             When should your voting start?
           </label>
           <input
@@ -271,100 +268,16 @@ function CreateProjectPage() {
             value={formValues.startDate}
             onChange={handleInputChange}
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        {/* <div style={styles.formGroup}>
-          <label style={styles.label}>
-            <input
-              type="checkbox"
-              name="inProgress"
-              checked={formValues.inProgress}
-              onChange={(e) =>
-                setFormValues((prevValues) => ({
-                  ...prevValues,
-                  inProgress: e.target.checked,
-                }))
-              }
-              style={styles.checkbox}
-            />
-            Hide project from fans until release date
-          </label>
-        </div> */}
-        <button type="submit" style={styles.submitButton}>
+        <button type="submit" className="button buttonLarge">
           Create Project
         </button>
       </form>
-      {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+      {errorMessage && <div className="errorMessage">{errorMessage}</div>}
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "600px",
-    margin: "0 auto",
-    padding: "20px",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  formGroup: {
-    marginBottom: "15px",
-  },
-  label: {
-    marginBottom: "5px",
-    fontWeight: "bold",
-  },
-  input: {
-    width: "100%",
-    padding: "8px",
-    boxSizing: "border-box",
-  },
-  textarea: {
-    width: "100%",
-    padding: "8px",
-    boxSizing: "border-box",
-    minHeight: "100px",
-  },
-  optionGroup: {
-    marginBottom: "15px",
-    padding: "10px",
-    border: "1px solid #ddd",
-    borderRadius: "5px",
-  },
-  addButton: {
-    padding: "10px",
-    backgroundColor: "#28a745",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-  removeButton: {
-    padding: "10px",
-    backgroundColor: "grey",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-  submitButton: {
-    padding: "10px",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-  errorMessage: {
-    color: "red",
-    marginTop: "10px",
-  },
-  checkbox: {
-    marginRight: "5px",
-  },
-};
 
 export default CreateProjectPage;

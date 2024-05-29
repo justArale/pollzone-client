@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
-import "./Dashboard.css"; // Import dashboard specific styles
+import "../components/Dashboard.css"; // Import dashboard specific styles
 
 const API_URL = import.meta.env.VITE_API_URL;
 
