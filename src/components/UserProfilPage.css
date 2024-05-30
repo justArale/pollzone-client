@@ -19,6 +19,11 @@
   object-fit: cover;
 }
 
+.userCardInfo {
+  display: flex;
+  flex-direction: column;
+}
+
 .userName {
   font-size: 56px;
   font-weight: var(--font-weight-semiBold);

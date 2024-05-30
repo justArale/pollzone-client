@@ -75,17 +75,16 @@ function UserProfilPage() {
             </p>
           </div>
           <div>
-            <p>Webside</p>
-            <ul>
-              {userProfile.socialMedia &&
-                userProfile.socialMedia.map((link, index) => (
-                  <li key={index}>
-                    <a href={link} target="_blank" rel="noopener noreferrer">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-            </ul>
+            <p>Webside :</p>
+
+            {userProfile.socialMedia &&
+              userProfile.socialMedia.map((link, index) => (
+                <div key={index} className="webpageLink">
+                  <a href={link} target="_blank" rel="noopener noreferrer">
+                    {link}
+                  </a>
+                </div>
+              ))}
           </div>
 
           {userProfile.role === "creators" && (

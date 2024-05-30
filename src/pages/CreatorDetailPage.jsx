@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 import "../components/CreatorDetailPage.css"; // Import the CSS file
+import defaultImage from "../assets/images/defaultProfilPicture.png";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -113,19 +114,34 @@ function CreatorDetailPage() {
           <div className="flexTry">
             <div className="userCard">
               <img
-                src={currentCreator.image || ""}
+                src={currentCreator.image || defaultImage}
                 alt="profile-photo"
                 className="userImageCard"
               />
-              <div>
+
+              <div className="userCardInfo">
                 <h1 className="userName">{currentCreator.name}</h1>
-                {/* <p className="userRole">
-                  {currentCreator.role.charAt(0).toUpperCase() +
-                    currentCreator.role.slice(
-                      1,
-                      currentCreator.role.length - 1
-                    )}
-                </p> */}
+                <p className="font16RegularGrey">
+                  {currentCreator.description}
+                </p>
+                <div className="creatorSubInfo">
+                  <h2 className="font16SemiBoldGrey">
+                    {currentCreator.fans?.length || 0} Follower
+                  </h2>
+                  <div className="font16BoldGrey">•</div>
+                  {currentCreator.socialMedia &&
+                    currentCreator.socialMedia.map((link, index) => (
+                      <p key={index} className="webpageLink font16SemiBoldGrey">
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Webside
+                        </a>
+                      </p>
+                    ))}
+                </div>
               </div>
             </div>
             <div className="buttonContainer">
@@ -140,20 +156,6 @@ function CreatorDetailPage() {
                 </button>
               )}
             </div>
-          </div>
-
-          <h2 className="subheader">
-            Followers: {currentCreator.fans?.length || 0}
-          </h2>
-          <div>
-            {currentCreator.socialMedia &&
-              currentCreator.socialMedia.map((link, index) => (
-                <p key={index} className="webpageLink">
-                  <a href={link} target="_blank" rel="noopener noreferrer">
-                    Webside
-                  </a>
-                </p>
-              ))}
           </div>
         </div>
       )}
