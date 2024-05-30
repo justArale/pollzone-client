@@ -1,5 +1,3 @@
-/* style={{ listStyleType: "disc" }} */
-
 .userDetail {
   display: flex;
   flex-direction: column;

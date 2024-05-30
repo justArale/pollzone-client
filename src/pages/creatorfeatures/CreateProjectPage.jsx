@@ -132,7 +132,7 @@ function CreateProjectPage() {
             {
               title: option.title,
               description: option.description,
-              image: option.image, // Include the image URL
+              image: option.image,
             },
             {
               headers: { Authorization: `Bearer ${storedToken}` },
@@ -238,13 +238,13 @@ function CreateProjectPage() {
                   className="button buttonSmall buttonDelete removeButton"
                   onClick={() => removeOption(index)}
                 >
-                  <img src={deleteIcon} alt="-" className="addIcon"/>
+                  <img src={deleteIcon} alt="-" className="addIcon" />
                   <span>Remove</span>
                 </button>
               </div>
             </div>
           ))}
-          <div >
+          <div>
             <button
               type="button"
               onClick={addOption}

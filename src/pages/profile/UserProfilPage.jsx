@@ -1,7 +1,7 @@
 import "../../components/UserProfilPage.css";
 import editIcon from "../../assets/icons/edit.svg";
 import deleteIcon from "../../assets/icons/delete.svg";
-import defaultProfilePicture from "../../assets/images/defaultProfilPicture.png";
+import defaultProfilePicture from "../../assets/images/Avatar.svg";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";

@@ -1,11 +1,3 @@
-/* .headerDescription {
-  position: fixed;
-  width: 610px;
-  font-weight: var(--font-weight-black);
-  font-size: var(--font-size-xlarge);
-  color: var(--color-white);
-} */
-
 .homePageWrapper {
   position: relative;
   display: flex;
@@ -24,7 +16,6 @@
   font-size: var(--font-size-xlarge);
   color: var(--color-white);
   height: auto;
-  line-height: inherit; /* Übernimmt er nicht */
 }
 
 .cover {
@@ -44,7 +35,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  /* align-items: flex-start; */
 }
 
 .box {

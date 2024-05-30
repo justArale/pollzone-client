@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 import "../components/CreatorDetailPage.css"; // Import the CSS file
-import defaultImage from "../assets/images/defaultProfilPicture.png";
+import defaultImage from "../assets/images/Avatar.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

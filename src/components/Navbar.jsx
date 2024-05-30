@@ -6,7 +6,7 @@ import logo from "../assets/images/LogoPollZone.png";
 import LoginForm from "../components/LogInForm";
 import SignUpForm from "../components/SignUpForm";
 import axios from "axios";
-import defaultImage from "../assets/images/defaultProfilPicture.png";
+import defaultImage from "../assets/images/Avatar.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../components/AllProjectsPage.css"; // Import the CSS file
 import CreatorCard from "../components/CreatorCard";
-import defaultImage from "../assets/images/defaultProfilPicture.png"
+import defaultImage from "../assets/images/Avatar.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -46,7 +46,10 @@ function AllProjectsPage() {
                     alt={`${project.title}'s profile`}
                   />
                 )}
-                <p><span className="boldName">{project.creator.name}</span> asks for your opinion on:</p>
+                <p>
+                  <span className="boldName">{project.creator.name}</span> asks
+                  for your opinion on:
+                </p>
               </div>
               <h2>{project.title}</h2>
             </div>

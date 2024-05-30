@@ -1,5 +1,3 @@
-/* SignUpForm.css */
-
 .signup-form-container {
   padding: 20px;
   margin: 20px auto;
@@ -10,7 +8,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 600px;
-  box-sizing: border-box; /* Include padding and border in the total width and height */
+  box-sizing: border-box;
 }
 
 .signup-form {
@@ -46,7 +44,7 @@
   border-radius: 4px;
   width: 100%;
   margin-bottom: 16px;
-  box-sizing: border-box; /* Include padding and border in the input's total width */
+  box-sizing: border-box;
 }
 
 .signup-form .role-options {

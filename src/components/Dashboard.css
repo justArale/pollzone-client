@@ -92,7 +92,7 @@
 }
 
 .highestOption {
-  background-color: #b8e6d6; /* Highlight color for the highest option */
+  background-color: #b8e6d6;
 }
 
 .optionHeadline {
@@ -129,45 +129,44 @@
 }
 
 .favCreatorCard {
-    border-radius: 20px;
-    box-sizing: border-box;
-    padding: 32px;
-    margin: 0;
-    transition: transform 0.3s, box-shadow 0.3s;
-    background-color: var(--box-color);
-    width: calc(33% - 20px);
-    height: fit-content;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    text-decoration: none;
-    align-items: center;
-  }
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 32px;
+  margin: 0;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: var(--box-color);
+  width: calc(33% - 20px);
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-decoration: none;
+  align-items: center;
+}
 
-  .favCreatorCard:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-  }
-  
-  .favCreatorCard img {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin-right: 15px;
-  }
-  
-  .favCreatorCard h2 {
-    font-size: var(--font-size-ml);
-    font-weight: var(--font-weight-bold);
-    color: #333;
-    margin-bottom: 0px;
-  }
-  
-  .favCreatorCard p {
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-normal);
-    color: #686868;
-    margin: 5px 0;
-  }
-  
+.favCreatorCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.favCreatorCard img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.favCreatorCard h2 {
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-bold);
+  color: #333;
+  margin-bottom: 0px;
+}
+
+.favCreatorCard p {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-normal);
+  color: #686868;
+  margin: 5px 0;
+}

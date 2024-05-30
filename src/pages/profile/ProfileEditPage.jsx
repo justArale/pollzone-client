@@ -176,29 +176,15 @@ function ProfileEditPage() {
         <div className="formGroup">
           <label>Link to other platforms:</label>
           {formValues.socialMedia.map((link, index) => (
-            <div key={index} >
+            <div key={index}>
               <input
                 type="text"
                 value={link}
                 onChange={(e) => handleSocialMediaChange(index, e.target.value)}
                 className="input"
               />
-              {/* <button
-                type="button"
-                onClick={() => handleRemoveSocialMedia(index)}
-                className="button"
-              >
-                Remove
-              </button> */}
             </div>
           ))}
-          {/* <button
-            type="button"
-            onClick={handleAddSocialMedia}
-            className="button"
-          >
-            Add Social Media Link
-          </button> */}
         </div>
         <button type="submit" className="button buttonLarge submitButton">
           Save Changes

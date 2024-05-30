@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../components/AllCreatorsPage.css"; // Import the CSS file
-import defaultImage from "../assets/images/defaultProfilPicture.png"
+import defaultImage from "../assets/images/Avatar.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -82,7 +82,10 @@ function AllCreatorsPage() {
             className="allCreatorCard"
             key={creator._id}
           >
-            <img src={creator.image || defaultImage} alt={`${creator.name}'s profile`} />
+            <img
+              src={creator.image || defaultImage}
+              alt={`${creator.name}'s profile`}
+            />
             <div>
               <h2>{creator.name}</h2>
               <p>Follower: {creator.fans.length}</p>
