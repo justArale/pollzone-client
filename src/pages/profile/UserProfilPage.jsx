@@ -75,7 +75,7 @@ function UserProfilPage() {
             </p>
           </div>
           <div>
-            <p>Social Media:</p>
+            <p>Webside</p>
             <ul>
               {userProfile.socialMedia &&
                 userProfile.socialMedia.map((link, index) => (
@@ -90,9 +90,6 @@ function UserProfilPage() {
 
           {userProfile.role === "creators" && (
             <div>
-              <p>
-                <strong>Category:</strong> {userProfile.category}
-              </p>
               <div>
                 <p>
                   <strong>Description:</strong> {userProfile.description}

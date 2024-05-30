@@ -119,13 +119,13 @@ function CreatorDetailPage() {
               />
               <div>
                 <h1 className="userName">{currentCreator.name}</h1>
-                <p className="userRole">
+                {/* <p className="userRole">
                   {currentCreator.role.charAt(0).toUpperCase() +
                     currentCreator.role.slice(
                       1,
                       currentCreator.role.length - 1
                     )}
-                </p>
+                </p> */}
               </div>
             </div>
             <div className="buttonContainer">
@@ -146,13 +146,11 @@ function CreatorDetailPage() {
             Followers: {currentCreator.fans?.length || 0}
           </h2>
           <div>
-            <p>Find me elsewhere:</p>
-
             {currentCreator.socialMedia &&
               currentCreator.socialMedia.map((link, index) => (
                 <p key={index} className="webpageLink">
                   <a href={link} target="_blank" rel="noopener noreferrer">
-                    {link}
+                    Webside
                   </a>
                 </p>
               ))}
