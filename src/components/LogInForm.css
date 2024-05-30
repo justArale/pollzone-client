@@ -1,0 +1,59 @@
+/* LogInForm.css */
+
+.login-form-container {
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box; /* Include padding and border in the total width and height */
+}
+
+.login-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.login-form h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.login-form .input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form .input-group label {
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.login-form .input-group input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-form .error-message {
+  color: red;
+  margin-top: 16px;
+}
+
+.login-form .switch-link {
+  color: #007bff;
+  border: none;
+  background: none;
+  cursor: pointer;
+  margin-top: 40px;
+}

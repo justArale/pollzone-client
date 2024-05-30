@@ -1,81 +1,215 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useContext } from "react";
+import React, { useState, useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import "./Navbar.css";
+import logo from "../assets/images/LogoPollZone.png";
+import LoginForm from "../components/LogInForm";
+import SignUpForm from "../components/SignUpForm";
+import axios from "axios";
+import defaultImage from "../assets/images/Avatar.svg";
 
-function Navbar() {
+const API_URL = import.meta.env.VITE_API_URL;
 
-    const location = useLocation();
-    const { isLoggedIn, logOutUser } = useContext(AuthContext);
-  
-    const getCurrentLinkText = (pathname) => {
-      const routes = {
-        "/dashboard": "Cohorts",
-        "/students": "Students",
-        "/cohorts/details/:cohortId": "Cohort Details",
-        "/cohorts/edit/:cohortId": "Edit Cohort",
-        "/cohorts/create": "Create Cohort",
-        "/students/details/:studentId": "Student Details",
-        "/students/edit/:studentId": "Edit Student",
-        "/profile": "User Profile",
-        "/login": "Log In",
-        "/signup": "Sign Up",
-      };
-  
-      for (let route in routes) {
-        let regexPattern = new RegExp("^" + route.replace(/:\w+/g, "\\w+") + "$");
-        if (regexPattern.test(pathname)) {
-          return routes[route];
-        }
-      }
-      return "";
-    };
+function Navbar({
+  isOverlayOpen,
+  handleLoginClick,
+  handleCloseOverlay,
+  isLogin,
+  setIsLogin,
+}) {
+  const location = useLocation();
+  const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
-    return (
-        <nav
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: '#6a0dad', // Purple color
-            padding: '10px 20px',
-            color: 'white',
-          }}
-        >
-          <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
-            <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>POLLZONE</Link>
-          </div>
+  return (
+    <>
+      <nav>
+        <div className="headerBar">
           <div>
-            <Link to="/about" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>About</Link>
-            <Link to="/creators" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>All Creators</Link>
-            <Link to="/projects" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>All Projects</Link>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <Link to="/signup" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Sign Up</Link>
-            <Link to="/login" style={{ color: 'white', margin: '0 10px', textDecoration: 'none' }}>Log In</Link>
-
-          </div>
-          {/* <div>
-          {isLoggedIn && (
-            <button
-              className="px-4 py-1 rounded bg-blue-500 text-white hover:bg-blue-400"
-              onClick={logOutUser}
-            >
-              Log Out
-            </button>
-          )}
-          {!isLoggedIn &&
-            location.pathname !== "/login" &&
-            location.pathname !== "/signup" && (
-              <Link to="/login">
-                <button className="px-6 py-1 rounded bg-blue-500 text-white hover:bg-blue-400">
-                  Log In
-                </button>
+            {isLoggedIn ? (
+              <Link to="/dashboard">
+                <img src={logo} alt="PollZone Logo" className="logo" />
+              </Link>
+            ) : (
+              <Link to="/">
+                <img src={logo} alt="PollZone Logo" className="logo" />
               </Link>
             )}
-          </div> */}
-        </nav>
-      );
+          </div>
+          <div className="pageWrapper">
+            <Link
+              className={`linkNavbar ${
+                location.pathname === "/creators" ? "active" : ""
+              }`}
+              to="/creators"
+            >
+              All Creators
+            </Link>
+            <Link
+              className={`linkNavbar ${
+                location.pathname === "/projects" ? "active" : ""
+              }`}
+              to="/projects"
+            >
+              All Projects
+            </Link>
+            {isLoggedIn ? (
+              <Link
+                className={`linkNavbar ${
+                  location.pathname === "/profile" ? "active" : ""
+                }`}
+                to="/profile"
+              >
+                My Profile
+              </Link>
+            ) : (
+              <Link
+                className={`linkNavbar ${
+                  location.pathname === "/about" ? "active" : ""
+                }`}
+                to="/about"
+              >
+                About
+              </Link>
+            )}
+
+            <div>
+              {isLoggedIn ? (
+                <button
+                  onClick={logOutUser}
+                  className="button buttonSmall buttonReverse"
+                >
+                  Log Out
+                </button>
+              ) : (
+                <>
+                  {location.pathname !== "/login" &&
+                    location.pathname !== "/signup" && (
+                      <>
+                        <button
+                          onClick={handleLoginClick}
+                          className="button buttonSmall"
+                        >
+                          Log In
+                        </button>
+                      </>
+                    )}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </nav>
+      {isOverlayOpen && (
+        <Overlay
+          isLogin={isLogin}
+          onClose={handleCloseOverlay}
+          onSwitch={() => setIsLogin(!isLogin)}
+        />
+      )}
+    </>
+  );
+}
+
+function Overlay({ isLogin, onClose, onSwitch }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("fans");
+  const [category, setCategory] = useState("");
+  const [image, setImage] = useState(defaultImage);
+  const [errorMessage, setErrorMessage] = useState(undefined);
+
+  const { storeToken, authenticateUser } = useContext(AuthContext);
+
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value);
+  const handleName = (e) => setName(e.target.value);
+  const handleRole = (e) => setRole(e.target.value);
+  const handleCategory = (e) => setCategory(e.target.value);
+
+  const navigate = useNavigate();
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = { email, password };
+
+    axios
+      .post(`${API_URL}/auth/login`, requestBody)
+      .then((response) => {
+        storeToken(response.data.authToken);
+        authenticateUser();
+        onClose();
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setErrorMessage(errorDescription);
+      });
+  };
+
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+    const requestBody = { email, password, name, role, category, image };
+
+    axios
+      .post(`${API_URL}/auth/signup`, requestBody)
+      .then(() => {
+        // After successful signup, log the user in
+        const loginRequestBody = { email, password };
+
+        axios
+          .post(`${API_URL}/auth/login`, loginRequestBody)
+          .then((response) => {
+            storeToken(response.data.authToken);
+            authenticateUser();
+            onClose();
+            navigate("/dashboard");
+          })
+          .catch((error) => {
+            const errorDescription = error.response.data.message;
+            setErrorMessage(errorDescription);
+          });
+      })
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setErrorMessage(errorDescription);
+      });
+  };
+
+  return (
+    <div className="overlay">
+      <div className="overlay-background" onClick={onClose}></div>
+      <div className="overlay-content">
+        {isLogin ? (
+          <LoginForm
+            handleLoginSubmit={handleLoginSubmit}
+            handleEmail={handleEmail}
+            handlePassword={handlePassword}
+            email={email}
+            password={password}
+            errorMessage={errorMessage}
+            onSwitch={onSwitch}
+          />
+        ) : (
+          <SignUpForm
+            handleSignupSubmit={handleSignupSubmit}
+            handleEmail={handleEmail}
+            handlePassword={handlePassword}
+            handleName={handleName}
+            handleRole={handleRole}
+            handleCategory={handleCategory}
+            email={email}
+            password={password}
+            name={name}
+            role={role}
+            category={category}
+            errorMessage={errorMessage}
+            onSwitch={onSwitch}
+          />
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default Navbar;

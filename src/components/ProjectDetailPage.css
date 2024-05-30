@@ -1,0 +1,263 @@
+.PollDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.projectBox {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  /* box-sizing: border-box; */
+}
+
+.projectHeaderBox {
+  display: flex;
+  gap: 32px;
+  /* box-sizing: border-box; */
+}
+
+.rectangle {
+  width: 8px;
+  background-color: var(--highlight-color);
+  border-radius: 10px;
+}
+
+.projectHeadline {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  /* box-sizing: border-box; */
+}
+
+.projectHeader {
+  font-size: 56px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+
+.projectDescription {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+}
+
+.buttonGroup > button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voteDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.voteInfoBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.timeWrapper {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+}
+
+.spanTime {
+  color: var(--overlay-background-color);
+  text-transform: uppercase;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semiBold);
+  margin: 0;
+}
+
+.countdown {
+  display: block;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-semiBold);
+  width: 6em;
+  text-align: left;
+}
+
+.optionsContainer {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.optionCard {
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin: 0;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: var(--box-color);
+  width: calc(33% - 20px);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+}
+
+.votedCard {
+  background-color: var(--highlight-color);
+}
+
+.optionImage {
+  width: 100%;
+  padding-bottom: calc(100% / 3 * 2);
+  height: 0;
+  overflow: hidden;
+}
+
+.optionImage img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.searchIcon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.searchIcon img {
+  width: 21px;
+  height: 21px;
+}
+
+.optionInfoBox {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.optionTitle {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-extraBold);
+  margin: 0;
+}
+
+.optionDescription {
+  font-size: var(--font-weight-extraBold);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+}
+
+.spacer {
+  margin: auto;
+}
+
+.submitOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.submitModal {
+  background-color: var(--color-white);
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.bigImageModel {
+  padding: 0;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 20px;
+  width: auto;
+  cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .optionCard {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .PollDetails {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .optionsContainer {
+    flex-direction: column;
+  }
+
+  .optionCard {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .PollDetails {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .projectHeader {
+    font-size: var(--font-size-large);
+  }
+
+  .optionCard {
+    width: 100%;
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  .optionTitle {
+    font-size: var(--font-size-medium);
+  }
+}

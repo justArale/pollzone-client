@@ -1,0 +1,17 @@
+.errorPage {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 612px;
+}
+
+.errorDescription {
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-normal);
+}
+
+.errorImage {
+  width: 500px;
+  height: auto;
+  align-self: center;
+}

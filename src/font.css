@@ -1,0 +1,53 @@
+/* ExtraLight */
+@font-face {
+  font-family: "Unbounded";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("../src/assets/font/Unbounded-ExtraLight.woff2") format("woff2");
+}
+
+/* Light */
+@font-face {
+  font-family: "Unbounded";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../src/assets/font/Unbounded-Light.woff2") format("woff2");
+}
+
+/* Medium */
+@font-face {
+  font-family: "Unbounded";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../src/assets/font/Unbounded-Medium.woff2") format("woff2");
+}
+
+/* Regular */
+@font-face {
+  font-family: "Unbounded";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../src/assets/font/Unbounded-Regular.woff2") format("woff2");
+}
+
+/* Bold */
+@font-face {
+  font-family: "Unbounded";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../src/assets/font/Unbounded-Bold.woff2") format("woff2");
+}
+
+/* Black */
+@font-face {
+  font-family: "Unbounded";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../src/assets/font/Unbounded-Black.woff2") format("woff2");
+}

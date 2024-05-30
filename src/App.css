@@ -1,0 +1,5 @@
+.page {
+  display: grid;
+  grid-template-rows: 0fr 2fr;
+  gap: 48px;
+}

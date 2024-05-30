@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import "./SignUpForm.css";
 
 const SignUpForm = ({
   handleSignupSubmit,
@@ -7,226 +7,142 @@ const SignUpForm = ({
   handlePassword,
   handleName,
   handleRole,
+  handleCategory,
   email,
   password,
   name,
   role,
+  category,
   errorMessage,
+  onSwitch,
 }) => {
+  const categoryContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (role === "creators") {
+      categoryContainerRef.current.style.maxHeight = `${categoryContainerRef.current.scrollHeight}px`;
+    } else {
+      categoryContainerRef.current.style.maxHeight = "0";
+    }
+  }, [role]);
+
   return (
-    <div
-      style={{
-        padding: "20px",
-        margin: "20px auto",
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        width: "100%",
-        maxWidth: "600px",
-      }}
-    >
+    <div className="signup-form-container">
+      <form onSubmit={handleSignupSubmit} className="signup-form">
+        <h3>Sign Up</h3>
 
-      <form
-        onSubmit={handleSignupSubmit}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
-          gap: "16px",
-          marginTop: "10px",
-        }}
-      >
-        <h3
-          style={{
-            fontSize: "24px",
-            fontWeight: "600",
-            color: "#333",
-            marginBottom: "24px",
-          }}
-        >
-          Sign Up
-        </h3>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            marginBottom: "24px",
-          }}
-        >
-          <label
-            htmlFor="role"
-            style={{
-              color: "#666",
-              marginBottom: "8px",
-              fontWeight: "600",
-            }}
-          >
-            Role
-          </label>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <input
-              type="radio"
-              name="role"
-              value="creators"
-              id="creators"
-              checked={role === "creators"}
-              onChange={handleRole}
-              style={{
-                marginRight: "8px",
-              }}
-            />
-            <label
-              htmlFor="creator"
-              style={{
-                marginRight: "16px",
-              }}
-            >
-              Creator
-            </label>
-            <input
-              type="radio"
-              name="role"
-              value="fans"
-              id="fans"
-              checked={role === "fans"}
-              onChange={handleRole}
-              style={{
-                marginRight: "8px",
-              }}
-            />
-            <label htmlFor="fan">Fan</label>
+        <div className="input-group">
+          <label htmlFor="role">Role</label>
+          <div className="role-options">
+            <div>
+              <input
+                type="radio"
+                name="role"
+                value="creators"
+                id="creators"
+                checked={role === "creators"}
+                onChange={handleRole}
+              />
+              <label htmlFor="creators">Creator</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="role"
+                value="fans"
+                id="fans"
+                checked={role === "fans"}
+                onChange={handleRole}
+              />
+              <label htmlFor="fans">Fan</label>
+            </div>
           </div>
         </div>
 
         <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
+          ref={categoryContainerRef}
+          className={`category-container ${role === "creators" ? "open" : ""}`}
         >
-          <label
-            htmlFor="name"
-            style={{
-              color: "#666",
-              marginBottom: "8px",
-              fontWeight: "600",
-            }}
-          >
-            Name
-          </label>
+          <div className="input-group">
+            <label htmlFor="category">What's your niche?</label>
+            <select
+              id="category"
+              name="category"
+              value={category}
+              onChange={handleCategory}
+            >
+              <option value="" disabled>
+                Choose category
+              </option>
+              {[
+                "Music",
+                "Sports",
+                "Art",
+                "Gaming",
+                "Beauty",
+                "Culinary",
+                "Travel",
+                "Fitness",
+                "Film & Video",
+                "Audio & Podcasts",
+              ].map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="input-group">
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             name="name"
             id="name"
             value={name}
             onChange={handleName}
-            style={{
-              padding: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              width: "100%",
-              marginBottom: "16px",
-            }}
             autoComplete="off"
           />
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <label
-            htmlFor="email"
-            style={{
-              color: "#666",
-              marginBottom: "8px",
-              fontWeight: "600",
-            }}
-          >
-            Email
-          </label>
+        <div className="input-group">
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             name="email"
             id="email"
             value={email}
             onChange={handleEmail}
-            style={{
-              padding: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              width: "100%",
-              marginBottom: "16px",
-            }}
             autoComplete="off"
           />
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <label
-            htmlFor="password"
-            style={{
-              color: "#666",
-              marginBottom: "8px",
-              fontWeight: "600",
-            }}
-          >
-            Password
-          </label>
+        <div className="input-group">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
             id="password"
             value={password}
             onChange={handlePassword}
-            style={{
-              padding: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              width: "100%",
-              marginBottom: "16px",
-            }}
             autoComplete="off"
           />
         </div>
 
-        <button
-          type="submit"
-          style={{
-            backgroundColor: "#007bff",
-            color: "white",
-            fontWeight: "600",
-            padding: "12px",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            transition: "background-color 0.3s ease",
-          }}
-        >
+        <button type="submit" className="button buttonLarge">
           Create Account
         </button>
       </form>
 
-      {errorMessage && (
-        <p style={{ color: "red", marginTop: "16px" }}>{errorMessage}</p>
-      )}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p style={{ marginTop: "40px" }}>Already have an account?</p>
-      <Link to="/login">Log in</Link>
+      <p>
+        Already have an account?{" "}
+        <a href="#" onClick={onSwitch}>
+          Log In
+        </a>
+      </p>
     </div>
   );
 };

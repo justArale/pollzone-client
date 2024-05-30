@@ -1,106 +1,57 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "./LogInForm.css";
 
-const LogInForm = ({ handleLoginSubmit, handleEmail, handlePassword, email, password, errorMessage }) => {
+const LogInForm = ({
+  handleLoginSubmit,
+  handleEmail,
+  handlePassword,
+  email,
+  password,
+  errorMessage,
+  onSwitch,
+}) => {
   return (
-    <div style={{
-      padding: '20px',
-      margin: '20px auto',
-      borderRadius: '8px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-      width: '100%',
-      maxWidth: '600px'
-    }}>
+    <div className="login-form-container">
+      <form onSubmit={handleLoginSubmit} className="login-form">
+        <h3>Log In</h3>
 
-      <form
-        onSubmit={handleLoginSubmit}
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          gap: '16px',
-          marginTop: '10px'
-        }}
-      >
-        <h3 style={{
-          fontSize: '24px',
-          fontWeight: '600',
-          color: '#333',
-          marginBottom: '24px'
-        }}>
-          Log In
-        </h3>
-
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-          <label htmlFor="email" style={{
-            color: '#666',
-            marginBottom: '8px',
-            fontWeight: '600'
-          }}>Email</label>
+        <div className="input-group">
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             name="email"
             id="email"
             value={email}
             onChange={handleEmail}
-            style={{
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              width: '100%',
-              marginBottom: '16px'
-            }}
             autoComplete="off"
           />
         </div>
 
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column'
-        }}>
-          <label htmlFor="password" style={{
-            color: '#666',
-            marginBottom: '8px',
-            fontWeight: '600'
-          }}>Password</label>
+        <div className="input-group">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
             id="password"
             value={password}
             onChange={handlePassword}
-            style={{
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              width: '100%',
-              marginBottom: '16px'
-            }}
             autoComplete="off"
           />
         </div>
 
-        <button type="submit" style={{
-          backgroundColor: '#007bff',
-          color: 'white',
-          fontWeight: '600',
-          padding: '12px',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          transition: 'background-color 0.3s ease'
-        }}>Log In</button>
+        <button type="submit" className="button buttonLarge">
+          Log In
+        </button>
       </form>
 
-      {errorMessage && <p style={{ color: 'red', marginTop: '16px' }}>{errorMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p style={{ marginTop: '40px' }}>Don't have an account?</p>
-      <Link to="/signup">Sign Up</Link>
+      <p>
+        Don't have an account?{" "}
+        <a href="#" onClick={onSwitch}>
+          Sign Up
+        </a>
+      </p>
     </div>
   );
 };

@@ -1,0 +1,56 @@
+.creatorCard {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.profilImageCard {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.projectCreatorHeader {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.creatorHeader {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
+.spanElementCreator {
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-normal);
+  color: var(--overlay-background-color);
+}
+
+.creatorName {
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+.projectEndInfo {
+  display: flex;
+  gap: 4px;
+  font-size: var(--font-size-small);
+  margin: 0;
+  padding: 0;
+}
+
+.spanElementProjectEnd {
+  color: var(--overlay-background-color);
+  font-weight: var(--font-weight-normal);
+}

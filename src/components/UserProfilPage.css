@@ -1,0 +1,47 @@
+.userDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.userCard {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.userImageCard {
+  width: 142px;
+  height: 142px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userCardInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 56px;
+  font-weight: var(--font-weight-semiBold);
+  margin: 0;
+}
+
+.userRole {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+}
+
+.detailPageButtons {
+  display: flex;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.detailPageButtons > button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

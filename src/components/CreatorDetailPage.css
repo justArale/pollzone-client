@@ -1,0 +1,22 @@
+.flexTry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.creatorSubInfo {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.webpageLink > a {
+  display: block;
+  text-decoration: none;
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.socialLink:hover {
+  text-decoration: underline;
+}
