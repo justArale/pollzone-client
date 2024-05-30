@@ -6,13 +6,19 @@ import logo from "../assets/images/LogoPollZone.png";
 import LoginForm from "../components/LogInForm";
 import SignUpForm from "../components/SignUpForm";
 import axios from "axios";
-import defaultImage from "../assets/images/defaultProfilPicture.png"
+import defaultImage from "../assets/images/defaultProfilPicture.png";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-function Navbar({ isOverlayOpen, handleLoginClick, handleCloseOverlay, isLogin, setIsLogin }) {
-    const location = useLocation();
-    const { isLoggedIn, logOutUser } = useContext(AuthContext);
+function Navbar({
+  isOverlayOpen,
+  handleLoginClick,
+  handleCloseOverlay,
+  isLogin,
+  setIsLogin,
+}) {
+  const location = useLocation();
+  const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
   return (
     <>
@@ -30,15 +36,41 @@ function Navbar({ isOverlayOpen, handleLoginClick, handleCloseOverlay, isLogin, 
             )}
           </div>
           <div className="pageWrapper">
-            <Link className="link" to="/creators">
+            <Link
+              className={`linkNavbar ${
+                location.pathname === "/creators" ? "active" : ""
+              }`}
+              to="/creators"
+            >
               All Creators
             </Link>
-            <Link className="link" to="/projects">
+            <Link
+              className={`linkNavbar ${
+                location.pathname === "/projects" ? "active" : ""
+              }`}
+              to="/projects"
+            >
               All Projects
             </Link>
-            <Link className="link" to="/profile">
-              My Profile
-            </Link>
+            {isLoggedIn ? (
+              <Link
+                className={`linkNavbar ${
+                  location.pathname === "/profile" ? "active" : ""
+                }`}
+                to="/profile"
+              >
+                My Profile
+              </Link>
+            ) : (
+              <Link
+                className={`linkNavbar ${
+                  location.pathname === "/about" ? "active" : ""
+                }`}
+                to="/about"
+              >
+                About
+              </Link>
+            )}
 
             <div>
               {isLoggedIn ? (
@@ -84,7 +116,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
   const [name, setName] = useState("");
   const [role, setRole] = useState("fans");
   const [category, setCategory] = useState("");
-  const [image, setImage] = useState(defaultImage)
+  const [image, setImage] = useState(defaultImage);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
@@ -107,7 +139,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
         storeToken(response.data.authToken);
         authenticateUser();
         onClose();
-        navigate("/dashboard")
+        navigate("/dashboard");
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
@@ -117,7 +149,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { email, password, name, role, category,  image };
+    const requestBody = { email, password, name, role, category, image };
 
     axios
       .post(`${API_URL}/auth/signup`, requestBody)
@@ -131,7 +163,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
             storeToken(response.data.authToken);
             authenticateUser();
             onClose();
-            navigate("/dashboard")
+            navigate("/dashboard");
           })
           .catch((error) => {
             const errorDescription = error.response.data.message;

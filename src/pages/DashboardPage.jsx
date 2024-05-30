@@ -54,6 +54,7 @@ function DashboardPage() {
         headers: { Authorization: `Bearer ${storedToken}` },
       });
       setFan(response.data);
+      console.log(response.data)
     } catch (error) {
       const errorDescription =
         error.response?.data?.message || "An error occurred";
@@ -140,7 +141,8 @@ function DashboardPage() {
           <div className="projectsContainer">
             {fan.votes && fan.votes.length > 0 ? (
               fan.votes.map((vote) => (
-                <div key={vote._id} className="projectCard">
+                <Link className="projectCard" to={`/projects/${vote.projectId.creator._id}/${vote.projectId._id}`}>
+                <div key={vote._id} >
                   {vote.image && <img src={vote.image} alt={vote.title} />}
                   <h2>{vote.title}</h2>
                   <p className="projectDescription">{vote.description}</p>
@@ -148,6 +150,7 @@ function DashboardPage() {
                     Total Votes for this option: {vote.counter}
                   </p>
                 </div>
+                </Link>
               ))
             ) : (
               <p className="noProjectsMessage">No votes found.</p>
@@ -163,7 +166,8 @@ function DashboardPage() {
                   to={`/creators/${creator._id}`}
                   key={creator._id}
                   className="favCreatorCard"
-                ><img src={creator.image} alt={creator.name} />
+                >
+                  <img src={creator.image} alt={creator.name} />
                   <div>
                     <h2>{creator.name}</h2>
                     <p>Follower: {creator.fans.length}</p>

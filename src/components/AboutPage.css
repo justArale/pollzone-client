@@ -1,0 +1,12 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+  }
+  
+.aboutPara {
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-small);
+    margin: 15px 0 45px;
+}
