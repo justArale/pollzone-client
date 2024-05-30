@@ -4,11 +4,16 @@
   align-items: center;
 }
 
+.creatorSubInfo {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
 .webpageLink > a {
   display: block;
-  margin: 5px 0;
-  color: var(--color-black);
   text-decoration: none;
+  color: var(--color-black);
   cursor: pointer;
 }
 
