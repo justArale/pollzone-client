@@ -20,6 +20,18 @@ Creating a collaborative environment for both creators and fans:
   - Gain insights into how fans are voting.
   - Use the dashboard to view all projects.
 
+## Usage
+- **For Fans**:
+  - Sign up and explore available projects and polls.
+  - Vote on your favorite options.
+  - Use the personalized dashboard to track your interactions.
+
+- **For Creators**:
+  - Create and manage polls with multiple options.
+  - Set timers for voting periods.
+  - Analyze voting patterns to gain insights.
+  - Monitor all active and completed projects through the dashboard.
+
 ## Features
 - Launch and manage polls, collections, or projects.
 - Vote on favorite options and track engagement.
@@ -109,18 +121,6 @@ To ensure the frontend and backend communicate correctly:
       credentials: true
     }));
     ```
-
-## Usage
-- **For Fans**:
-  - Sign up and explore available projects and polls.
-  - Vote on your favorite options.
-  - Use the personalized dashboard to track your interactions.
-
-- **For Creators**:
-  - Create and manage polls with multiple options.
-  - Set timers for voting periods.
-  - Analyze voting patterns to gain insights.
-  - Monitor all active and completed projects through the dashboard.
 
 ## Contributing
 We welcome contributions to PollZone! Please follow these steps to contribute:
