@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
 import "../../components/CreateNewProject.css";
+import deleteIcon from "../../assets/icons/delete.svg";
+import addIcon from "../../assets/icons/add.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -150,14 +152,15 @@ function CreateProjectPage() {
 
   return (
     <div className="containerCreatePage">
-      <h2>Create Project</h2>
+      <h2 className="headlineCreateProject">New Project</h2>
       <form onSubmit={handleSubmit} className="form">
         <div className="formGroup">
           <label htmlFor="title" className="label">
-            What's your new project's name?
+            Title
           </label>
           <input
             type="text"
+            placeholder="    My poll / collection / voting is called..."
             id="title"
             name="title"
             value={formValues.title}
@@ -168,11 +171,12 @@ function CreateProjectPage() {
         </div>
         <div className="formGroup">
           <label htmlFor="description" className="label">
-            How would you describe it?
+            Description
           </label>
           <textarea
             id="description"
             name="description"
+            placeholder="    What do you want people to know about your poll?"
             value={formValues.description}
             onChange={handleInputChange}
             required
@@ -181,10 +185,11 @@ function CreateProjectPage() {
         </div>
         <div className="formGroup">
           <label htmlFor="image" className="label">
-            Here, you can paste the URL to a header image:
+            Image URL
           </label>
           <input
             type="text"
+            placeholder="    What should be the front Image of your poll?"
             id="image"
             name="image"
             value={formValues.image}
@@ -195,13 +200,13 @@ function CreateProjectPage() {
         <h3>Voting Options</h3>
         <div className="formGroup">
           <label className="label">
-            Here, you can add as many options as you like:
+            You can add as many options as you like:
           </label>
           {formValues.options.map((option, index) => (
             <div key={index} className="optionGroup">
               <input
                 type="text"
-                placeholder="Option Title"
+                placeholder="    Option Title"
                 value={option.title}
                 onChange={(e) =>
                   handleOptionChange(index, "title", e.target.value)
@@ -211,7 +216,7 @@ function CreateProjectPage() {
               />
               <input
                 type="text"
-                placeholder="Option Image URL"
+                placeholder="    Option Image URL"
                 value={option.image}
                 onChange={(e) =>
                   handleOptionChange(index, "image", e.target.value)
@@ -219,7 +224,7 @@ function CreateProjectPage() {
                 className="input"
               />
               <textarea
-                placeholder="Option Description"
+                placeholder="    Option Description"
                 value={option.description}
                 onChange={(e) =>
                   handleOptionChange(index, "description", e.target.value)
@@ -227,18 +232,28 @@ function CreateProjectPage() {
                 required
                 className="textarea"
               />
-              <button
-                type="button"
-                onClick={() => removeOption(index)}
-                className="button"
-              >
-                Remove
-              </button>
+              <div className="buttonContainer">
+                <button
+                  type="button"
+                  className="button buttonSmall buttonDelete removeButton"
+                  onClick={() => removeOption(index)}
+                >
+                  <img src={deleteIcon} alt="-" className="addIcon"/>
+                  <span>Remove</span>
+                </button>
+              </div>
             </div>
           ))}
-          <button type="button" onClick={addOption} className="button buttonSmall">
-            Add Option
-          </button>
+          <div >
+            <button
+              type="button"
+              onClick={addOption}
+              className="button buttonSmall addButton"
+            >
+              <img src={addIcon} alt="+" className="addIcon" />
+              <span>Add Option</span>
+            </button>
+          </div>
         </div>
         <h3>Schedule Voting</h3>
         <div className="formGroup">
@@ -271,9 +286,11 @@ function CreateProjectPage() {
             className="input"
           />
         </div>
-        <button type="submit" className="button buttonLarge">
-          Create Project
-        </button>
+        <div className="submitButton">
+          <button type="submit" className="button buttonLarge">
+            Create Project
+          </button>
+        </div>
       </form>
       {errorMessage && <div className="errorMessage">{errorMessage}</div>}
     </div>

@@ -25,6 +25,7 @@ function ProjectDetailPage() {
   const [chosenVote, setChosenVote] = useState("");
   const [bigImage, setBigImage] = useState("");
   const [hasVoted, setHasVoted] = useState(false);
+  const [userChoice, setUserChoice] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
   const [timer, setTimer] = useState("");
   const [isVotingClosed, setIsVotingClosed] = useState(false);
@@ -86,11 +87,16 @@ function ProjectDetailPage() {
 
   const checkIfUserHasVoted = (options) => {
     if (currentUser && currentUser.votes) {
-      const userVotes = currentUser.votes.map((vote) => vote._id.toString());
+      const userVotes = currentUser.votes.map((vote) => {
+        setUserChoice(vote._id);
+        console.log(typeof userChoice);
+        console.log(userChoice);
+
+        vote._id.toString();
+      });
       const userHasVoted = options.some((option) => {
         const optionId = option._id.toString();
-        console.log("Option Id:", option._id);
-        console.log("User voted:", currentUser.votes);
+
         return userVotes.includes(optionId);
       });
       setHasVoted(userHasVoted);
@@ -209,12 +215,7 @@ function ProjectDetailPage() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [
-    isVotingModalOpen,
-    !isVotingModalOpen,
-    isImageFocusOpen,
-    !isImageFocusOpen,
-  ]);
+  }, [isVotingModalOpen, isImageFocusOpen]);
 
   const submitVote = async (optionId) => {
     try {
@@ -354,7 +355,8 @@ function ProjectDetailPage() {
                             disabled={hasVoted || isVotingClosed}
                           >
                             {hasVoted
-                              ? "You already voted"
+                              ? userChoice == option._id.toString() &&
+                                "You voted this"
                               : isVotingClosed
                               ? "Voting Closed"
                               : "Vote this!"}
