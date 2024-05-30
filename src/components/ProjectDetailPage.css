@@ -95,20 +95,74 @@
 }
 
 .countdown {
-  display: flex;
+  display: block;
   align-items: center;
   gap: 4px;
   font-size: var(--font-size-large);
   font-weight: var(--font-weight-semiBold);
-  /* width: 110px; */
+  width: 6em;
+  text-align: left;
+}
+
+.optionsContainer {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.optionCard {
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin: 0;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: var(--box-color);
+  width: calc(33% - 20px);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
 }
 
 .optionImage {
   width: 100%;
+  padding-bottom: calc(100% / 3 * 2);
+  height: 0;
+  overflow: hidden;
+}
+
+.optionImage img {
+  display: block;
+  width: 100%;
   height: auto;
-  border-radius: 5px;
-  margin-top: 10px;
-  margin: 0;
+}
+
+.searchIcon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.searchIcon img {
+  width: 21px;
+  height: 21px;
+}
+
+.optionInfoBox {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
 }
 
 .optionTitle {
@@ -121,6 +175,10 @@
   font-size: var(--font-weight-extraBold);
   font-weight: var(--font-weight-normal);
   margin: 0;
+}
+
+.spacer {
+  margin: auto;
 }
 
 .submitOverlay {
@@ -155,4 +213,48 @@
   height: 20px;
   width: auto;
   cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .optionCard {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .PollDetails {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .optionsContainer {
+    flex-direction: column;
+  }
+
+  .optionCard {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .PollDetails {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .projectHeader {
+    font-size: var(--font-size-large);
+  }
+
+  .optionCard {
+    width: 100%;
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  .optionTitle {
+    font-size: var(--font-size-medium);
+  }
 }

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
-import "../components/Dashboard.css"; // Import dashboard specific styles
+import "../components/Dashboard.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -144,7 +144,9 @@ function DashboardPage() {
                   {vote.image && <img src={vote.image} alt={vote.title} />}
                   <h2>{vote.title}</h2>
                   <p className="projectDescription">{vote.description}</p>
-                  <p className="optionHeadline">Total Votes for this option: {vote.counter}</p>
+                  <p className="optionHeadline">
+                    Total Votes for this option: {vote.counter}
+                  </p>
                 </div>
               ))
             ) : (
@@ -157,7 +159,11 @@ function DashboardPage() {
           <div className="projectsContainer">
             {fan.favoritCreators && fan.favoritCreators.length > 0 ? (
               fan.favoritCreators.map((creator) => (
-                <Link to={`/creators/${creator._id}`} key={creator._id} className="projectCard">
+                <Link
+                  to={`/creators/${creator._id}`}
+                  key={creator._id}
+                  className="projectCard"
+                >
                   <div>
                     <img src={creator.image} alt={creator.name} />
                     <h2>{creator.name}</h2>
