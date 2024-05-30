@@ -276,7 +276,7 @@ function ProjectDetailPage() {
             {user &&
               currentProject.creator &&
               user._id === currentProject.creator._id && (
-                <div className="detailPageButtons">
+                <div className="buttonGroup">
                   <button
                     className="button buttonSmall buttonReverse"
                     onClick={handleEditClick}

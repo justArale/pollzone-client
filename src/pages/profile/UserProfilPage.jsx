@@ -1,8 +1,10 @@
 import "../../components/UserProfilPage.css";
 import editIcon from "../../assets/icons/edit.svg";
+import deleteIcon from "../../assets/icons/delete.svg";
 import defaultProfilePicture from "../../assets/images/defaultProfilPicture.png";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { AuthContext } from "../../context/auth.context";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,9 +14,13 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function UserProfilPage() {
   const [userProfile, setUserProfile] = useState(null);
+  const { isLoggedIn, logOutUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(undefined);
+
+  const notifyDelete = () => toast("Successfully deleted!");
 
   useEffect(() => {
     const getUser = () => {
@@ -41,6 +47,30 @@ function UserProfilPage() {
 
     getUser();
   }, [user._id, user.role]);
+
+  const handleDeleteClick = async () => {
+    try {
+      const storedToken = localStorage.getItem("authToken");
+
+      const response = await axios.delete(
+        userProfile.role === "creators"
+          ? `${API_URL}/api/creators/${userProfile._id}`
+          : `${API_URL}/api/fans/${userProfile._id}`,
+
+        {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        }
+      );
+
+      console.log("Deleted:", response.data);
+      notifyDelete();
+      logOutUser();
+      navigate(`/`);
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      setErrorMessage("An error occurred while deleting the user.");
+    }
+  };
 
   if (errorMessage) return <div>{errorMessage}</div>;
 
@@ -101,11 +131,20 @@ function UserProfilPage() {
               </div>
             </div>
           )}
-          <Link to={"/profile/edit"} className="detailPageButtons">
-            <button className="button buttonSmall buttonReverse">
-              <img src={editIcon} alt="Edit Icon" /> Edit Profile
+          <div className="buttonGroup">
+            <Link to={"/profile/edit"} className="detailPageButtons">
+              <button className="button buttonSmall buttonReverse">
+                <img src={editIcon} alt="Edit Icon" /> Edit
+              </button>
+            </Link>
+
+            <button
+              className="button buttonSmall buttonDelete"
+              onClick={handleDeleteClick}
+            >
+              <img src={deleteIcon} alt="Delete Icon" /> Delete
             </button>
-          </Link>
+          </div>
         </div>
       )}
     </div>

@@ -126,7 +126,7 @@ h2 {
 
 .buttonDelete {
   background-color: var(--color-attention);
-  border: none;
+  border-color: var(--color-attention);
 }
 .buttonFontMedium {
   font-size: var(--font-size-medium);
