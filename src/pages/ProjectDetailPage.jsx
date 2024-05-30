@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import deleteIcon from "../assets/icons/delete.svg";
 import editIcon from "../assets/icons/edit.svg";
 import searchIcon from "../assets/icons/search.svg";
+import checkIcon from "../assets/icons/check.svg";
 import closeIcon from "../assets/icons/close.svg";
 import CreatorCard from "../components/CreatorCard";
 
@@ -87,18 +88,24 @@ function ProjectDetailPage() {
 
   const checkIfUserHasVoted = (options) => {
     if (currentUser && currentUser.votes) {
-      const userVotes = currentUser.votes.map((vote) => {
-        setUserChoice(vote._id);
-        console.log(typeof userChoice);
-        console.log(userChoice);
+      const userVotes = currentUser.votes.map((vote) => vote._id.toString());
 
-        vote._id.toString();
-      });
+      // Prüfen, ob der Benutzer für eine der Optionen gestimmt hat
       const userHasVoted = options.some((option) => {
         const optionId = option._id.toString();
-
         return userVotes.includes(optionId);
       });
+
+      // Setzen Sie userChoice, wenn der Benutzer abgestimmt hat
+      if (userHasVoted) {
+        const votedOption = options.find((option) =>
+          userVotes.includes(option._id.toString())
+        );
+        if (votedOption) {
+          setUserChoice(votedOption._id.toString());
+        }
+      }
+
       setHasVoted(userHasVoted);
     }
   };
@@ -320,7 +327,14 @@ function ProjectDetailPage() {
             <div className="optionsContainer">
               {currentProject.options && currentProject.options.length > 0 ? (
                 currentProject.options.map((option, index) => (
-                  <div key={index} className="optionCard">
+                  <div
+                    key={index}
+                    className={`optionCard ${
+                      hasVoted &&
+                      userChoice === option._id.toString() &&
+                      "votedCard"
+                    }`}
+                  >
                     {option.image && (
                       <div className="optionImage">
                         <img src={option.image} alt={option.title} />
@@ -344,8 +358,8 @@ function ProjectDetailPage() {
                       <div>
                         {user && user.role === "fans" && (
                           <button
-                            className={`button buttonSmall buttonVote ${
-                              hasVoted || isVotingClosed ? "buttonClosed" : ""
+                            className={`button buttonSmall ${
+                              isVotingClosed ? "buttonClosed" : ""
                             }`}
                             onClick={
                               hasVoted || isVotingClosed
@@ -354,12 +368,18 @@ function ProjectDetailPage() {
                             }
                             disabled={hasVoted || isVotingClosed}
                           >
-                            {hasVoted
-                              ? userChoice == option._id.toString() &&
-                                "You voted this"
-                              : isVotingClosed
-                              ? "Voting Closed"
-                              : "Vote this!"}
+                            {hasVoted ? (
+                              userChoice === option._id.toString() ? (
+                                <div className="detailPageButtons">
+                                  <img src={checkIcon} alt="Check icon" />
+                                  You voted this
+                                </div>
+                              ) : null
+                            ) : isVotingClosed ? (
+                              "Voting Closed"
+                            ) : (
+                              "Vote this!"
+                            )}
                           </button>
                         )}
                       </div>
@@ -400,7 +420,7 @@ function ProjectDetailPage() {
 
       {isImageFocusOpen && (
         <div className="submitOverlay" onClick={closeModal}>
-          <div className="submitModal">
+          <div className="submitModal bigImageModel">
             <img
               src={closeIcon}
               alt="close Icon"

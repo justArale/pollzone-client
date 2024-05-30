@@ -1,5 +1,6 @@
 import "../../components/UserProfilPage.css";
 import editIcon from "../../assets/icons/edit.svg";
+import defaultProfilePicture from "../../assets/images/defaultProfilPicture.png";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
@@ -51,7 +52,11 @@ function UserProfilPage() {
         <div className="userDetail">
           <div className="userCard">
             <img
-              src={userProfile.image || ""}
+              src={
+                userProfile.image === ""
+                  ? defaultProfilePicture
+                  : userProfile.image
+              }
               alt="profile-photo"
               className="userImageCard"
             />

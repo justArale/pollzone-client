@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 import "../components/CreatorDetailPage.css"; // Import the CSS file
@@ -9,7 +9,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 function CreatorDetailPage() {
   const { user, authenticateUser } = useContext(AuthContext);
   const { creatorId } = useParams();
-  const navigate = useNavigate();
   const [currentCreator, setCurrentCreator] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -60,7 +59,8 @@ function CreatorDetailPage() {
     } catch (error) {
       console.error("Error fetching user data:", error);
       const errorDescription =
-        error.response?.data?.message || "An error occurred while fetching user data";
+        error.response?.data?.message ||
+        "An error occurred while fetching user data";
       setErrorMessage(errorDescription);
     }
   };
@@ -107,42 +107,57 @@ function CreatorDetailPage() {
   }
 
   return (
-    <div className="container">
-      {currentCreator.image && (
-        <img
-          src={currentCreator.image}
-          alt={currentCreator.name}
-          className="image"
-        />
-      )}
+    <div>
+      {currentCreator && (
+        <div className="userDetail">
+          <div className="flexTry">
+            <div className="userCard">
+              <img
+                src={currentCreator.image || ""}
+                alt="profile-photo"
+                className="userImageCard"
+              />
+              <div>
+                <h1 className="userName">{currentCreator.name}</h1>
+                <p className="userRole">
+                  {currentCreator.role.charAt(0).toUpperCase() +
+                    currentCreator.role.slice(
+                      1,
+                      currentCreator.role.length - 1
+                    )}
+                </p>
+              </div>
+            </div>
+            <div className="buttonContainer">
+              {user && user.role === "fans" && (
+                <button
+                  onClick={handleFollowToggle}
+                  className={`button buttonLarge buttonFontMedium ${
+                    isFollowing ? "unfollow" : "follow"
+                  }`}
+                >
+                  {isFollowing ? "Unfollow" : `Follow`}
+                </button>
+              )}
+            </div>
+          </div>
 
-      <h1 className="name">{currentCreator.name}</h1>
-      <p className="description">{currentCreator.description}</p>
-      <h2 className="subheader">
-        Followers: {currentCreator.fans?.length || 0}
-      </h2>
-      <h2 className="subheader">Social Media</h2>
-      {currentCreator.socialMedia &&
-        currentCreator.socialMedia.map((link, index) => (
-          <a
-            key={index}
-            href={link}
-            className="socialLink"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {link}
-          </a>
-        ))}
-      {user && user.role === "fans" && (
-        <button
-          onClick={handleFollowToggle}
-          className={`followButton ${isFollowing ? "unfollow" : "follow"}`}
-        >
-          {isFollowing
-            ? "Unfollow"
-            : `Follow ${currentCreator.name} on PollZone!`}
-        </button>
+          <h2 className="subheader">
+            Followers: {currentCreator.fans?.length || 0}
+          </h2>
+          <div>
+            <p>Find me elsewhere:</p>
+
+            {currentCreator.socialMedia &&
+              currentCreator.socialMedia.map((link, index) => (
+                <p key={index} className="webpageLink">
+                  <a href={link} target="_blank" rel="noopener noreferrer">
+                    {link}
+                  </a>
+                </p>
+              ))}
+          </div>
+        </div>
       )}
     </div>
   );
