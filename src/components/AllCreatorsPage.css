@@ -30,7 +30,7 @@
 
 .followers {
   font-size: 1rem;
-  color: #777;
+  color: var(--overlay-background-color);
 }
 
 .link {
@@ -79,14 +79,14 @@
 .allCreatorCard h2 {
   font-size: var(--font-size-ml);
   font-weight: var(--font-weight-bold);
-  color: #333;
+  color: var(--color-black);
   margin-bottom: 0px;
 }
 
 .allCreatorCard p {
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-normal);
-  color: #686868;
+  color: var(--overlay-background-color);
   margin: 5px 0;
 }
 
