@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 import "../components/CreatorDetailPage.css"; // Import the CSS file
+import defaultImage from "../assets/images/defaultProfilPicture.png";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -113,7 +114,7 @@ function CreatorDetailPage() {
           <div className="flexTry">
             <div className="userCard">
               <img
-                src={currentCreator.image || ""}
+                src={currentCreator.image || defaultImage}
                 alt="profile-photo"
                 className="userImageCard"
               />
