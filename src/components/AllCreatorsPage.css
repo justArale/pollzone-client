@@ -2,7 +2,7 @@
 
 .filterContainer {
   display: flex;
-  justify-content: space-between; /* Änderung */
+  justify-content: right;
   align-items: center;
   margin-top: 20px;
   margin-bottom: 40px;
@@ -20,7 +20,7 @@
   font-family: "Unbounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji";
-  width: 200px; /* Breite des Dropdown-Menüs festlegen */
+  width: 200px;
 }
 
 .name {
@@ -41,7 +41,7 @@
 .allCreatorContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-around; /* Änderung */
+  justify-content: space-around;
   flex-wrap: wrap;
   gap: 24px;
 }
@@ -98,27 +98,29 @@
 }
 
 @media (max-width: 768px) {
+  .filterContainer {
+    align-items: center;
+    justify-content: center;
+  }
+
   .allCreatorContainer {
     flex-direction: column;
-    align-items: center; /* Änderung */
+    align-items: center;
+    justify-content: right;
   }
 
   .allCreatorCard {
-    width: calc(50% - 20px); /* Änderung */
-    margin-bottom: 20px; /* Hinzufügung */
+    width: calc(50% - 20px);
+    margin-bottom: 20px;
   }
 
   .filterContainer {
     flex-direction: column;
-    align-items: flex-start; /* Änderung */
+    align-items: flex-start;
   }
 
   .labelCategory {
-    margin-bottom: 10px; /* Hinzufügung */
-  }
-
-  .select {
-    width: 100%; /* Vollständige Breite auf mobilen Geräten */
+    margin-bottom: 10px;
   }
 }
 
