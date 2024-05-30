@@ -6,6 +6,7 @@ import logo from "../assets/images/LogoPollZone.png";
 import LoginForm from "../components/LogInForm";
 import SignUpForm from "../components/SignUpForm";
 import axios from "axios";
+import defaultImage from "../assets/images/defaultProfilPicture.png"
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -83,6 +84,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
   const [name, setName] = useState("");
   const [role, setRole] = useState("fans");
   const [category, setCategory] = useState("");
+  const [image, setImage] = useState(defaultImage)
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
@@ -115,7 +117,7 @@ function Overlay({ isLogin, onClose, onSwitch }) {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { email, password, name, role, category };
+    const requestBody = { email, password, name, role, category,  image };
 
     axios
       .post(`${API_URL}/auth/signup`, requestBody)

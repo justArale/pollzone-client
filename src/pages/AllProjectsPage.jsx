@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../components/AllProjectsPage.css"; // Import the CSS file
 import CreatorCard from "../components/CreatorCard";
+import defaultImage from "../assets/images/defaultProfilPicture.png"
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -41,7 +42,7 @@ function AllProjectsPage() {
               <div className="creatorBoxAllProjects">
                 {project.creator.image && (
                   <img
-                    src={project.creator.image}
+                    src={project.creator.image || defaultImage}
                     alt={`${project.title}'s profile`}
                   />
                 )}
