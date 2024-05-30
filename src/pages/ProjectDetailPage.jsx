@@ -30,6 +30,7 @@ function ProjectDetailPage() {
   const [currentUser, setCurrentUser] = useState({});
   const [timer, setTimer] = useState("");
   const [isVotingClosed, setIsVotingClosed] = useState(false);
+  const [highestVote, setHighestVote] = useState();
 
   const notifySubmit = () =>
     toast("You submitted your vote successfully, SWEET!");
@@ -109,6 +110,20 @@ function ProjectDetailPage() {
       setHasVoted(userHasVoted);
     }
   };
+
+  useEffect(() => {
+    if (currentProject && currentProject.options) {
+      let mostVotes = 0;
+      currentProject.options.forEach((option) => {
+        if (option.counter > mostVotes) {
+          mostVotes = option._id;
+        }
+      });
+      console.log(mostVotes);
+
+      setHighestVote(mostVotes);
+    }
+  }, [currentProject]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -324,15 +339,17 @@ function ProjectDetailPage() {
                 <span className="spanTime">Voting ended</span>
               )}
             </div>
+
             <div className="optionsContainer">
               {currentProject.options && currentProject.options.length > 0 ? (
                 currentProject.options.map((option, index) => (
                   <div
                     key={index}
                     className={`optionCard ${
-                      hasVoted &&
-                      userChoice === option._id.toString() &&
-                      "votedCard"
+                      (hasVoted && userChoice === option._id.toString()) ||
+                      (currentProject.creator._id === currentUser._id &&
+                        highestVote === option._id &&
+                        "votedCard")
                     }`}
                   >
                     {option.image && (
@@ -381,6 +398,25 @@ function ProjectDetailPage() {
                               "Vote this!"
                             )}
                           </button>
+                        )}
+                        {currentProject.creator._id === currentUser._id && (
+                          <div>
+                            <p className="font12SemiBoldGrey upperCase">
+                              results:
+                            </p>
+
+                            {option.counter === 0 ? (
+                              <p className="font24ExtraBold">No Votes</p>
+                            ) : option.counter === 1 ? (
+                              <p className="font24ExtraBold">
+                                {option.counter} Vote
+                              </p>
+                            ) : (
+                              <p className="font24ExtraBold">
+                                {option.counter} Votes
+                              </p>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>

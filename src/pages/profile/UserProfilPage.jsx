@@ -105,7 +105,7 @@ function UserProfilPage() {
             </p>
           </div>
           <div>
-            <p>Webside :</p>
+            <p>Website:</p>
 
             {userProfile.socialMedia &&
               userProfile.socialMedia.map((link, index) => (
