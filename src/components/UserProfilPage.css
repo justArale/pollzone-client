@@ -11,8 +11,8 @@
 }
 
 .userImageCard {
-  width: 96px;
-  height: 96px;
+  width: 142px;
+  height: 142px;
   border-radius: 50%;
   object-fit: cover;
 }

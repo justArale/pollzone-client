@@ -1,66 +1,110 @@
-
 /* card css */
 
 .allProjectsContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.allProjectsCard {
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 32px;
+  margin: 0;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: var(--box-color);
+  width: calc(33% - 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-decoration: none;
+  text-align: center;
+  color: black;
+}
+
+.allProjectsCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.allProjectsCard img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: flex-start;
+}
+
+.allProjectsCard h2 {
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-bold);
+  margin: 10px;
+}
+
+.allProjectsCard p {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-normal);
+  margin: 10px;
+}
+
+.creatorBoxAllProjects {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.boldName {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .allProjectsContainer {
     flex-wrap: wrap;
-    gap: 24px;
   }
-  
-  .allProjectsCard {
-    border-radius: 20px;
-    box-sizing: border-box;
-    padding: 32px;
-    margin: 0;
-    transition: transform 0.3s, box-shadow 0.3s;
-    background-color: var(--box-color);
-    width: calc(33% - 20px);
-    display: flex;
+
+  .allCreatorCard {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .filterContainer {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .allProjectsContainer {
     flex-direction: column;
-    justify-content: flex-start;
-    text-decoration: none;
-    text-align: center;
-    color: black;
-  }
-  
-  .allProjectsCard:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-  }
-  
-  .allProjectsCard img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    align-self: flex-start;
+    align-items: center;
+    justify-content: right;
   }
 
-
-  .allProjectsCard h2 {
-    font-size: var(--font-size-ml);
-    font-weight: var(--font-weight-bold);
-    margin: 10px;
+  .allProjectsCard {
+    width: calc(50% - 20px);
+    margin-bottom: 20px;
   }
 
-  .allProjectsCard p {
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-normal);
-    margin: 10px;
+  .filterContainer {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .creatorBoxAllProjects {
-    display: flex;
-    flex-direction: row;
-    align-items:baseline;
-    justify-content: flex-start;
-    text-align: left;
-    margin-bottom: 30px;
+  .labelCategory {
+    margin-bottom: 10px;
   }
+}
 
-  .boldName {
-    font-weight: var(--font-weight-bold);
+@media (max-width: 480px) {
+  .allProjectsCard {
+    width: 100%;
+    padding: 20px;
+    margin: 20px 0;
   }
+}

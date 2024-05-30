@@ -79,6 +79,12 @@ h2 {
   margin: 0;
 }
 
+.font12BoldGrey {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  color: var(--overlay-background-color);
+}
+
 .font16RegularGrey {
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-normal);
@@ -97,9 +103,22 @@ h2 {
   color: var(--overlay-background-color);
 }
 
+.font24bold {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-semiBold);
+  margin: 0;
+}
+
 .font24ExtraBold {
   font-size: var(--font-size-large);
   font-weight: var(--font-weight-extraBold);
+  margin: 0;
+}
+
+.font40Bold {
+  font-size: var(--font-size-xlarge);
+  font-weight: var(--font-weight-semiBold);
+  margin: 0;
 }
 
 .button {
@@ -127,11 +146,12 @@ h2 {
 .buttonReverse {
   color: var(--color-black);
   background-color: var(--color-white);
+  border: 2px solid black;
 }
 
 .buttonSubmit {
   background-color: var(--highlight-color);
-  border: none;
+  border: 2px solid #b8e6d6;
   color: var(--color-black);
 }
 
@@ -142,7 +162,7 @@ h2 {
 
 .buttonDelete {
   background-color: var(--color-attention);
-  border-color: var(--color-attention);
+  border: 2px solid #cc0044;
 }
 .buttonFontMedium {
   font-size: var(--font-size-medium);

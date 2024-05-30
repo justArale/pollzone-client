@@ -64,3 +64,17 @@
   height: 32px;
   width: auto;
 }
+
+@media (max-width: 480px) {
+  .headerBar {
+    padding: 0 10px;
+  }
+
+  .linkNavbar {
+    font-size: var(--font-size-smallest);
+  }
+
+  .logo {
+    height: 20px;
+  }
+}

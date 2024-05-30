@@ -312,14 +312,14 @@ function ProjectDetailPage() {
                 user._id === currentProject.creator._id) ||
               (isVotingClosed &&
                 new Date(currentProject.startDate) < new Date()) ? (
-                <h3 className="voteInfo">Results</h3>
+                <h3 className="font24ExtraBold">Results</h3>
               ) : !isVotingClosed &&
                 new Date(currentProject.startDate) > new Date() ? (
-                <h3 className="voteInfo">
+                <h3 className="font24ExtraBold">
                   Voting Start: {formatDate(currentProject.startDate)}
                 </h3>
               ) : (
-                <h3 className="voteInfo">Vote now</h3>
+                <h3 className="font24ExtraBold">Vote now</h3>
               )}
               {!isVotingClosed &&
               new Date(currentProject.startDate) < new Date() ? (

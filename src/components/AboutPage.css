@@ -1,12 +1,23 @@
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-  }
-  
-.aboutPara {
-    font-weight: var(--font-weight-normal);
-    font-size: var(--font-size-small);
-    margin: 15px 0 45px;
+.aboutCard {
+  width: calc(50% - 20px);
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin: 0;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: var(--box-color);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+}
+
+.aboutDescription {
+  width: calc(70%);
+}
+
+.projectDescription a {
+  text-decoration: none;
+  color: var(--color-black);
+  font-weight: var(--font-weight-semiBold);
 }
