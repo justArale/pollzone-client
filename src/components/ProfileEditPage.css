@@ -1,0 +1,68 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 70%;
+}
+
+.headlineCreateProject {
+  font-size: var(--font-size-xlarge);
+  font-weight: var(--font-weight-extraBold);
+  margin-bottom: 30px;
+  color: var(--color-black);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 7px;
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-small);
+  color: var(--color-black);
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  box-sizing: border-box;
+  font-size: var(--font-size-medium);
+  margin: 5px;
+  color: rgb(56, 55, 55);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-thin);
+    font-family: "Unbounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji";
+}
+
+.textarea {
+  min-height: 100px;
+  min-width: 500px;
+  resize: vertical;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  box-sizing: border-box;
+  font-size: var(--font-size-small);
+  margin: 5px;
+}
+
+.submitButton {
+  width: fit-content;
+}
+
+.errorMessage {
+  color: red;
+}

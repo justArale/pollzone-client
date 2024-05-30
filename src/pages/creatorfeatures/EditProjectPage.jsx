@@ -2,6 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
+import "../../components/EditProjectPage.css"; // Import the CSS file
+import deleteIcon from "../../assets/icons/delete.svg";
+import addIcon from "../../assets/icons/add.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -43,7 +46,7 @@ function EditProjectPage() {
       setFormValues((prevValues) => ({
         ...prevValues,
         ...projectData,
-        startDate: new Date(projectData.startDate).toISOString().slice(0, 16), // Set initial value for datetime-local input
+        startDate: new Date(projectData.startDate).toISOString().slice(0, 16),
         options: projectData.options.length
           ? projectData.options
           : [{ _id: "", title: "", image: "", description: "" }],
@@ -129,7 +132,6 @@ function EditProjectPage() {
             headers: { Authorization: `Bearer ${storedToken}` },
           }
         );
-        // Update the option with the new _id
         option._id = newOptionResponse.data._id;
         return newOptionResponse;
       }
@@ -139,35 +141,27 @@ function EditProjectPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form values on submit:", formValues);
     const storedToken = localStorage.getItem("authToken");
     try {
-      // Convert local start date and time to UTC
       const localStartDate = new Date(formValues.startDate);
       const utcStartDate = localStartDate.toISOString();
-
-      // Delete the options that were removed
       await deleteOptions();
-      // Update the remaining options
       await updateOptions();
-      // Update the project
       await axios.put(
         `${API_URL}/api/creators/${creatorId}/projects/${projectId}`,
         {
           ...formValues,
-          startDate: utcStartDate, // Use UTC start date
-          options: formValues.options.map((option) => option._id), // Only send the IDs to update the project
+          startDate: utcStartDate,
+          options: formValues.options.map((option) => option._id),
         },
         {
           headers: { Authorization: `Bearer ${storedToken}` },
         }
       );
-      // Navigate to the project detail page
       navigate(`/projects/${creatorId}/${projectId}`, {
         state: { refresh: true },
       });
     } catch (error) {
-      console.error("Error details:", error.response || error);
       const errorDescription =
         error.response?.data?.message || "An error occurred";
       setErrorMessage(errorDescription);
@@ -175,11 +169,11 @@ function EditProjectPage() {
   };
 
   return (
-    <div style={styles.container}>
-      <h2>Edit Project</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.formGroup}>
-          <label htmlFor="title" style={styles.label}>
+    <div className="containerCreatePage">
+      <h2 className="headlineCreateProject">Edit Project</h2>
+      <form onSubmit={handleSubmit} className="form">
+        <div className="formGroup">
+          <label htmlFor="title" className="label">
             What's your project's name?
           </label>
           <input
@@ -189,12 +183,12 @@ function EditProjectPage() {
             value={formValues.title}
             onChange={handleInputChange}
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="description" style={styles.label}>
-            How would you describe it?
+        <div className="formGroup">
+          <label htmlFor="description" className="label">
+            Description
           </label>
           <textarea
             id="description"
@@ -202,12 +196,12 @@ function EditProjectPage() {
             value={formValues.description}
             onChange={handleInputChange}
             required
-            style={styles.textarea}
+            className="textarea"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="image" style={styles.label}>
-            Here, you can paste the URL to a header image:
+        <div className="formGroup">
+          <label htmlFor="image" className="label">
+            Image URL
           </label>
           <input
             type="text"
@@ -215,16 +209,16 @@ function EditProjectPage() {
             name="image"
             value={formValues.image}
             onChange={handleInputChange}
-            style={styles.input}
+            className="input"
           />
         </div>
         <h3>Voting Options</h3>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>
-            Here, you can add as many options as you like:
+        <div className="formGroup">
+          <label className="label">
+            You can add as many options as you like:
           </label>
           {formValues.options.map((option, index) => (
-            <div key={index} style={styles.optionGroup}>
+            <div key={index} className="optionGroup">
               <input
                 type="text"
                 placeholder="Option Title"
@@ -233,7 +227,7 @@ function EditProjectPage() {
                   handleOptionChange(index, "title", e.target.value)
                 }
                 required
-                style={styles.input}
+                className="input"
               />
               <input
                 type="text"
@@ -242,7 +236,7 @@ function EditProjectPage() {
                 onChange={(e) =>
                   handleOptionChange(index, "image", e.target.value)
                 }
-                style={styles.input}
+                className="input"
               />
               <textarea
                 placeholder="Option Description"
@@ -251,24 +245,34 @@ function EditProjectPage() {
                   handleOptionChange(index, "description", e.target.value)
                 }
                 required
-                style={styles.textarea}
+                className="textarea"
               />
-              <button
-                type="button"
-                onClick={() => removeOption(index)}
-                style={styles.removeButton}
-              >
-                Remove
-              </button>
+              <div className="buttonContainer">
+                <button
+                  type="button"
+                  onClick={() => removeOption(index)}
+                  className="button buttonSmall buttonDelete removeButton"
+                >
+                  <img src={deleteIcon} alt="-" className="addIcon" />
+                  <span>Remove</span>
+                </button>
+              </div>
             </div>
           ))}
-          <button type="button" onClick={addOption} style={styles.addButton}>
-            Add Option
-          </button>
+          <div>
+            <button
+              type="button"
+              onClick={addOption}
+              className="button buttonSmall addButton"
+            >
+              <img src={addIcon} alt="+" className="addIcon" />
+              <span>Add Option</span>
+            </button>
+          </div>
         </div>
         <h3>Schedule Voting</h3>
-        <div style={styles.formGroup}>
-          <label htmlFor="timeCount" style={styles.label}>
+        <div className="formGroup">
+          <label htmlFor="timeCount" className="label">
             For how long can your fans vote? (in hours)
           </label>
           <input
@@ -279,11 +283,11 @@ function EditProjectPage() {
             onChange={handleInputChange}
             min="1"
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label htmlFor="startDate" style={styles.label}>
+        <div className="formGroup">
+          <label htmlFor="startDate" className="label">
             When should your voting start?
           </label>
           <input
@@ -293,100 +297,18 @@ function EditProjectPage() {
             value={formValues.startDate}
             onChange={handleInputChange}
             required
-            style={styles.input}
+            className="input"
           />
         </div>
-        {/* <div style={styles.formGroup}>
-          <label style={styles.label}>
-            <input
-              type="checkbox"
-              name="inProgress"
-              checked={formValues.inProgress}
-              onChange={(e) =>
-                setFormValues((prevValues) => ({
-                  ...prevValues,
-                  inProgress: e.target.checked,
-                }))
-              }
-              style={styles.checkbox}
-            />
-            Release immediately after creating
-          </label>
-        </div> */}
-        <button type="submit" style={styles.submitButton}>
-          Update Project
-        </button>
+        <div className="submitButton">
+          <button type="submit" className="button buttonLarge">
+            Update Project
+          </button>
+        </div>
       </form>
-      {errorMessage && <div style={styles.errorMessage}>{errorMessage}</div>}
+      {errorMessage && <div className="errorMessage">{errorMessage}</div>}
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "600px",
-    margin: "0 auto",
-    padding: "20px",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  formGroup: {
-    marginBottom: "15px",
-  },
-  label: {
-    marginBottom: "5px",
-    fontWeight: "bold",
-  },
-  input: {
-    width: "100%",
-    padding: "8px",
-    boxSizing: "border-box",
-  },
-  textarea: {
-    width: "100%",
-    padding: "8px",
-    boxSizing: "border-box",
-    minHeight: "100px",
-  },
-  optionGroup: {
-    marginBottom: "15px",
-    padding: "10px",
-    border: "1px solid #ddd",
-    borderRadius: "5px",
-  },
-  addButton: {
-    padding: "10px",
-    backgroundColor: "#28a745",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-  removeButton: {
-    padding: "10px",
-    backgroundColor: "grey",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-  submitButton: {
-    padding: "10px",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-  errorMessage: {
-    color: "red",
-    marginTop: "10px",
-  },
-  checkbox: {
-    marginRight: "10px",
-  },
-};
 
 export default EditProjectPage;

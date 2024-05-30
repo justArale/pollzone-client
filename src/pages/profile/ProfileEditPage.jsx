@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
+import "../../components/ProfileEditPage.css"; // Import the CSS file
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -102,11 +103,11 @@ function ProfileEditPage() {
   };
 
   return (
-    <div style={styles.formContainer}>
-      <h1>Edit Profile</h1>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div style={styles.formGroup}>
+    <div className="formContainer">
+      <h2 className="headlineCreateProject">Edit Profile</h2>
+      {errorMessage && <p className="errorMessage">{errorMessage}</p>}
+      <form onSubmit={handleSubmit} className="form">
+        <div className="formGroup">
           <label htmlFor="name">Name:</label>
           <input
             type="text"
@@ -114,10 +115,10 @@ function ProfileEditPage() {
             name="name"
             value={formValues.name}
             onChange={handleInputChange}
-            style={styles.input}
+            className="input"
           />
         </div>
-        <div style={styles.formGroup}>
+        <div className="formGroup">
           <label htmlFor="image">Image URL:</label>
           <input
             type="text"
@@ -125,29 +126,29 @@ function ProfileEditPage() {
             name="image"
             value={formValues.image}
             onChange={handleInputChange}
-            style={styles.input}
+            className="input"
           />
         </div>
         {user.role === "creators" && (
           <>
-            <div style={styles.formGroup}>
+            <div className="formGroup">
               <label htmlFor="description">Description:</label>
               <textarea
                 id="description"
                 name="description"
                 value={formValues.description}
                 onChange={handleInputChange}
-                style={{ ...styles.input, ...styles.textarea }}
+                className="textarea"
               />
             </div>
-            <div style={styles.formGroup}>
+            <div className="formGroup">
               <label htmlFor="category">What's your niche?</label>
               <select
                 id="category"
                 name="category"
                 value={formValues.category}
                 onChange={handleInputChange}
-                style={styles.input}
+                className="input"
               >
                 <option value="" disabled>
                   Choose category
@@ -172,95 +173,39 @@ function ProfileEditPage() {
             </div>
           </>
         )}
-        <div style={styles.formGroup}>
-          <label>Social Media Links:</label>
+        <div className="formGroup">
+          <label>Link to other platforms:</label>
           {formValues.socialMedia.map((link, index) => (
-            <div key={index} style={styles.socialMediaGroup}>
+            <div key={index} >
               <input
                 type="text"
                 value={link}
                 onChange={(e) => handleSocialMediaChange(index, e.target.value)}
-                style={{ ...styles.input, marginRight: "8px" }}
+                className="input"
               />
-              <button
+              {/* <button
                 type="button"
                 onClick={() => handleRemoveSocialMedia(index)}
-                style={styles.button}
+                className="button"
               >
                 Remove
-              </button>
+              </button> */}
             </div>
           ))}
-          <button
+          {/* <button
             type="button"
             onClick={handleAddSocialMedia}
-            style={{ ...styles.button, marginTop: "8px" }}
+            className="button"
           >
             Add Social Media Link
-          </button>
+          </button> */}
         </div>
-        <button type="submit" style={styles.submitButton}>
+        <button type="submit" className="button buttonLarge submitButton">
           Save Changes
         </button>
       </form>
     </div>
   );
 }
-
-const styles = {
-  formContainer: {
-    maxWidth: "600px",
-    margin: "50px auto",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#fff",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  formGroup: {
-    marginBottom: "16px",
-    width: "100%",
-  },
-  label: {
-    display: "block",
-    marginBottom: "8px",
-    fontWeight: "600",
-    color: "#333",
-  },
-  input: {
-    width: "calc(100% - 16px)",
-    padding: "8px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-  },
-  textarea: {
-    minHeight: "100px",
-    resize: "vertical",
-  },
-  socialMediaGroup: {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "8px",
-  },
-  button: {
-    padding: "8px 16px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    backgroundColor: "#f5f5f5",
-  },
-  submitButton: {
-    padding: "8px 16px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    backgroundColor: "#007bff",
-    color: "white",
-    fontWeight: "600",
-    marginTop: "16px",
-  },
-};
 
 export default ProfileEditPage;
