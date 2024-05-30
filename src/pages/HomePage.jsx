@@ -1,12 +1,12 @@
 import React from "react";
 import "../components/HomePage.css";
 
-function HomePage() {
+function HomePage({ handleLoginClick }) {
   return (
     <div className="homePageWrapper">
       <div className="cover"></div>
       <h1 className="headerDescription">
-        Simple polls to engage with your commuity
+        Simple polls to engage with your community
       </h1>
       <div className="boxWrapper">
         <div className="box">
@@ -16,7 +16,7 @@ function HomePage() {
             participate in your decisions.
           </p>
           <div></div>
-          <button className="button buttonLarge">Create a poll</button>
+          <button className="button buttonLarge" onClick={handleLoginClick}>Create a poll</button>
         </div>
 
         <div className="box">
@@ -26,7 +26,7 @@ function HomePage() {
             projects you like.
           </p>
           <div></div>
-          <button className="button buttonLarge">Start Voting</button>
+          <button className="button buttonLarge" onClick={handleLoginClick}>Start Voting</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "../components/AllCreatorsPage.css"; // Import the CSS file
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -43,15 +44,15 @@ function AllCreatorsPage() {
     <div>
       {errorMessage && <p>{errorMessage}</p>}
 
-      <div style={styles.filterContainer}>
-        <label htmlFor="category" style={styles.label}>
+      <div className="filterContainer">
+        <label htmlFor="category" className="labelCategory">
           Filter by Category:
         </label>
         <select
           id="category"
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          style={styles.select}
+          className="select"
         >
           <option value="">All</option>
           {[
@@ -73,25 +74,18 @@ function AllCreatorsPage() {
         </select>
       </div>
 
-      <div style={styles.container}>
+      <div className="allCreatorContainer">
         {filteredCreators.map((creator) => (
           <Link
             to={`/creators/${creator._id}`}
-            style={styles.link}
+            className="allCreatorCard"
             key={creator._id}
           >
-            <div style={styles.creatorCard}>
-              {creator.image ? (
-                <img
-                  src={creator.image}
-                  alt={`${creator.name}'s profile`}
-                  style={styles.image}
-                />
-              ) : (
-                <div style={styles.placeholderImage}>No Image Available</div>
-              )}
-              <h1 style={styles.name}>{creator.name}</h1>
-              <p style={styles.followers}>Followers: {creator.fans.length}</p>
+            <img src={creator.image} alt={`${creator.name}'s profile`} />
+            <div>
+              <h2>{creator.name}</h2>
+              <p>Follower: {creator.fans.length}</p>
+              <p>Total Polls: {creator.projects.length}</p>
             </div>
           </Link>
         ))}
@@ -99,72 +93,5 @@ function AllCreatorsPage() {
     </div>
   );
 }
-
-const styles = {
-  filterContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "20px",
-    marginBottom: "20px",
-  },
-  label: {
-    marginRight: "10px",
-    fontWeight: "bold",
-  },
-  select: {
-    padding: "8px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-  },
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: "16px",
-    marginTop: "20px",
-  },
-  creatorCard: {
-    border: "1px solid #ccc",
-    padding: "16px",
-    margin: "16px",
-    borderRadius: "8px",
-    textAlign: "center",
-    width: "200px",
-    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-  },
-  image: {
-    width: "100px",
-    height: "100px",
-    borderRadius: "50%",
-    objectFit: "cover",
-    margin: "0 auto 16px",
-  },
-  placeholderImage: {
-    width: "100px",
-    height: "100px",
-    borderRadius: "50%",
-    backgroundColor: "#ccc",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#fff",
-    margin: "0 auto 16px",
-    fontSize: "12px",
-    textAlign: "center",
-  },
-  name: {
-    fontSize: "1.2rem",
-    marginTop: "10px",
-  },
-  followers: {
-    fontSize: "1rem",
-    color: "#777",
-  },
-  link: {
-    textDecoration: "none", // Removed link decoration
-    color: "inherit", // Inherit color
-  },
-};
 
 export default AllCreatorsPage;

@@ -9,20 +9,9 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-function Navbar() {
-  const location = useLocation();
-  const { isLoggedIn, logOutUser } = useContext(AuthContext);
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-
-  const handleLoginClick = () => {
-    setIsLogin(true);
-    setIsOverlayOpen(true);
-  };
-
-  const handleCloseOverlay = () => {
-    setIsOverlayOpen(false);
-  };
+function Navbar({ isOverlayOpen, handleLoginClick, handleCloseOverlay, isLogin, setIsLogin }) {
+    const location = useLocation();
+    const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
   return (
     <>

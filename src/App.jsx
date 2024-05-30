@@ -18,15 +18,33 @@ import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 
 import { ToastContainer, toast } from "react-toastify";
+import { useState } from "react";
 
 function App() {
+
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const handleLoginClick = () => {
+    setIsLogin(true);
+    setIsOverlayOpen(true);
+  };
+
+  const handleCloseOverlay = () => {
+    setIsOverlayOpen(false);
+  };
+
   return (
     <div className="page">
-      <Navbar />
+      <Navbar isOverlayOpen={isOverlayOpen}
+          handleLoginClick={handleLoginClick}
+          handleCloseOverlay={handleCloseOverlay}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}/>
       <div>
         <ToastContainer />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage handleLoginClick={handleLoginClick}/>} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<AllProjectsPage />} />

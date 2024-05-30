@@ -162,12 +162,11 @@ function DashboardPage() {
                 <Link
                   to={`/creators/${creator._id}`}
                   key={creator._id}
-                  className="projectCard"
-                >
+                  className="favCreatorCard"
+                ><img src={creator.image} alt={creator.name} />
                   <div>
-                    <img src={creator.image} alt={creator.name} />
                     <h2>{creator.name}</h2>
-                    <p>{creator.description}</p>
+                    <p>Follower: {creator.fans.length}</p>
                   </div>
                 </Link>
               ))
