@@ -68,6 +68,17 @@ h2 {
   margin: 0;
 }
 
+.upperCase {
+  text-transform: uppercase;
+}
+
+.font12SemiBoldGrey {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semiBold);
+  color: var(--overlay-background-color);
+  margin: 0;
+}
+
 .font16RegularGrey {
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-normal);
@@ -84,6 +95,11 @@ h2 {
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   color: var(--overlay-background-color);
+}
+
+.font24ExtraBold {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-extraBold);
 }
 
 .button {

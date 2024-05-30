@@ -137,7 +137,7 @@ function CreatorDetailPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          Webside
+                          Website
                         </a>
                       </p>
                     ))}
