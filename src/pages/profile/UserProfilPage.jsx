@@ -1,5 +1,6 @@
 import "../../components/UserProfilPage.css";
 import editIcon from "../../assets/icons/edit.svg";
+import defaultProfilePicture from "../../assets/images/defaultProfilPicture.png";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
@@ -51,7 +52,11 @@ function UserProfilPage() {
         <div className="userDetail">
           <div className="userCard">
             <img
-              src={userProfile.image || ""}
+              src={
+                userProfile.image === ""
+                  ? defaultProfilePicture
+                  : userProfile.image
+              }
               alt="profile-photo"
               className="userImageCard"
             />
@@ -70,7 +75,7 @@ function UserProfilPage() {
             </p>
           </div>
           <div>
-            <p>Social Media:</p>
+            <p>Webside</p>
             <ul>
               {userProfile.socialMedia &&
                 userProfile.socialMedia.map((link, index) => (
@@ -85,9 +90,6 @@ function UserProfilPage() {
 
           {userProfile.role === "creators" && (
             <div>
-              <p>
-                <strong>Category:</strong> {userProfile.category}
-              </p>
               <div>
                 <p>
                   <strong>Description:</strong> {userProfile.description}
