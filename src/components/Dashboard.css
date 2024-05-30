@@ -44,9 +44,10 @@
 
 .projectCard img {
   width: 100%;
-  height: auto;
-  border-radius: 5px;
+  max-height: 300px;
+  border-radius: 10px;
   margin-bottom: 10px;
+  object-fit: cover;
 }
 
 .projectCard h2 {
