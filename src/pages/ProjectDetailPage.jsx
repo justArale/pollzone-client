@@ -36,15 +36,6 @@ function ProjectDetailPage() {
     toast("You submitted your vote successfully, SWEET!");
   const notifyDelete = () => toast("Successfully deleted!");
 
-  useEffect(() => {
-    if (user) {
-      console.log("AuthContext user:", user);
-      if (user.votes) {
-        console.log("User votes:", user.votes);
-      }
-    }
-  }, [user]);
-
   const fetchUserData = async () => {
     const storedToken = localStorage.getItem("authToken");
     if (!user || !user.role || !user._id) {
@@ -252,6 +243,7 @@ function ProjectDetailPage() {
       console.log("Vote submitted:", response.data);
       setHasVoted(true);
       notifySubmit();
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting vote:", error);
       setErrorMessage("An error occurred while submitting your vote.");
