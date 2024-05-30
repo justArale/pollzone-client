@@ -89,7 +89,8 @@ function ProjectDetailPage() {
       const userVotes = currentUser.votes.map((vote) => vote._id.toString());
       const userHasVoted = options.some((option) => {
         const optionId = option._id.toString();
-        console.log("User voted:", optionId);
+        console.log("Option Id:", option._id);
+        console.log("User voted:", currentUser.votes);
         return userVotes.includes(optionId);
       });
       setHasVoted(userHasVoted);
