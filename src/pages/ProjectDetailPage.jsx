@@ -82,19 +82,23 @@ function ProjectDetailPage() {
     if (currentUser && currentUser.votes) {
       const userVotes = currentUser.votes.map((vote) => vote._id.toString());
 
-      // Prüfen, ob der Benutzer für eine der Optionen gestimmt hat
+      console.log("User votes:", userVotes);
+      console.log("Project options:", options);
+
       const userHasVoted = options.some((option) => {
         const optionId = option._id.toString();
         return userVotes.includes(optionId);
       });
 
-      // Setzen Sie userChoice, wenn der Benutzer abgestimmt hat
+      console.log("User has voted:", userHasVoted);
+
       if (userHasVoted) {
         const votedOption = options.find((option) =>
           userVotes.includes(option._id.toString())
         );
         if (votedOption) {
           setUserChoice(votedOption._id.toString());
+          console.log("User voted for option:", votedOption);
         }
       }
 
@@ -262,6 +266,19 @@ function ProjectDetailPage() {
     )}, ${date.toLocaleTimeString(undefined, timeOptions)}`;
   };
 
+  const getOptionCardClass = (option) => {
+    if (hasVoted && userChoice === option._id.toString()) {
+      return "optionCard votedCard";
+    }
+    if (
+      currentProject.creator._id === currentUser._id &&
+      highestVote === option._id
+    ) {
+      return "optionCard votedCard";
+    }
+    return "optionCard";
+  };
+
   return (
     <div>
       {isLoading ? (
@@ -335,15 +352,7 @@ function ProjectDetailPage() {
             <div className="optionsContainer">
               {currentProject.options && currentProject.options.length > 0 ? (
                 currentProject.options.map((option, index) => (
-                  <div
-                    key={index}
-                    className={`optionCard ${
-                      (hasVoted && userChoice === option._id.toString()) ||
-                      (currentProject.creator._id === currentUser._id &&
-                        highestVote === option._id &&
-                        "votedCard")
-                    }`}
-                  >
+                  <div key={index} className={getOptionCardClass(option)}>
                     {option.image && (
                       <div className="optionImage">
                         <img src={option.image} alt={option.title} />
