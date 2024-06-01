@@ -130,6 +130,7 @@ function CreatorDetailPage() {
                   </h2>
                   <div className="font16BoldGrey">•</div>
                   {currentCreator.socialMedia &&
+                  currentCreator.socialMedia.length > 0 ? (
                     currentCreator.socialMedia.map((link, index) => (
                       <p key={index} className="webpageLink font16SemiBoldGrey">
                         <a
@@ -140,7 +141,10 @@ function CreatorDetailPage() {
                           Website
                         </a>
                       </p>
-                    ))}
+                    ))
+                  ) : (
+                    <p className="webpageLink font16SemiBoldGrey">No Website</p>
+                  )}
                 </div>
               </div>
             </div>
