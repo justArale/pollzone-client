@@ -2,7 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
-import "../../components/ProfileEditPage.css"; // Import the CSS file
+import "../../components/ProfileEditPage.css";
+import fileUploadService from "../../service/file-upload.service";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -10,7 +11,7 @@ const DEFAULT_USER_FORM_VALUES = {
   name: "",
   image: "",
   description: "",
-  category: "", // Add category to the default form values
+  category: "",
   socialMedia: [""],
 };
 
@@ -18,6 +19,7 @@ function ProfileEditPage() {
   const [formValues, setFormValues] = useState(DEFAULT_USER_FORM_VALUES);
   const { user, authenticateUser } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const fetchUserData = async () => {
@@ -33,7 +35,7 @@ function ProfileEditPage() {
         name: response.data.name || "",
         image: response.data.image || "",
         description: response.data.description || "",
-        category: response.data.category || "", // Fetch category from response
+        category: response.data.category || "",
         socialMedia:
           response.data.socialMedia && response.data.socialMedia.length
             ? response.data.socialMedia
@@ -60,24 +62,33 @@ function ProfileEditPage() {
     }));
   };
 
+  const handleUploadAvatar = async (file) => {
+    try {
+      setLoading(true);
+      const fileUrl = await fileUploadService.uploadAvatar(file);
+      setLoading(false);
+      return fileUrl;
+    } catch (error) {
+      console.error("Error uploading avatar:", error);
+      setLoading(false);
+    }
+  };
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      handleUploadAvatar(file).then((fileUrl) => {
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          image: fileUrl,
+        }));
+      });
+    }
+  };
+
   const handleSocialMediaChange = (index, value) => {
     const newSocialMedia = [...formValues.socialMedia];
     newSocialMedia[index] = value;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      socialMedia: newSocialMedia,
-    }));
-  };
-
-  const handleAddSocialMedia = () => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      socialMedia: [...prevValues.socialMedia, ""],
-    }));
-  };
-
-  const handleRemoveSocialMedia = (index) => {
-    const newSocialMedia = formValues.socialMedia.filter((_, i) => i !== index);
     setFormValues((prevValues) => ({
       ...prevValues,
       socialMedia: newSocialMedia,
@@ -92,6 +103,7 @@ function ProfileEditPage() {
       await axios.put(`${API_URL}/api/${user.role}/${user._id}`, formValues, {
         headers: { Authorization: `Bearer ${storedToken}` },
       });
+
       await authenticateUser(); // Update user context
       await fetchUserData(); // Fetch updated user data
       navigate("/profile");
@@ -119,15 +131,14 @@ function ProfileEditPage() {
           />
         </div>
         <div className="formGroup">
-          <label htmlFor="image">Image URL:</label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            value={formValues.image}
-            onChange={handleInputChange}
-            className="input"
-          />
+          <h2>Upload Avatar</h2>
+          <input type="file" onChange={handleAvatarChange} />
+          {formValues.image && (
+            <div>
+              <p>Uploaded Avatar:</p>
+              <img src={formValues.image} alt="Uploaded Avatar" />
+            </div>
+          )}
         </div>
         {user.role === "creators" && (
           <>
