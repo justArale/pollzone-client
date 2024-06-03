@@ -2,9 +2,10 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
-import "../../components/EditProjectPage.css"; // Import the CSS file
+import "../../components/EditProjectPage.css";
 import deleteIcon from "../../assets/icons/delete.svg";
 import addIcon from "../../assets/icons/add.svg";
+import fileUploadService from "../../service/file-upload.service";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -25,6 +26,8 @@ function EditProjectPage() {
   const [formValues, setFormValues] = useState(DEFAULT_PROJECT_FORM_VALUES);
   const [errorMessage, setErrorMessage] = useState("");
   const [optionsToDelete, setOptionsToDelete] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,6 +67,31 @@ function EditProjectPage() {
       ...prevValues,
       [name]: value,
     }));
+  };
+
+  const handleUploadOptionImage = async (file) => {
+    try {
+      setLoading(true);
+      const fileUrl = await fileUploadService.uploadPollOptionImage(file);
+      setLoading(false);
+      return fileUrl;
+    } catch (error) {
+      console.error("Error uploading option image:", error);
+      setLoading(false);
+    }
+  };
+
+  const handleOptionImageChange = (index, file) => {
+    if (file) {
+      handleUploadOptionImage(file).then((fileUrl) => {
+        const newOptions = [...formValues.options];
+        newOptions[index].image = fileUrl;
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          options: newOptions,
+        }));
+      });
+    }
   };
 
   const handleOptionChange = (index, field, value) => {
@@ -199,19 +227,7 @@ function EditProjectPage() {
             className="textarea"
           />
         </div>
-        <div className="formGroup">
-          <label htmlFor="image" className="label">
-            Image URL
-          </label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            value={formValues.image}
-            onChange={handleInputChange}
-            className="input"
-          />
-        </div>
+
         <h3>Voting Options</h3>
         <div className="formGroup">
           <label className="label">
@@ -230,14 +246,17 @@ function EditProjectPage() {
                 className="input"
               />
               <input
-                type="text"
-                placeholder="Option Image URL"
-                value={option.image}
+                type="file"
                 onChange={(e) =>
-                  handleOptionChange(index, "image", e.target.value)
+                  handleOptionImageChange(index, e.target.files[0])
                 }
-                className="input"
               />
+              {option.image && (
+                <div>
+                  <p>Uploaded Image:</p>
+                  <img src={option.image} alt="Uploaded Image" />
+                </div>
+              )}
               <textarea
                 placeholder="Option Description"
                 value={option.description}
