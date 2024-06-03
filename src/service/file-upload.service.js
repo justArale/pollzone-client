@@ -4,11 +4,11 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5005",
 });
 
-// Upload avatar
+// Function to upload avatar
 const uploadAvatar = async (file) => {
   try {
     const fileData = new FormData();
-    fileData.append("image", file);
+    fileData.append("file", file);
     const res = await api.post("/api/upload-avatar", fileData);
     return res.data.fileUrl;
   } catch (error) {
@@ -17,11 +17,11 @@ const uploadAvatar = async (file) => {
   }
 };
 
-// Upload poll-option-image
+// Function to upload option-image
 const uploadPollOptionImage = async (file) => {
   try {
     const fileData = new FormData();
-    fileData.append("image", file);
+    fileData.append("file", file);
     const res = await api.post("/api/upload-option-image", fileData);
     return res.data.fileUrl;
   } catch (error) {
