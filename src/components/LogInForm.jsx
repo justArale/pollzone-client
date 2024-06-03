@@ -11,7 +11,7 @@ const LogInForm = ({
   onSwitch,
 }) => {
   return (
-    <div className="login-form-container">
+    <div>
       <form onSubmit={handleLoginSubmit} className="login-form">
         <h3>Log In</h3>
 
