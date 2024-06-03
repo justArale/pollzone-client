@@ -13,6 +13,8 @@ const DEFAULT_USER_FORM_VALUES = {
   description: "",
   category: "",
   socialMedia: [""],
+  oldPassword: "",
+  newPassword: "",
 };
 
 function ProfileEditPage() {
@@ -40,6 +42,8 @@ function ProfileEditPage() {
           response.data.socialMedia && response.data.socialMedia.length
             ? response.data.socialMedia
             : [""],
+        oldPassword: "",
+        newPassword: "",
       });
     } catch (error) {
       const errorDescription =
@@ -100,13 +104,39 @@ function ProfileEditPage() {
     const storedToken = localStorage.getItem("authToken");
 
     try {
-      await axios.put(`${API_URL}/api/${user.role}/${user._id}`, formValues, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-      });
+      if (formValues.oldPassword && formValues.newPassword) {
+        // Send request to change password
+        await axios.put(
+          `${API_URL}/api/${user.role}/${user._id}/change-password`,
+          {
+            oldPassword: formValues.oldPassword,
+            newPassword: formValues.newPassword,
+          },
+          {
+            headers: { Authorization: `Bearer ${storedToken}` },
+          }
+        );
 
-      await authenticateUser(); // Update user context
-      await fetchUserData(); // Fetch updated user data
-      navigate("/profile");
+        // Clear password fields
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          oldPassword: "",
+          newPassword: "",
+        }));
+
+        // Update user context and fetch updated user data
+        await authenticateUser();
+        await fetchUserData();
+        navigate("/profile");
+      } else {
+        // If oldPassword or newPassword is not provided, update user data directly
+        await axios.put(`${API_URL}/api/${user.role}/${user._id}`, formValues, {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        });
+
+        // Navigate to profile page
+        navigate("/profile");
+      }
     } catch (error) {
       const errorDescription =
         error.response?.data?.message || "An error occurred";
@@ -196,6 +226,28 @@ function ProfileEditPage() {
               />
             </div>
           ))}
+        </div>
+        <div className="formGroup">
+          <label htmlFor="oldPassword">Old Password:</label>
+          <input
+            type="password"
+            id="oldPassword"
+            name="oldPassword"
+            value={formValues.oldPassword}
+            onChange={handleInputChange}
+            className="input"
+          />
+        </div>
+        <div className="formGroup">
+          <label htmlFor="newPassword">New Password:</label>
+          <input
+            type="password"
+            id="newPassword"
+            name="newPassword"
+            value={formValues.newPassword}
+            onChange={handleInputChange}
+            className="input"
+          />
         </div>
         <button type="submit" className="button buttonLarge submitButton">
           Save Changes
