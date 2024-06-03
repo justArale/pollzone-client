@@ -307,14 +307,13 @@ function ProjectDetailPage() {
           )}
           <div className="voteDetails">
             <div className="voteInfoBox">
-              {(user &&
-                currentProject.creator &&
-                user._id === currentProject.creator._id) ||
-              (isVotingClosed &&
-                new Date(currentProject.startDate) < new Date()) ? (
+              {user &&
+              currentProject.creator &&
+              user._id === currentProject.creator._id ? (
                 <h3 className="font24ExtraBold">Results</h3>
-              ) : !isVotingClosed &&
-                new Date(currentProject.startDate) > new Date() ? (
+              ) : isVotingClosed ? (
+                <h3 className="font24ExtraBold">Results</h3>
+              ) : new Date(currentProject.startDate) > new Date() ? (
                 <h3 className="font24ExtraBold">
                   Voting Start: {formatDate(currentProject.startDate)}
                 </h3>
@@ -327,9 +326,9 @@ function ProjectDetailPage() {
                   <span className="spanTime">time left:</span>
                   <div className="countdown">{timer}</div>
                 </div>
-              ) : (
+              ) : isVotingClosed ? (
                 <span className="spanTime">Voting ended</span>
-              )}
+              ) : null}
             </div>
 
             <div className="optionsContainer">
