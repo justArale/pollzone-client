@@ -12,8 +12,6 @@
   left: 40px;
   z-index: 1;
   width: 610px;
-  font-weight: var(--font-weight-black);
-  font-size: var(--font-size-xlarge);
   color: var(--color-white);
   height: auto;
 }
@@ -44,16 +42,4 @@
   gap: 16px;
   padding: 32px;
   background-color: var(--box-color);
-}
-
-.boxHeader {
-  font-size: var(--font-size-large);
-  font-weight: var(--font-weight-extraBold);
-  margin: 0;
-}
-
-.boxDescription {
-  font-size: var(--font-size-ml);
-  font-weight: var(--font-weight-normal);
-  margin: 0;
 }

@@ -9,9 +9,11 @@
   --color-attention: #cc0044;
 
   --font-weight-thin: 100;
-  --font-weight-normal: 300;
-  --font-weight-semiBold: 500;
-  --font-weight-bold: bold;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semiBold: 600;
+  --font-weight-bold: 700;
   --font-weight-extraBold: 700;
   --font-weight-black: 900;
 
@@ -21,6 +23,14 @@
   --font-size-ml: 20px;
   --font-size-large: 24px;
   --font-size-xlarge: 40px;
+  --font-size-xxlarge: 56px;
+
+  --font-family-unbounded: "Unbounded", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji";
+  --font-family-montserrat: "Montserrat", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji";
 }
 
 html {
@@ -28,27 +38,16 @@ html {
   justify-content: center;
   align-items: center;
   gap: 48px;
-  line-height: 1.5 em;
+  letter-spacing: 0.1em;
 }
 
 body {
-  font-family: "Unbounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji";
+  font-family: var(--font-family-unbounded);
   padding: 48px 0;
   margin: 0;
   box-sizing: border-box;
-  width: 80vw;
-}
-
-.h1 {
-  margin: 0;
-  font-size: var(--font-size-xlarge);
-  font-weight: var(--font-weight-extraBold);
-}
-
-h2 {
-  margin: 0;
+  width: 73vw;
+  line-height: 1.5em;
 }
 
 ::placeholder {
@@ -60,18 +59,142 @@ h2 {
     "Segoe UI Emoji";
 }
 
-.h3 {
-  margin: 0;
-}
-
-.h4 {
-  margin: 0;
-}
-
 .upperCase {
   text-transform: uppercase;
 }
 
+.primaryColor {
+  color: var(--color-black);
+}
+
+.secondaryColor {
+  color: var(--overlay-background-color);
+}
+
+.noUnderline {
+  text-decoration: none;
+}
+
+.pageTitle {
+  font-size: var(--font-size-xlarge);
+  font-weight: var(--font-weight-extraBold);
+  margin: 0;
+  line-height: inherit;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-semiBold);
+  margin: 0;
+}
+
+.headline {
+  font-size: var(--font-size-xxlarge);
+  font-weight: var(--font-weight-light);
+  margin: 0;
+  line-height: inherit;
+}
+
+.title {
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+}
+
+.bodyLarge {
+  font-family: var(--font-family-montserrat);
+  font-size: var(--font-size-ml);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+.body {
+  font-family: var(--font-family-montserrat);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+}
+
+.bodyLink,
+.bodyLink > a {
+  font-family: var(--font-family-montserrat);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-normal);
+  margin: 0;
+  color: var(--overlay-background-color);
+  text-decoration: none;
+}
+
+.label {
+  font-family: var(--font-family-montserrat);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semiBold);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.buttonFont {
+  font-family: var(--font-family-montserrat);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.error-message {
+  color: var(--color-attention);
+}
+
+.buttonFontReverse {
+  color: var(--color-white);
+}
+
+.button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  font-family: inherit;
+}
+
+.buttonPrimaryLarge {
+  padding: 12px 24px;
+  background-color: var(--color-black);
+  border: 2px solid black;
+}
+
+.buttonPrimarySmall {
+  padding: 4px 16px;
+  background-color: var(--color-black);
+  border: 2px solid black;
+}
+
+.buttonSecondaryLarge {
+  padding: 12px 24px;
+  background-color: var(--color-white);
+  border: 2px solid black;
+}
+
+.buttonSecondarySmall {
+  padding: 4px 16px;
+  background-color: var(--color-white);
+  border: 2px solid black;
+}
+
+.buttonClosedSmall {
+  padding: 4px 16px;
+  background-color: var(--overlay-background-color);
+  border: 2px solid black;
+}
+
+.awareButtonSmall {
+  background-color: var(--color-attention);
+  border: 2px solid #cc0044;
+  padding: 4px 16px;
+}
+
+/**/
+/* 
 .font12SemiBoldGrey {
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-semiBold);
@@ -119,9 +242,9 @@ h2 {
   font-size: var(--font-size-xlarge);
   font-weight: var(--font-weight-semiBold);
   margin: 0;
-}
+} */
 
-.button {
+/* .button {
   display: inline-block;
   background-color: var(--color-black);
   border: 1px solid black;
@@ -132,9 +255,9 @@ h2 {
   cursor: pointer;
   line-height: inherit;
   margin: 0;
-}
+} */
 
-.buttonSmall {
+/* .buttonSmall {
   padding: 4px 16px;
   font-size: var(--font-size-medium);
 }
@@ -161,11 +284,7 @@ h2 {
   cursor: not-allowed;
 }
 
-.buttonDelete {
-  background-color: var(--color-attention);
-  border: 2px solid #cc0044;
-}
 .buttonFontMedium {
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
-}
+} */

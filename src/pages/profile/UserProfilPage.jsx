@@ -5,6 +5,7 @@ import defaultProfilePicture from "../../assets/images/Avatar.svg";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import defaultImage from "../../assets/images/Avatar.svg";
 
 import { AuthContext } from "../../context/auth.context";
 import { Link, useNavigate } from "react-router-dom";
@@ -82,17 +83,13 @@ function UserProfilPage() {
         <div className="userDetail">
           <div className="userCard">
             <img
-              src={
-                userProfile.image === ""
-                  ? defaultProfilePicture
-                  : userProfile.image
-              }
-              alt="profile-photo"
+              src={userProfile.image || defaultImage}
+              alt={`${user.name}'s profile`}
               className="userImageCard"
             />
             <div>
-              <h1 className="userName">{userProfile.name}</h1>
-              <p className="userRole">
+              <h1 className="headline">{userProfile.name}</h1>
+              <p className="bodyLarge secondaryColor">
                 {userProfile.role.charAt(0).toUpperCase() +
                   userProfile.role.slice(1, userProfile.role.length - 1)}
               </p>
@@ -100,12 +97,10 @@ function UserProfilPage() {
           </div>
 
           <div>
-            <p>
-              <strong>Email:</strong> {userProfile.email}
-            </p>
+            <p className="body">Email: {userProfile.email}</p>
           </div>
           <div>
-            <p>Website:</p>
+            <p className="body">Website:</p>
 
             {userProfile.socialMedia &&
               userProfile.socialMedia.map((link, index) => (
@@ -120,26 +115,22 @@ function UserProfilPage() {
           {userProfile.role === "creators" && (
             <div>
               <div>
-                <p>
-                  <strong>Description:</strong> {userProfile.description}
-                </p>
+                <p className="body">Description: {userProfile.description}</p>
               </div>
               <div>
-                <p>
-                  <strong>Follower:</strong> {userProfile.fans.length}
-                </p>
+                <p className="body">Follower:{userProfile.fans.length}</p>
               </div>
             </div>
           )}
           <div className="buttonGroup">
             <Link to={"/profile/edit"} className="detailPageButtons">
-              <button className="button buttonSmall buttonReverse">
+              <button className="button buttonSecondarySmall buttonFont">
                 <img src={editIcon} alt="Edit Icon" /> Edit
               </button>
             </Link>
 
             <button
-              className="button buttonSmall buttonDelete"
+              className="button awareButtonSmall buttonFont buttonFontReverse"
               onClick={handleDeleteClick}
             >
               <img src={deleteIcon} alt="Delete Icon" /> Delete
