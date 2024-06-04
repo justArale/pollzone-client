@@ -32,22 +32,6 @@
   /* box-sizing: border-box; */
 }
 
-.projectHeader {
-  font-size: 56px;
-  font-weight: 500;
-  margin: 0;
-  padding: 0;
-  height: auto;
-}
-
-.projectDescription {
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-normal);
-  margin: 0;
-  padding: 0;
-  height: auto;
-}
-
 .buttonGroup {
   display: flex;
   gap: 12px;
@@ -78,14 +62,6 @@
   align-items: center;
 
   gap: 4px;
-}
-
-.spanTime {
-  color: var(--overlay-background-color);
-  text-transform: uppercase;
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-semiBold);
-  margin: 0;
 }
 
 .countdown {
@@ -177,6 +153,12 @@
 
 .spacer {
   margin: auto;
+}
+
+.votedButtonAlign {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .submitOverlay {

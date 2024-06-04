@@ -110,7 +110,7 @@ function CreatorDetailPage() {
   return (
     <div>
       {currentCreator && (
-        <div className="userDetail">
+        <div className="creatorDetailPage">
           <div className="flexTry">
             <div className="userCard">
               <img
@@ -120,19 +120,19 @@ function CreatorDetailPage() {
               />
 
               <div className="userCardInfo">
-                <h1 className="userName">{currentCreator.name}</h1>
-                <p className="font16RegularGrey">
+                <h1 className="pageTitle">{currentCreator.name}</h1>
+                <p className="title secondaryColor">
                   {currentCreator.description}
                 </p>
                 <div className="creatorSubInfo">
-                  <h2 className="font16SemiBoldGrey">
+                  <h2 className="bodyLink">
                     {currentCreator.fans?.length || 0} Follower
                   </h2>
-                  <div className="font16BoldGrey">•</div>
+                  <div className="bodyLarge">•</div>
                   {currentCreator.socialMedia &&
                   currentCreator.socialMedia.length > 0 ? (
                     currentCreator.socialMedia.map((link, index) => (
-                      <p key={index} className="webpageLink font16SemiBoldGrey">
+                      <p key={index} className="webpageLink bodyLink">
                         <a
                           href={link}
                           target="_blank"
@@ -143,21 +143,40 @@ function CreatorDetailPage() {
                       </p>
                     ))
                   ) : (
-                    <p className="webpageLink font16SemiBoldGrey">No Website</p>
+                    <p className="webpageLink bodyLink">No Website</p>
                   )}
                 </div>
               </div>
             </div>
-            <div className="buttonContainer">
+            <div>
               {user && user.role === "fans" && (
                 <button
                   onClick={handleFollowToggle}
-                  className={`button buttonLarge buttonFontMedium ${
+                  className={`button buttonPrimaryLarge buttonFont buttonFontReverse ${
                     isFollowing ? "unfollow" : "follow"
                   }`}
                 >
                   {isFollowing ? "Unfollow" : `Follow`}
                 </button>
+              )}
+            </div>
+          </div>
+          <div className="userDetail">
+            <h2 className="sectionTitle">Projects</h2>
+            <div className="projectsContainer">
+              {currentCreator.projects && currentCreator.projects.length > 0 ? (
+                currentCreator.projects.map((project, index) => (
+                  <Link
+                    to={`/projects/${currentCreator._id}/${project._id}`}
+                    key={index}
+                    className="projectCard"
+                  >
+                    <h3 className="title primaryColor">{project.title}</h3>
+                    <p className="body secondaryColor">{project.description}</p>
+                  </Link>
+                ))
+              ) : (
+                <p>No projects found</p>
               )}
             </div>
           </div>

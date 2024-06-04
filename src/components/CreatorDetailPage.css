@@ -1,3 +1,9 @@
+.creatorDetailPage {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
 .flexTry {
   display: flex;
   justify-content: space-between;

@@ -143,116 +143,172 @@ function ProfileEditPage() {
       setErrorMessage(errorDescription);
     }
   };
+  const isPlaceholderVisible = formValues.description === "";
 
   return (
-    <div className="formContainer">
-      <h2 className="headlineCreateProject">Edit Profile</h2>
-      {errorMessage && <p className="errorMessage">{errorMessage}</p>}
-      <form onSubmit={handleSubmit} className="form">
-        <div className="formGroup">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formValues.name}
-            onChange={handleInputChange}
-            className="input"
-          />
-        </div>
-        <div className="formGroup">
-          <h2>Upload Avatar</h2>
-          <input type="file" onChange={handleAvatarChange} />
-          {formValues.image && (
-            <div>
-              <p>Uploaded Avatar:</p>
-              <img src={formValues.image} alt="Uploaded Avatar" />
-            </div>
-          )}
-        </div>
-        {user.role === "creators" && (
-          <>
-            <div className="formGroup">
-              <label htmlFor="description">Description:</label>
-              <textarea
-                id="description"
-                name="description"
-                value={formValues.description}
-                onChange={handleInputChange}
-                className="textarea"
+    <div className="editProfilPage">
+      <div className="editProfilWrapper">
+        <h2 className="pageTitle">Edit Profile</h2>
+        {errorMessage && <p className="errorMessage">{errorMessage}</p>}
+
+        <form onSubmit={handleSubmit} className="editSpacer">
+          <div className="editAvatar">
+            {formValues.image && (
+              <div>
+                <img
+                  src={formValues.image}
+                  alt="Uploaded Avatar"
+                  className="profilEditCard"
+                />
+              </div>
+            )}
+            <div className="profilEditButtonsSmall">
+              <input
+                type="file"
+                onChange={handleAvatarChange}
+                className="hidden-file-input"
+                id="file-upload"
               />
-            </div>
-            <div className="formGroup">
-              <label htmlFor="category">What's your niche?</label>
-              <select
-                id="category"
-                name="category"
-                value={formValues.category}
-                onChange={handleInputChange}
-                className="input"
+              <label
+                htmlFor="file-upload"
+                className="button buttonPrimarySmall buttonFontReverse buttonFont"
               >
-                <option value="" disabled>
-                  Choose category
-                </option>
-                {[
-                  "Music",
-                  "Sports",
-                  "Art",
-                  "Gaming",
-                  "Beauty",
-                  "Culinary",
-                  "Travel",
-                  "Fitness",
-                  "Film & Video",
-                  "Audio & Podcasts",
-                ].map((value) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
+                Upload new picture
+              </label>
+              <button className="button buttonSecondarySmall buttonFont">
+                Remove
+              </button>
             </div>
-          </>
-        )}
-        <div className="formGroup">
-          <label>Link to other platforms:</label>
-          {formValues.socialMedia.map((link, index) => (
-            <div key={index}>
+          </div>
+          <div className="inputBoxWrapper">
+            <div className="inputBox">
+              <label htmlFor="name" className="label secondaryColor">
+                Name:
+              </label>
               <input
                 type="text"
-                value={link}
-                onChange={(e) => handleSocialMediaChange(index, e.target.value)}
-                className="input"
+                id="name"
+                name="name"
+                value={formValues.name}
+                onChange={handleInputChange}
+                className="body inputFrame"
+                placeholder="Your name"
               />
             </div>
-          ))}
-        </div>
-        <div className="formGroup">
-          <label htmlFor="oldPassword">Old Password:</label>
-          <input
-            type="password"
-            id="oldPassword"
-            name="oldPassword"
-            value={formValues.oldPassword}
-            onChange={handleInputChange}
-            className="input"
-          />
-        </div>
-        <div className="formGroup">
-          <label htmlFor="newPassword">New Password:</label>
-          <input
-            type="password"
-            id="newPassword"
-            name="newPassword"
-            value={formValues.newPassword}
-            onChange={handleInputChange}
-            className="input"
-          />
-        </div>
-        <button type="submit" className="button buttonLarge submitButton">
+
+            {user.role === "creators" && (
+              <>
+                <div className="inputBox">
+                  <label htmlFor="description" className="label secondaryColor">
+                    Description:
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formValues.description}
+                    onChange={handleInputChange}
+                    className={`body inputFrame ${
+                      isPlaceholderVisible ? "secondaryColor" : ""
+                    }`}
+                    placeholder="Some words about you..."
+                  />
+                </div>
+                <div className="inputBox">
+                  <label htmlFor="category" className="label secondaryColor">
+                    Category
+                  </label>
+                  <select
+                    id="category"
+                    name="category"
+                    value={formValues.category}
+                    onChange={handleInputChange}
+                    className="body inputFrame"
+                  >
+                    <option value="" disabled>
+                      Choose category
+                    </option>
+                    {[
+                      "Music",
+                      "Sports",
+                      "Art",
+                      "Gaming",
+                      "Beauty",
+                      "Culinary",
+                      "Travel",
+                      "Fitness",
+                      "Film & Video",
+                      "Audio & Podcasts",
+                    ].map((value) => (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
+            )}
+            <div className="inputBox">
+              <label className="label secondaryColor">Website:</label>
+              {formValues.socialMedia.map((link, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    rows="1"
+                    value={link}
+                    onChange={(e) =>
+                      handleSocialMediaChange(index, e.target.value)
+                    }
+                    className={`body inputFrame website ${
+                      isPlaceholderVisible ? "secondaryColor" : ""
+                    }`}
+                    placeholder="Link your Website"
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="inputBox">
+              <label htmlFor="oldPassword" className="label secondaryColor">
+                Old Password:
+              </label>
+              <input
+                type="password"
+                id="oldPassword"
+                name="oldPassword"
+                value={formValues.oldPassword}
+                onChange={handleInputChange}
+                className="body inputFrame"
+                placeholder="*****"
+              />
+            </div>
+            <div className="inputBox">
+              <label htmlFor="newPassword" className="label secondaryColor">
+                New Password:
+              </label>
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                value={formValues.newPassword}
+                onChange={handleInputChange}
+                className="body inputFrame"
+                placeholder="*****"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div className="profilEditButtonsSmall profilEditButtonsLarge">
+        <button type="" className="button buttonSecondaryLarge buttonFont">
+          Cancel
+        </button>
+        <button
+          onClick={handleSubmit}
+          type="submit"
+          className="button buttonPrimaryLarge buttonFontReverse buttonFont"
+        >
           Save Changes
         </button>
-      </form>
+      </div>
     </div>
   );
 }

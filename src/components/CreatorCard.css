@@ -30,27 +30,28 @@
 }
 
 .spanElementCreator {
+  font-family: var(--font-family-montserrat);
   font-size: var(--font-size-ml);
   font-weight: var(--font-weight-normal);
-  color: var(--overlay-background-color);
 }
 
 .creatorName {
+  font-family: var(--font-family-montserrat);
   font-size: var(--font-size-ml);
   font-weight: var(--font-weight-bold);
   text-decoration: none;
-  color: var(--color-black);
 }
 
 .projectEndInfo {
   display: flex;
   gap: 4px;
+  font-family: var(--font-family-montserrat);
   font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semiBold);
   margin: 0;
   padding: 0;
 }
 
 .spanElementProjectEnd {
-  color: var(--overlay-background-color);
   font-weight: var(--font-weight-normal);
 }
