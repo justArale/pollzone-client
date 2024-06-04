@@ -31,18 +31,18 @@ function CreatorCard({ currentProject }) {
       <img src={currentProject.creator.image} className="profilImageCard" />
       <div className="projectCreatorHeader">
         <h3 className="creatorHeader">
-          <span className="spanElementCreator">By</span>
+          <span className="spanElementCreator secondaryColor">By</span>
           <Link
             to={`/creators/${currentProject.creator._id}`}
-            className="creatorName"
+            className="creatorName primaryColor"
           >
             {currentProject.creator?.name}
           </Link>
         </h3>
         <p className="projectEndInfo">
-          <span className="spanElementProjectEnd">Until</span>
+          <span className="spanElementProjectEnd secondaryColor">Until</span>
           {formatDate(endDate)}
-          <span className="spanElementProjectEnd">at</span>
+          <span className="spanElementProjectEnd secondaryColor">at</span>
           {formatTime(endDate)}
         </p>
       </div>

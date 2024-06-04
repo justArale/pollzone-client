@@ -22,18 +22,6 @@
   flex-direction: column;
 }
 
-.userName {
-  font-size: 56px;
-  font-weight: var(--font-weight-semiBold);
-  margin: 0;
-}
-
-.userRole {
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-normal);
-  margin: 0;
-}
-
 .detailPageButtons {
   display: flex;
   gap: 12px;

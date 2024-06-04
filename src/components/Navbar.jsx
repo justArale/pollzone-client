@@ -76,7 +76,7 @@ function Navbar({
               {isLoggedIn ? (
                 <button
                   onClick={logOutUser}
-                  className="button buttonSmall buttonReverse"
+                  className="button buttonSecondarySmall buttonFont"
                 >
                   Log Out
                 </button>
@@ -87,7 +87,7 @@ function Navbar({
                       <>
                         <button
                           onClick={handleLoginClick}
-                          className="button buttonSmall"
+                          className="button buttonPrimarySmall buttonFont buttonFontReverse"
                         >
                           Log In
                         </button>
@@ -149,7 +149,15 @@ function Overlay({ isLogin, onClose, onSwitch }) {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { email, password, name, role, category, image };
+
+    const requestBody = {
+      email,
+      password,
+      name,
+      role,
+      category,
+      image,
+    };
 
     axios
       .post(`${API_URL}/auth/signup`, requestBody)

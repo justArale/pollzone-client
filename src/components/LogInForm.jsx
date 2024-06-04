@@ -11,12 +11,14 @@ const LogInForm = ({
   onSwitch,
 }) => {
   return (
-    <div>
-      <form onSubmit={handleLoginSubmit} className="login-form">
-        <h3>Log In</h3>
+    <div className="sign-up">
+      <form onSubmit={handleLoginSubmit} className="signup-form">
+        <h3 className="sectionTitle">Log In</h3>
 
         <div className="input-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email" className="label secondaryColor">
+            Email
+          </label>
           <input
             type="email"
             name="email"
@@ -24,11 +26,15 @@ const LogInForm = ({
             value={email}
             onChange={handleEmail}
             autoComplete="off"
+            placeholder="What's your email?"
+            className="signUpInput"
           />
         </div>
 
         <div className="input-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="label secondaryColor">
+            Password
+          </label>
           <input
             type="password"
             name="password"
@@ -36,17 +42,22 @@ const LogInForm = ({
             value={password}
             onChange={handlePassword}
             autoComplete="off"
+            placeholder="••••••••••••••••"
+            className="signUpInput"
           />
         </div>
 
-        <button type="submit" className="button buttonLarge">
+        <button
+          type="submit"
+          className="button buttonPrimaryLarge buttonFont buttonFontReverse"
+        >
           Log In
         </button>
       </form>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p>
+      <p className="bodyLink">
         Don't have an account?{" "}
         <a href="#" onClick={onSwitch}>
           Sign Up
