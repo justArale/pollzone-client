@@ -40,7 +40,7 @@ function DashboardPage() {
         }
       );
       setProjects(response.data);
-      console.log("projectsInfo", projects);
+      // console.log("projectsInfo", projects);
     } catch (error) {
       const errorDescription =
         error.response?.data?.message || "An error occurred";
