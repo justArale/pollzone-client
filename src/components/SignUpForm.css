@@ -1,75 +1,35 @@
-.signup-form-container {
-  padding: 20px;
-  margin: 20px auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
+.sign-up {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 600px;
+  gap: 24px;
+  padding: 40px;
   box-sizing: border-box;
 }
 
 .signup-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  margin-top: 10px;
-}
-
-.signup-form h3 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.signup-form .input-group {
   display: flex;
   flex-direction: column;
+  gap: 24px;
 }
 
-.signup-form .input-group label {
-  color: #666;
-  margin-bottom: 8px;
-  font-weight: 600;
+.signUpInput {
+  padding: 12px 24px;
+  border-radius: 40px;
+  border: 1px solid black;
 }
 
-.signup-form .input-group input,
-.signup-form .input-group select {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-  margin-bottom: 16px;
-  box-sizing: border-box;
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.signup-form .role-options {
+.role-options {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 16px;
-}
-
-.signup-form .role-options label {
-  margin-left: 8px;
-  font-weight: normal;
-}
-
-.signup-form .error-message {
-  color: red;
-  margin-top: 16px;
-}
-
-.signup-form .switch-link {
-  color: #007bff;
-  border: none;
-  background: none;
-  cursor: pointer;
-  margin-top: 16px;
-  text-align: center;
+  align-items: center;
+  gap: 32px;
+  padding: 12px;
 }
 
 .category-container {

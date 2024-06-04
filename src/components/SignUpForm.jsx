@@ -27,12 +27,30 @@ const SignUpForm = ({
   }, [role]);
 
   return (
-    <div className="signup-form-container">
+    <div className="sign-up">
       <form onSubmit={handleSignupSubmit} className="signup-form">
-        <h3>Sign Up</h3>
+        <h3 className="sectionTitle">Sign Up</h3>
+        <div className="input-group">
+          <label htmlFor="name" className="label secondaryColor">
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value={name}
+            onChange={handleName}
+            autoComplete="off"
+            className="signUpInput"
+            placeholder="What's your name?"
+          />
+        </div>
 
         <div className="input-group">
-          <label htmlFor="role">Role</label>
+          <label htmlFor="role" className="label secondaryColor">
+            Role
+          </label>
+
           <div className="role-options">
             <div>
               <input
@@ -43,7 +61,9 @@ const SignUpForm = ({
                 checked={role === "creators"}
                 onChange={handleRole}
               />
-              <label htmlFor="creators">Creator</label>
+              <label htmlFor="creators" className="body">
+                Creator
+              </label>
             </div>
             <div>
               <input
@@ -54,7 +74,9 @@ const SignUpForm = ({
                 checked={role === "fans"}
                 onChange={handleRole}
               />
-              <label htmlFor="fans">Fan</label>
+              <label htmlFor="fans" className="body">
+                Fan
+              </label>
             </div>
           </div>
         </div>
@@ -64,12 +86,15 @@ const SignUpForm = ({
           className={`category-container ${role === "creators" ? "open" : ""}`}
         >
           <div className="input-group">
-            <label htmlFor="category">What's your niche?</label>
+            <label htmlFor="category" className="label secondaryColor">
+              What's your niche?
+            </label>
             <select
               id="category"
               name="category"
               value={category}
               onChange={handleCategory}
+              className="signUpInput"
             >
               <option value="" disabled>
                 Choose category
@@ -95,19 +120,9 @@ const SignUpForm = ({
         </div>
 
         <div className="input-group">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            onChange={handleName}
-            autoComplete="off"
-          />
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email" className="label secondaryColor">
+            Email
+          </label>
           <input
             type="email"
             name="email"
@@ -115,11 +130,15 @@ const SignUpForm = ({
             value={email}
             onChange={handleEmail}
             autoComplete="off"
+            className="signUpInput"
+            placeholder="What's your email?"
           />
         </div>
 
         <div className="input-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="label secondaryColor">
+            Password
+          </label>
           <input
             type="password"
             name="password"
@@ -127,17 +146,22 @@ const SignUpForm = ({
             value={password}
             onChange={handlePassword}
             autoComplete="off"
+            placeholder="••••••••••••••••"
+            className="signUpInput"
           />
         </div>
 
-        <button type="submit" className="button buttonLarge">
+        <button
+          type="submit"
+          className="button buttonPrimaryLarge buttonFont buttonFontReverse"
+        >
           Create Account
         </button>
       </form>
 
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p>
+      <p className="bodyLink">
         Already have an account?{" "}
         <a href="#" onClick={onSwitch}>
           Log In

@@ -130,6 +130,7 @@ function ProjectDetailPage() {
   useEffect(() => {
     if (currentUser && currentProject.options) {
       checkIfUserHasVoted(currentProject.options);
+      console.log(hasVoted);
     }
   }, [currentUser, currentProject]);
 
@@ -274,8 +275,8 @@ function ProjectDetailPage() {
             <div className="projectHeaderBox">
               <div className="rectangle"></div>
               <div className="projectHeadline">
-                <h1 className="projectHeader">{currentProject.title}</h1>
-                <p className="projectDescription">
+                <h1 className="headline">{currentProject.title}</h1>
+                <p className="bodyLarge secondaryColor">
                   {currentProject.description}
                 </p>
               </div>
@@ -285,14 +286,14 @@ function ProjectDetailPage() {
               user._id === currentProject.creator._id && (
                 <div className="buttonGroup">
                   <button
-                    className="button buttonSmall buttonReverse"
+                    className="button buttonSecondarySmall buttonFont"
                     onClick={handleEditClick}
                   >
                     <img src={editIcon} alt="Edit Icon" />
                     Edit
                   </button>
                   <button
-                    className="button buttonSmall buttonDelete"
+                    className="button awareButtonSmall buttonFont buttonFontReverse"
                     onClick={handleDeleteClick}
                   >
                     <img src={deleteIcon} alt="Delete Icon" />
@@ -307,29 +308,28 @@ function ProjectDetailPage() {
           )}
           <div className="voteDetails">
             <div className="voteInfoBox">
-              {(user &&
-                currentProject.creator &&
-                user._id === currentProject.creator._id) ||
-              (isVotingClosed &&
-                new Date(currentProject.startDate) < new Date()) ? (
-                <h3 className="font24ExtraBold">Results</h3>
-              ) : !isVotingClosed &&
-                new Date(currentProject.startDate) > new Date() ? (
-                <h3 className="font24ExtraBold">
+              {user &&
+              currentProject.creator &&
+              user._id === currentProject.creator._id ? (
+                <h3 className="sectionTitle">Results</h3>
+              ) : isVotingClosed ? (
+                <h3 className="sectionTitle">Results</h3>
+              ) : new Date(currentProject.startDate) > new Date() ? (
+                <h3 className="sectionTitle">
                   Voting Start: {formatDate(currentProject.startDate)}
                 </h3>
               ) : (
-                <h3 className="font24ExtraBold">Vote now</h3>
+                <h3 className="sectionTitle">Vote now</h3>
               )}
               {!isVotingClosed &&
               new Date(currentProject.startDate) < new Date() ? (
                 <div className="timeWrapper">
-                  <span className="spanTime">time left:</span>
+                  <span className="label">time left:</span>
                   <div className="countdown">{timer}</div>
                 </div>
-              ) : (
+              ) : isVotingClosed ? (
                 <span className="spanTime">Voting ended</span>
-              )}
+              ) : null}
             </div>
 
             <div className="optionsContainer">
@@ -340,8 +340,9 @@ function ProjectDetailPage() {
                     className={`optionCard ${
                       (hasVoted && userChoice === option._id.toString()) ||
                       (currentProject.creator._id === currentUser._id &&
-                        highestVote === option._id &&
-                        "votedCard")
+                        highestVote === option._id)
+                        ? "votedCard"
+                        : ""
                     }`}
                   >
                     {option.image && (
@@ -364,11 +365,13 @@ function ProjectDetailPage() {
                       <h4 className="optionTitle">{option.title}</h4>
                       <p className="optionDescription">{option.description}</p>
                       <div className="spacer"></div>
-                      <div>
+                      <div className="detailPageButtons">
                         {user && user.role === "fans" && (
                           <button
-                            className={`button buttonSmall ${
-                              isVotingClosed ? "buttonClosed" : ""
+                            className={`button buttonPrimarySmall buttonFont buttonFontReverse ${
+                              isVotingClosed
+                                ? "button buttonClosedSmall buttonFont buttonFontReverse"
+                                : ""
                             }`}
                             onClick={
                               hasVoted || isVotingClosed
@@ -379,7 +382,7 @@ function ProjectDetailPage() {
                           >
                             {hasVoted ? (
                               userChoice === option._id.toString() ? (
-                                <div className="detailPageButtons">
+                                <div className="votedButtonAlign">
                                   <img src={checkIcon} alt="Check icon" />
                                   You voted this
                                 </div>
@@ -393,18 +396,16 @@ function ProjectDetailPage() {
                         )}
                         {currentProject.creator._id === currentUser._id && (
                           <div>
-                            <p className="font12SemiBoldGrey upperCase">
-                              results:
-                            </p>
+                            <p className="label secondaryColor">results:</p>
 
                             {option.counter === 0 ? (
-                              <p className="font24ExtraBold">No Votes</p>
+                              <p className="sectionTitle">No Votes</p>
                             ) : option.counter === 1 ? (
-                              <p className="font24ExtraBold">
+                              <p className="sectionTitle">
                                 {option.counter} Vote
                               </p>
                             ) : (
-                              <p className="font24ExtraBold">
+                              <p className="sectionTitle">
                                 {option.counter} Votes
                               </p>
                             )}

@@ -1,43 +1,43 @@
 /* Container for the entire create project page */
-.containerCreatePage {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    width: 70%;
-  }
-  
-  /* Headline for the create project page */
-  .headlineCreateProject {
-    font-size: var(--font-size-xlarge);
-    font-weight: var(--font-weight-extraBold);
-    margin-bottom: 30px;
-    color: var(--color-black);
-  }
-  
-  /* Form container */
-  .form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  /* Form group container */
-  .formGroup {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Label for form inputs */
-  .label {
+/* .containerCreatePage {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 70%;
+} */
+
+/* Headline for the create project page */
+/* .headlineCreateProject {
+  font-size: var(--font-size-xlarge);
+  font-weight: var(--font-weight-extraBold);
+  margin-bottom: 30px;
+  color: var(--color-black);
+} */
+
+/* Form container */
+/* .form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+} */
+
+/* Form group container */
+/* .formGroup {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+} */
+
+/* Label for form inputs */
+/* .label {
     margin-bottom: 7px;
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-small);
     color: var(--color-black);
-  }
-  
-  /* Input and textarea styling */
-  .input {
+  } */
+
+/* Input and textarea styling */
+/* .input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -51,11 +51,10 @@
       font-family: "Unbounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
         "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji";
-  }
-  
-  
-  /* Textarea specific styling */
-  .textarea {
+  } */
+
+/* Textarea specific styling */
+/* .textarea {
     min-height: 100px;
     min-width: 500px;
     resize: vertical;
@@ -69,53 +68,53 @@
     font-family: "Unbounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
         "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji";
-  }
-  
-  /* Option group container */
-  .optionGroup {
-    margin-bottom: 15px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    background-color: #edf1f5;
-  }
-  
-  .addButton, .removeButton {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: var(--font-size-medium);
-    font-weight: var(--font-weight-bold);
-    color: white;
-  }
-  
-  .addIcon {
-      width: 16px; /* Adjust the size as needed */
-      height: 16px;
-      margin-right: 8px; /* Space between icon and text */
-    }
-  
-   .buttonContainer {
-      text-align: right;
-   } 
-  
-  /* Submit button styling */
-  .submitButton {
-      margin-top: 20px;
-    }
-  
-  /* Error message styling */
-  .errorMessage {
-    color: red;
-    margin-top: 20px;
-    font-size: var(--font-size-medium);
-  }
-  
-  /* Checkbox styling */
-  .checkbox {
-    margin-right: 5px;
-  }
-  
+  } */
+
+/* Option group container
+.optionGroup {
+  margin-bottom: 15px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background-color: #edf1f5;
+} */
+
+/* .addButton,
+.removeButton {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  color: white;
+} */
+
+/* .addIcon {
+  width: 16px;
+ height: 16px;
+  margin-right: 8px; 
+} */
+
+/* .buttonContainer {
+  text-align: right;
+} */
+
+/* Submit button styling */
+/* .submitButton {
+  margin-top: 20px;
+} */
+
+/* Error message styling */
+/* .errorMessage {
+  color: red;
+  margin-top: 20px;
+  font-size: var(--font-size-medium);
+} */
+
+/* Checkbox styling */
+/* .checkbox {
+  margin-right: 5px;
+}  */

@@ -1,5 +1,5 @@
 .page {
-  display: grid;
-  grid-template-rows: 0fr 2fr;
+  display: flex;
+  flex-direction: column;
   gap: 48px;
 }
