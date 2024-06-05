@@ -379,8 +379,10 @@ function ProjectDetailPage() {
                       </div>
                     )}
                     <div className="optionInfoBox">
-                      <h4 className="optionTitle">{option.title}</h4>
-                      <p className="optionDescription">{option.description}</p>
+                      <h4 className="title">{option.title}</h4>
+                      <p className="body secondaryColor">
+                        {option.description}
+                      </p>
                       <div className="spacer"></div>
                       <div className="detailPageButtons">
                         {user && user.role === "fans" && (
