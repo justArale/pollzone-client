@@ -193,98 +193,90 @@ body {
   padding: 4px 16px;
 }
 
-/**/
-/* 
-.font12SemiBoldGrey {
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-semiBold);
-  color: var(--overlay-background-color);
-  margin: 0;
+.containerCreatePage {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
 }
 
-.font12BoldGrey {
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
-  color: var(--overlay-background-color);
+.numberInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.font16RegularGrey {
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-normal);
-  color: var(--overlay-background-color);
+.numberInputWrapper input {
+  flex-grow: 1;
+  padding-right: 40px;
 }
 
-.font16SemiBoldGrey {
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-semiBold);
-  color: var(--overlay-background-color);
-}
-
-.font16BoldGrey {
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-bold);
-  color: var(--overlay-background-color);
-}
-
-.font24bold {
-  font-size: var(--font-size-large);
-  font-weight: var(--font-weight-semiBold);
-  margin: 0;
-}
-
-.font24ExtraBold {
-  font-size: var(--font-size-large);
-  font-weight: var(--font-weight-extraBold);
-  margin: 0;
-}
-
-.font40Bold {
-  font-size: var(--font-size-xlarge);
-  font-weight: var(--font-weight-semiBold);
-  margin: 0;
-} */
-
-/* .button {
-  display: inline-block;
-  background-color: var(--color-black);
-  border: 1px solid black;
-  color: var(--color-white);
-  font-family: inherit;
-  font-weight: var(--font-weight-bold);
-  border-radius: 40px;
+.selectIcon {
+  position: absolute;
+  right: 10px;
   cursor: pointer;
-  line-height: inherit;
-  margin: 0;
-} */
-
-/* .buttonSmall {
-  padding: 4px 16px;
-  font-size: var(--font-size-medium);
 }
 
-.buttonLarge {
-  padding: 12px 24px;
-  font-size: var(--font-size-ml);
+.optionInputBoxWrapper {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.buttonReverse {
-  color: var(--color-black);
+.optionBoxWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.optionBox {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #edf1f5;
+  border-radius: 20px;
+}
+
+.optionInputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.optionInput {
+  background-color: #edf1f5;
+}
+
+.optionImageBox {
+  display: flex;
+  gap: 8px;
+}
+
+.contentAligner {
+  align-self: flex-end;
+}
+
+.optionImageContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.optionImageCard {
+  width: 124px;
+  height: 124px;
+  border-radius: 20%;
+  object-fit: cover;
   background-color: var(--color-white);
-  border: 2px solid black;
 }
 
-.buttonSubmit {
-  background-color: var(--highlight-color);
-  border: 2px solid #b8e6d6;
-  color: var(--color-black);
+.buttonContainer {
+  align-self: flex-end;
+  text-align: center;
 }
 
-.buttonClosed {
-  background-color: var(--overlay-background-color);
-  cursor: not-allowed;
+.alignWidth {
+  width: calc(60%);
 }
-
-.buttonFontMedium {
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-bold);
-} */
