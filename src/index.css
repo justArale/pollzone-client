@@ -193,6 +193,10 @@ body {
   padding: 4px 16px;
 }
 
+.footer {
+  text-align: center;
+}
+
 .containerCreatePage {
   display: flex;
   flex-direction: column;
