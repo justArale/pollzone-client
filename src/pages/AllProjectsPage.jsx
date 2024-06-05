@@ -41,10 +41,12 @@ function AllProjectsPage() {
             <div className="creatorInfoBox">
               <div className="creatorBoxAllProjects">
                 {project.creator.image && (
-                  <img
-                    src={project.creator.image || defaultImage}
-                    alt={`${project.title}'s profile`}
-                  />
+                  <div>
+                    <img
+                      src={project.creator.image || defaultImage}
+                      alt={`${project.title}'s profile`}
+                    />
+                  </div>
                 )}
                 <p>
                   <span className="boldName">{project.creator.name}</span> asks
