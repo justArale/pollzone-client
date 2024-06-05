@@ -1,11 +1,16 @@
 /* AllCreatorsPage.css */
 
+.allCreatorPage {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .filterContainer {
   display: flex;
   justify-content: right;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  gap: 16px;
 }
 
 .labelCategory {
@@ -23,7 +28,7 @@
   width: 200px;
 }
 
-.name {
+/* .name {
   font-size: 1.2rem;
   margin-top: 10px;
 }
@@ -36,7 +41,7 @@
 .link {
   text-decoration: none;
   color: inherit;
-}
+} */
 
 .allCreatorContainer {
   display: flex;
@@ -49,7 +54,7 @@
 .allCreatorCard {
   border-radius: 20px;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 32px;
   margin: 0;
   transition: transform 0.3s, box-shadow 0.3s;
   background-color: var(--box-color);
@@ -58,8 +63,15 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  gap: 16px;
   text-decoration: none;
   align-items: center;
+}
+
+.creatorCardInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .allCreatorCard:hover {
@@ -69,14 +81,13 @@
 }
 
 .allCreatorCard img {
-  width: 100px;
-  height: 100px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  margin-right: 15px;
   object-fit: cover;
 }
 
-.allCreatorCard h2 {
+/* .allCreatorCard h2 {
   font-size: var(--font-size-ml);
   font-weight: var(--font-weight-bold);
   color: var(--color-black);
@@ -88,7 +99,7 @@
   font-weight: var(--font-weight-normal);
   color: var(--overlay-background-color);
   margin: 5px 0;
-}
+} */
 
 /* Responsive styles */
 @media (max-width: 1200px) {
