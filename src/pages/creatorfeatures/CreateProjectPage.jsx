@@ -92,6 +92,13 @@ function CreateProjectPage() {
           options: newOptions,
         }));
       });
+    } else {
+      const newOptions = [...formValues.options];
+      newOptions[index].image = "";
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        options: newOptions,
+      }));
     }
   };
 
@@ -193,17 +200,6 @@ function CreateProjectPage() {
 
   const isPlaceholderVisible = formValues.description === "";
 
-  // function handleIconClick(event) {
-  //   const inputField = event.target.previousElementSibling;
-  //   const step = event.shiftKey ? -1 : 1;
-  //   const newValue = parseInt(inputField.value, 10) + step;
-
-  //   if (newValue >= parseInt(inputField.min, 10)) {
-  //     inputField.value = newValue;
-  //     handleInputChange({ target: inputField });
-  //   }
-  // }
-
   return (
     <div>
       <form onSubmit={handleSubmit} className="">
@@ -258,12 +254,7 @@ function CreateProjectPage() {
                   required
                   className="body inputFrame "
                 />
-                <img
-                  src={selectIcon}
-                  alt="-"
-                  className="selectIcon"
-                  // onClick={handleIconClick}
-                />
+                <img src={selectIcon} alt="-" className="selectIcon" />
               </div>
             </div>
           </div>
@@ -336,15 +327,19 @@ function CreateProjectPage() {
                               handleOptionImageChange(index, e.target.files[0])
                             }
                             className="hidden-file-input"
-                            id="file-upload"
+                            id={`file-upload-${index}`}
                           />
                           <label
-                            htmlFor="file-upload"
+                            htmlFor={`file-upload-${index}`}
                             className="button buttonPrimarySmall buttonFontReverse buttonFont"
                           >
                             Upload Image
                           </label>
-                          <button className="button buttonSecondarySmall buttonFont">
+                          <button
+                            type="button"
+                            className="button buttonSecondarySmall buttonFont"
+                            onClick={() => handleOptionImageChange(index, null)}
+                          >
                             Remove
                           </button>
                         </div>

@@ -456,7 +456,7 @@ function ProjectDetailPage() {
             <h2>Vote for: {chosenVote.title} </h2>
             <div>
               <button
-                className="button buttonLarge buttonSubmit"
+                className="button buttonPrimaryLarge submitButton"
                 onClick={() => submitVote(chosenVote._id)}
               >
                 Submit Vote

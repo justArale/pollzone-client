@@ -187,6 +187,10 @@ body {
   border: 2px solid black;
 }
 
+.submitButton {
+  background-color: var(--highlight-color);
+}
+
 .awareButtonSmall {
   background-color: var(--color-attention);
   border: 2px solid #cc0044;

@@ -270,7 +270,10 @@ function EditProjectPage() {
               {formValues.options.map((option, index) => (
                 <div key={index} className="optionBox">
                   <div className="optionInputBox">
-                    <label htmlFor="title" className="label secondaryColor">
+                    <label
+                      htmlFor={`title-${index}`}
+                      className="label secondaryColor"
+                    >
                       Title
                     </label>
                     <input
@@ -288,7 +291,7 @@ function EditProjectPage() {
                   </div>
                   <div className="optionInputBox">
                     <label
-                      htmlFor="description"
+                      htmlFor={`description-${index}`}
                       className="label secondaryColor"
                     >
                       Description
@@ -306,7 +309,10 @@ function EditProjectPage() {
                     />
                   </div>
                   <div className="optionInputBox">
-                    <label htmlFor="image" className="label secondaryColor">
+                    <label
+                      htmlFor={`image-${index}`}
+                      className="label secondaryColor"
+                    >
                       Image (optional)
                     </label>
                     <div className="optionImageBox contentAligner">
@@ -331,15 +337,19 @@ function EditProjectPage() {
                               handleOptionImageChange(index, e.target.files[0])
                             }
                             className="hidden-file-input"
-                            id="file-upload"
+                            id={`file-upload-${index}`}
                           />
                           <label
-                            htmlFor="file-upload"
+                            htmlFor={`file-upload-${index}`}
                             className="button buttonPrimarySmall buttonFontReverse buttonFont"
                           >
                             Upload Image
                           </label>
-                          <button className="button buttonSecondarySmall buttonFont">
+                          <button
+                            type="button"
+                            className="button buttonSecondarySmall buttonFont"
+                            onClick={() => handleOptionImageChange(index, null)}
+                          >
                             Remove
                           </button>
                         </div>
