@@ -99,6 +99,10 @@ function ProfileEditPage() {
     }));
   };
 
+  const handleCancel = () => {
+    navigate("/profile");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const storedToken = localStorage.getItem("authToken");
@@ -298,7 +302,11 @@ function ProfileEditPage() {
         </form>
       </div>
       <div className="profilEditButtonsSmall profilEditButtonsLarge">
-        <button type="" className="button buttonSecondaryLarge buttonFont">
+        <button
+          type=""
+          className="button buttonSecondaryLarge buttonFont"
+          onClick={handleCancel}
+        >
           Cancel
         </button>
         <button
