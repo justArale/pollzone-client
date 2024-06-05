@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../context/auth.context";
 import "../../components/CreateNewProject.css";
+import "../../components/EditProjectPage.css";
 import deleteIcon from "../../assets/icons/delete.svg";
 import addIcon from "../../assets/icons/add.svg";
 import selectIcon from "../../assets/icons/select.svg";
