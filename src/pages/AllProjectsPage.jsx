@@ -38,7 +38,7 @@ function AllProjectsPage() {
             className="allProjectsCard"
             key={project._id}
           >
-            <div>
+            <div className="creatorInfoBox">
               <div className="creatorBoxAllProjects">
                 {project.creator.image && (
                   <img
@@ -51,7 +51,7 @@ function AllProjectsPage() {
                   for your opinion on:
                 </p>
               </div>
-              <h2>{project.title}</h2>
+              <h2 className="title">{project.title}</h2>
             </div>
           </Link>
         ))}
