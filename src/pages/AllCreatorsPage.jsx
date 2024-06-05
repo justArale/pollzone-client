@@ -42,7 +42,7 @@ function AllCreatorsPage() {
   }, [selectedCategory, allCreators]);
 
   return (
-    <div>
+    <div className="allCreatorPage">
       {errorMessage && <p>{errorMessage}</p>}
 
       <div className="filterContainer">
@@ -82,14 +82,20 @@ function AllCreatorsPage() {
             className="allCreatorCard"
             key={creator._id}
           >
-            <img
-              src={creator.image || defaultImage}
-              alt={`${creator.name}'s profile`}
-            />
-            <div>
-              <h2>{creator.name}</h2>
-              <p>Follower: {creator.fans.length}</p>
-              <p>Total Polls: {creator.projects.length}</p>
+            <div className="creatorCardInfo">
+              <img
+                src={creator.image || defaultImage}
+                alt={`${creator.name}'s profile`}
+              />
+              <div>
+                <h2 className="title primaryColor">{creator.name}</h2>
+                <p className="body secondaryColor">
+                  Follower: {creator.fans.length}
+                </p>
+                <p className="body secondaryColor">
+                  Total Polls: {creator.projects.length}
+                </p>
+              </div>
             </div>
           </Link>
         ))}

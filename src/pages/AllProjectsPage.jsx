@@ -38,20 +38,22 @@ function AllProjectsPage() {
             className="allProjectsCard"
             key={project._id}
           >
-            <div>
+            <div className="creatorInfoBox">
               <div className="creatorBoxAllProjects">
                 {project.creator.image && (
-                  <img
-                    src={project.creator.image || defaultImage}
-                    alt={`${project.title}'s profile`}
-                  />
+                  <div>
+                    <img
+                      src={project.creator.image || defaultImage}
+                      alt={`${project.title}'s profile`}
+                    />
+                  </div>
                 )}
                 <p>
                   <span className="boldName">{project.creator.name}</span> asks
                   for your opinion on:
                 </p>
               </div>
-              <h2>{project.title}</h2>
+              <h2 className="title">{project.title}</h2>
             </div>
           </Link>
         ))}
