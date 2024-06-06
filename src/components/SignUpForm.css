@@ -29,7 +29,7 @@
   justify-content: space-around;
   align-items: center;
   gap: 32px;
-  padding: 12px;
+  padding: 0 12px;
 }
 
 .category-container {
@@ -42,10 +42,25 @@
   max-height: 200px;
 }
 
-.category-container .input-group {
+/* .category-container .input-group {
   margin-bottom: 0;
-}
+} */
 
 input[type="radio"] {
+  margin: 0;
   margin-right: 5px;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+
+  border: 1px solid #000;
+  transition: 0.2s all linear;
+  position: relative;
+  top: 3px;
+}
+
+input[type="radio"]:checked {
+  border: 6px solid black;
 }

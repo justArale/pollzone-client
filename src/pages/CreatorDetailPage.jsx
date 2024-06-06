@@ -2,7 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
-import "../components/CreatorDetailPage.css"; // Import the CSS file
+import "../components/CreatorDetailPage.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import defaultImage from "../assets/images/Avatar.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -15,6 +17,11 @@ function CreatorDetailPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
+
+  const notifySubmit = () =>
+    toast(`You successfully follow ${currentCreator.name}, NICE!`);
+  const notifyDelete = () =>
+    toast(`Successfully unfollow ${currentCreator.name}!`);
 
   const fetchCreatorData = async () => {
     try {
@@ -80,6 +87,7 @@ function CreatorDetailPage() {
       // Toggle the follow state
       const updatedIsFollowing = !isFollowing;
       setIsFollowing(updatedIsFollowing);
+      isFollowing ? notifyDelete() : notifySubmit();
 
       // Update the user's favoriteCreators in AuthContext
       authenticateUser();
@@ -121,7 +129,7 @@ function CreatorDetailPage() {
 
               <div className="userCardInfo">
                 <h1 className="pageTitle">{currentCreator.name}</h1>
-                <p className="title secondaryColor">
+                <p className="bodyLarge secondaryColor">
                   {currentCreator.description}
                 </p>
                 <div className="creatorSubInfo">

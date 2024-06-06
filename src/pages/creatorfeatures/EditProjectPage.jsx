@@ -238,29 +238,6 @@ function EditProjectPage() {
                 }`}
               />
             </div>
-            <div className="inputBox">
-              <label htmlFor="timeCount" className="label secondaryColor">
-                Time to vote
-              </label>
-              <div className="numberInputWrapper">
-                <input
-                  type="number"
-                  id="timeCount"
-                  name="timeCount"
-                  value={formValues.timeCount}
-                  onChange={handleInputChange}
-                  min="1"
-                  required
-                  className="body inputFrame "
-                />
-                <img
-                  src={selectIcon}
-                  alt="-"
-                  className="selectIcon"
-                  // onClick={handleIconClick}
-                />
-              </div>
-            </div>
           </div>
 
           <div className="optionInputBoxWrapper">
@@ -333,6 +310,7 @@ function EditProjectPage() {
                         <div className="profilEditButtonsSmall">
                           <input
                             type="file"
+                            accept="image/png, image/jpg, image/jpeg, image/gif, image/webm"
                             onChange={(e) =>
                               handleOptionImageChange(index, e.target.files[0])
                             }
@@ -380,8 +358,31 @@ function EditProjectPage() {
               </button>
             </div>
           </div>
-          <div className="alignWidth">
+          <div className="editProfilWrapper">
             <h3 className="sectionTitle">Schedule Voting</h3>
+            <div className="inputBox">
+              <label htmlFor="timeCount" className="label secondaryColor">
+                Time to vote (in hours)
+              </label>
+              <div className="numberInputWrapper">
+                <input
+                  type="number"
+                  id="timeCount"
+                  name="timeCount"
+                  value={formValues.timeCount}
+                  onChange={handleInputChange}
+                  min="1"
+                  required
+                  className="body inputFrame "
+                />
+                <img
+                  src={selectIcon}
+                  alt="-"
+                  className="selectIcon"
+                  // onClick={handleIconClick}
+                />
+              </div>
+            </div>
             <div className="inputBox">
               <label htmlFor="startDate" className="label secondaryColor">
                 When should your voting start?

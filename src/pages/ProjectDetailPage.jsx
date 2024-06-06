@@ -22,6 +22,7 @@ function ProjectDetailPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isVotingModalOpen, setIsVotingModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isImageFocusOpen, setIsImageFocusOpen] = useState(false);
   const [chosenVote, setChosenVote] = useState("");
   const [bigImage, setBigImage] = useState("");
@@ -34,7 +35,7 @@ function ProjectDetailPage() {
 
   const notifySubmit = () =>
     toast("You submitted your vote successfully, SWEET!");
-  const notifyDelete = () => toast("Successfully deleted!");
+  const notifyDelete = () => toast("Project successfully deleted!");
 
   const fetchUserData = async () => {
     const storedToken = localStorage.getItem("authToken");
@@ -210,6 +211,10 @@ function ProjectDetailPage() {
     setIsVotingModalOpen(true);
   };
 
+  const handleDeleteModel = () => {
+    setIsDeleteModalOpen(true);
+  };
+
   const handleImageFocus = (image) => {
     console.log("Big Image!");
     console.log("Image:", image);
@@ -220,6 +225,7 @@ function ProjectDetailPage() {
   const closeModal = () => {
     setIsVotingModalOpen(false);
     setIsImageFocusOpen(false);
+    setIsDeleteModalOpen(false);
   };
 
   useEffect(() => {
@@ -303,15 +309,30 @@ function ProjectDetailPage() {
               user._id === currentProject.creator._id && (
                 <div className="buttonGroup">
                   <button
-                    className="button buttonSecondarySmall buttonFont"
-                    onClick={handleEditClick}
+                    className={`button buttonSecondarySmall buttonFont ${
+                      currentProject.options.some(
+                        (option) => option.counter > 0
+                      )
+                        ? "buttenNoDrop"
+                        : ""
+                    }`}
+                    onClick={
+                      currentProject.options.some(
+                        (option) => option.counter > 0
+                      )
+                        ? null
+                        : handleEditClick
+                    }
+                    disabled={currentProject.options.some(
+                      (option) => option.counter > 0
+                    )}
                   >
                     <img src={editIcon} alt="Edit Icon" />
                     Edit
                   </button>
                   <button
                     className="button awareButtonSmall buttonFont buttonFontReverse"
-                    onClick={handleDeleteClick}
+                    onClick={handleDeleteModel}
                   >
                     <img src={deleteIcon} alt="Delete Icon" />
                     Delete
@@ -370,7 +391,7 @@ function ProjectDetailPage() {
 
                     {option.image && (
                       <div
-                        className="searchIcon"
+                        className="searchIcon cursorPointer"
                         onClick={() => {
                           handleImageFocus(option.image);
                         }}
@@ -390,14 +411,24 @@ function ProjectDetailPage() {
                             className={`button buttonPrimarySmall buttonFont buttonFontReverse ${
                               isVotingClosed
                                 ? "button buttonClosedSmall buttonFont buttonFontReverse"
+                                : hasVoted ||
+                                  new Date(currentProject.startDate) >
+                                    new Date()
+                                ? "button buttonFont buttonFontReverse buttenNoDrop"
                                 : ""
                             }`}
                             onClick={
-                              hasVoted || isVotingClosed
+                              hasVoted ||
+                              isVotingClosed ||
+                              new Date(currentProject.startDate) > new Date()
                                 ? null
                                 : () => handleVoteClick(option)
                             }
-                            disabled={hasVoted || isVotingClosed}
+                            disabled={
+                              hasVoted ||
+                              isVotingClosed ||
+                              new Date(currentProject.startDate) > new Date()
+                            }
                           >
                             {hasVoted ? (
                               userChoice === option._id.toString() ? (
@@ -408,6 +439,9 @@ function ProjectDetailPage() {
                               ) : null
                             ) : isVotingClosed ? (
                               "Voting Closed"
+                            ) : new Date(currentProject.startDate) >
+                              new Date() ? (
+                              "Voting not started"
                             ) : (
                               "Vote this!"
                             )}
@@ -438,7 +472,30 @@ function ProjectDetailPage() {
                 <p>No options available for this project.</p>
               )}
             </div>
-            <div></div>
+          </div>
+        </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <div className="submitOverlay" onClick={closeModal}>
+          <div className="deleteModal">
+            <img
+              src={closeIcon}
+              alt="close Icon"
+              className="closeIcon"
+              onClick={closeModal}
+            />
+
+            <div className="deleteModelContent">
+              <h3 className="title">Delete Project</h3>
+              <p className="body">Are you sure to delete your project?</p>
+              <button
+                className="button buttonPrimaryLarge awareButtonSmall buttonFontReverse buttonFont"
+                onClick={() => handleDeleteClick()}
+              >
+                Delete now
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -456,7 +513,7 @@ function ProjectDetailPage() {
             <h2>Vote for: {chosenVote.title} </h2>
             <div>
               <button
-                className="button buttonPrimaryLarge submitButton"
+                className="button buttonPrimaryLarge submitButton buttonFont"
                 onClick={() => submitVote(chosenVote._id)}
               >
                 Submit Vote

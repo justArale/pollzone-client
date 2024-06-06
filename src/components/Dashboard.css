@@ -1,5 +1,4 @@
-
-.dashboardPageWrapper{
+.dashboardPageWrapper {
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -112,61 +111,4 @@
   font-weight: var(--font-weight-normal);
   color: #686868;
   margin: 5px 0;
-} 
-
-
-/* 
-.projectCard img {
-  width: 100%;
-  max-height: 300px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  object-fit: cover;
-} */
-
-/* .projectDescription {
-  color: var(--overlay-background-color);
-  font-weight: var(--font-weight-thin);
-  margin-bottom: 6px;
 }
-
-.noProjectsMessage {
-  font-size: var(--font-size-large);
-  color: #777;
-  text-align: center;
-  width: 100%;
-} */
-
-/* .optionHeadline {
-  font-weight: var(--font-weight-normal);
-  color: var(--color-black);
-}
-
-.voteCard {
-  background-color: #eef2f7;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 10px;
-  width: calc(50% - 20px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.voteCard h3 {
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.voteCard p {
-  color: #555;
-}
-
-.voteCard .voteResult {
-  font-weight: bold;
-  color: #000;
-  margin-top: 10px;
-}
-
-.voteCard img {
-  width: 100%;
-}
-

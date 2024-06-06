@@ -239,24 +239,6 @@ function CreateProjectPage() {
                 }`}
               />
             </div>
-            <div className="inputBox">
-              <label htmlFor="timeCount" className="label secondaryColor">
-                Time to vote
-              </label>
-              <div className="numberInputWrapper">
-                <input
-                  type="number"
-                  id="timeCount"
-                  name="timeCount"
-                  value={formValues.timeCount}
-                  onChange={handleInputChange}
-                  min="1"
-                  required
-                  className="body inputFrame "
-                />
-                <img src={selectIcon} alt="-" className="selectIcon" />
-              </div>
-            </div>
           </div>
 
           <div className="optionInputBoxWrapper">
@@ -323,6 +305,7 @@ function CreateProjectPage() {
                         <div className="profilEditButtonsSmall">
                           <input
                             type="file"
+                            accept="image/png, image/jpg, image/jpeg, image/gif, image/webm"
                             onChange={(e) =>
                               handleOptionImageChange(index, e.target.files[0])
                             }
@@ -370,8 +353,26 @@ function CreateProjectPage() {
               </button>
             </div>
           </div>
-          <div className="alignWidth">
+          <div className="editProfilWrapper">
             <h3 className="sectionTitle">Schedule Voting</h3>
+            <div className="inputBox">
+              <label htmlFor="timeCount" className="label secondaryColor">
+                Time to vote (in hours)
+              </label>
+              <div className="numberInputWrapper">
+                <input
+                  type="number"
+                  id="timeCount"
+                  name="timeCount"
+                  value={formValues.timeCount}
+                  onChange={handleInputChange}
+                  min="1"
+                  required
+                  className="body inputFrame "
+                />
+                <img src={selectIcon} alt="-" className="selectIcon" />
+              </div>
+            </div>
             <div className="inputBox">
               <label htmlFor="startDate" className="label secondaryColor">
                 When should your voting start?
@@ -391,7 +392,7 @@ function CreateProjectPage() {
           </div>
 
           <div className="profilEditButtonsSmall profilEditButtonsLarge">
-            <button type="" className="button buttonSecondaryLarge buttonFont">
+            <button className="button buttonSecondaryLarge buttonFont buttenNoDrop">
               Save for later
             </button>
             <button
