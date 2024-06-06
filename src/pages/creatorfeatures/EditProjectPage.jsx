@@ -340,8 +340,8 @@ function EditProjectPage() {
                       className="button awareButtonSmall buttonFont buttonFontReverse"
                       onClick={() => removeOption(index)}
                     >
-                      <img src={deleteIcon} alt="-" className="addIcon" />
-                      <span>Remove</span>
+                      <img src={deleteIcon} alt="deleteIcon" className="addIcon" />
+                      Remove
                     </button>
                   </div>
                 </div>
@@ -353,8 +353,8 @@ function EditProjectPage() {
                 onClick={addOption}
                 className="button buttonPrimarySmall buttonFontReverse buttonFont"
               >
-                <img src={addIcon} alt="+" className="addIcon" />
-                <span>Add Option</span>
+                <img src={addIcon} alt="addIcon" className="addIcon" />
+                Add Option
               </button>
             </div>
           </div>

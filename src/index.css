@@ -157,6 +157,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   border-radius: 50px;
   font-family: inherit;
 }
