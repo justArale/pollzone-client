@@ -35,7 +35,7 @@ function ProjectDetailPage() {
 
   const notifySubmit = () =>
     toast("You submitted your vote successfully, SWEET!");
-  const notifyDelete = () => toast("Successfully deleted!");
+  const notifyDelete = () => toast("Project successfully deleted!");
 
   const fetchUserData = async () => {
     const storedToken = localStorage.getItem("authToken");
