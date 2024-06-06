@@ -289,7 +289,3 @@ body {
   align-self: flex-end;
   text-align: center;
 }
-
-.alignWidth {
-  width: calc(60%);
-}
