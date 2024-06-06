@@ -169,6 +169,7 @@ function ProfileEditPage() {
             <div className="profilEditButtonsSmall">
               <input
                 type="file"
+                accept="image/png, image/jpg, image/jpeg, image/gif, image/webm"
                 onChange={handleAvatarChange}
                 className="hidden-file-input"
                 id="file-upload"

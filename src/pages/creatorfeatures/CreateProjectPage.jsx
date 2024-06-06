@@ -305,6 +305,7 @@ function CreateProjectPage() {
                         <div className="profilEditButtonsSmall">
                           <input
                             type="file"
+                            accept="image/png, image/jpg, image/jpeg, image/gif, image/webm"
                             onChange={(e) =>
                               handleOptionImageChange(index, e.target.files[0])
                             }
