@@ -376,7 +376,7 @@ function ProjectDetailPage() {
 
                     {option.image && (
                       <div
-                        className="searchIcon"
+                        className="searchIcon cursorPointer"
                         onClick={() => {
                           handleImageFocus(option.image);
                         }}
