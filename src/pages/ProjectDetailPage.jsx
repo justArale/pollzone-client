@@ -309,8 +309,23 @@ function ProjectDetailPage() {
               user._id === currentProject.creator._id && (
                 <div className="buttonGroup">
                   <button
-                    className="button buttonSecondarySmall buttonFont"
-                    onClick={handleEditClick}
+                    className={`button buttonSecondarySmall buttonFont ${
+                      currentProject.options.some(
+                        (option) => option.counter > 0
+                      )
+                        ? "buttenNoDrop"
+                        : ""
+                    }`}
+                    onClick={
+                      currentProject.options.some(
+                        (option) => option.counter > 0
+                      )
+                        ? null
+                        : handleEditClick
+                    }
+                    disabled={currentProject.options.some(
+                      (option) => option.counter > 0
+                    )}
                   >
                     <img src={editIcon} alt="Edit Icon" />
                     Edit
