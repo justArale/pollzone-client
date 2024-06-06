@@ -414,9 +414,10 @@ function ProjectDetailPage() {
                               ) : null
                             ) : isVotingClosed ? (
                               "Voting Closed"
-                            ) : (
+                            ) : new Date(currentProject.startDate) >
+                              new Date() ? (
                               "Vote this!"
-                            )}
+                            ) : null}
                           </button>
                         )}
                         {currentProject.creator._id === currentUser._id && (
@@ -450,7 +451,7 @@ function ProjectDetailPage() {
 
       {isDeleteModalOpen && (
         <div className="submitOverlay" onClick={closeModal}>
-          <div className=" deleteModal">
+          <div className="deleteModal">
             <img
               src={closeIcon}
               alt="close Icon"
@@ -458,12 +459,14 @@ function ProjectDetailPage() {
               onClick={closeModal}
             />
 
-            <div>
+            <div className="deleteModelContent">
+              <h3 className="title">Delete Project</h3>
+              <p className="body">Are you sure to delete your project?</p>
               <button
-                className="button buttonPrimaryLarge awareButtonSmall buttonFontReverse"
+                className="button buttonPrimaryLarge awareButtonSmall buttonFontReverse buttonFont"
                 onClick={() => handleDeleteClick()}
               >
-                Sure?
+                Delete now
               </button>
             </div>
           </div>
@@ -483,7 +486,7 @@ function ProjectDetailPage() {
             <h2>Vote for: {chosenVote.title} </h2>
             <div>
               <button
-                className="button buttonPrimaryLarge submitButton"
+                className="button buttonPrimaryLarge submitButton buttonFont"
                 onClick={() => submitVote(chosenVote._id)}
               >
                 Submit Vote

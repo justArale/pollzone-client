@@ -150,7 +150,7 @@ function UserProfilPage() {
 
       {isDeleteModalOpen && (
         <div className="submitOverlay" onClick={closeModal}>
-          <div className=" deleteModal">
+          <div className="deleteModal">
             <img
               src={closeIcon}
               alt="close Icon"
@@ -158,12 +158,14 @@ function UserProfilPage() {
               onClick={closeModal}
             />
 
-            <div>
+            <div className="deleteModelContent">
+              <h3 className="title">Delete Profile</h3>
+              <p className="body">Are you sure to delete your profile?</p>
               <button
-                className="button buttonPrimaryLarge awareButtonSmall buttonFontReverse"
+                className="button buttonPrimaryLarge awareButtonSmall buttonFontReverse buttonFont"
                 onClick={() => handleDeleteClick()}
               >
-                Sure?
+                Delete now
               </button>
             </div>
           </div>
