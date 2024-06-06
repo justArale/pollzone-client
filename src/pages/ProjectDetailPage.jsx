@@ -438,7 +438,6 @@ function ProjectDetailPage() {
                 <p>No options available for this project.</p>
               )}
             </div>
-            <div></div>
           </div>
         </div>
       )}
