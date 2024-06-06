@@ -189,6 +189,11 @@ body {
   padding: 4px 16px;
   background-color: var(--overlay-background-color);
   border: 2px solid black;
+  cursor: no-drop;
+}
+
+.buttenNoDrop {
+  cursor: no-drop;
 }
 
 .submitButton {

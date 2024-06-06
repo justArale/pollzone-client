@@ -396,14 +396,24 @@ function ProjectDetailPage() {
                             className={`button buttonPrimarySmall buttonFont buttonFontReverse ${
                               isVotingClosed
                                 ? "button buttonClosedSmall buttonFont buttonFontReverse"
+                                : hasVoted ||
+                                  new Date(currentProject.startDate) >
+                                    new Date()
+                                ? "button buttonFont buttonFontReverse buttenNoDrop"
                                 : ""
                             }`}
                             onClick={
-                              hasVoted || isVotingClosed
+                              hasVoted ||
+                              isVotingClosed ||
+                              new Date(currentProject.startDate) > new Date()
                                 ? null
                                 : () => handleVoteClick(option)
                             }
-                            disabled={hasVoted || isVotingClosed}
+                            disabled={
+                              hasVoted ||
+                              isVotingClosed ||
+                              new Date(currentProject.startDate) > new Date()
+                            }
                           >
                             {hasVoted ? (
                               userChoice === option._id.toString() ? (
@@ -416,8 +426,10 @@ function ProjectDetailPage() {
                               "Voting Closed"
                             ) : new Date(currentProject.startDate) >
                               new Date() ? (
+                              "Voting not started"
+                            ) : (
                               "Vote this!"
-                            ) : null}
+                            )}
                           </button>
                         )}
                         {currentProject.creator._id === currentUser._id && (
