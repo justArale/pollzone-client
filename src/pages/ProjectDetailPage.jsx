@@ -22,6 +22,7 @@ function ProjectDetailPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isVotingModalOpen, setIsVotingModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isImageFocusOpen, setIsImageFocusOpen] = useState(false);
   const [chosenVote, setChosenVote] = useState("");
   const [bigImage, setBigImage] = useState("");
@@ -210,6 +211,10 @@ function ProjectDetailPage() {
     setIsVotingModalOpen(true);
   };
 
+  const handleDeleteModel = () => {
+    setIsDeleteModalOpen(true);
+  };
+
   const handleImageFocus = (image) => {
     console.log("Big Image!");
     console.log("Image:", image);
@@ -220,6 +225,7 @@ function ProjectDetailPage() {
   const closeModal = () => {
     setIsVotingModalOpen(false);
     setIsImageFocusOpen(false);
+    setIsDeleteModalOpen(false);
   };
 
   useEffect(() => {
@@ -311,7 +317,7 @@ function ProjectDetailPage() {
                   </button>
                   <button
                     className="button awareButtonSmall buttonFont buttonFontReverse"
-                    onClick={handleDeleteClick}
+                    onClick={handleDeleteModel}
                   >
                     <img src={deleteIcon} alt="Delete Icon" />
                     Delete
@@ -437,6 +443,28 @@ function ProjectDetailPage() {
               ) : (
                 <p>No options available for this project.</p>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <div className="submitOverlay" onClick={closeModal}>
+          <div className=" deleteModal">
+            <img
+              src={closeIcon}
+              alt="close Icon"
+              className="closeIcon"
+              onClick={closeModal}
+            />
+
+            <div>
+              <button
+                className="button buttonPrimaryLarge awareButtonSmall buttonFontReverse"
+                onClick={() => handleDeleteClick()}
+              >
+                Sure?
+              </button>
             </div>
           </div>
         </div>

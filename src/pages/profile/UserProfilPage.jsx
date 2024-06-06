@@ -6,7 +6,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import defaultImage from "../../assets/images/Avatar.svg";
-
+import closeIcon from "../../assets/icons/close.svg";
 import { AuthContext } from "../../context/auth.context";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -20,6 +20,7 @@ function UserProfilPage() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const notifyDelete = () => toast("Successfully deleted!");
 
@@ -48,6 +49,14 @@ function UserProfilPage() {
 
     getUser();
   }, [user._id, user.role]);
+
+  const handleDeleteModel = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsDeleteModalOpen(false);
+  };
 
   const handleDeleteClick = async () => {
     try {
@@ -131,10 +140,32 @@ function UserProfilPage() {
 
             <button
               className="button awareButtonSmall buttonFont buttonFontReverse"
-              onClick={handleDeleteClick}
+              onClick={handleDeleteModel}
             >
               <img src={deleteIcon} alt="Delete Icon" /> Delete
             </button>
+          </div>
+        </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <div className="submitOverlay" onClick={closeModal}>
+          <div className=" deleteModal">
+            <img
+              src={closeIcon}
+              alt="close Icon"
+              className="closeIcon"
+              onClick={closeModal}
+            />
+
+            <div>
+              <button
+                className="button buttonPrimaryLarge awareButtonSmall buttonFontReverse"
+                onClick={() => handleDeleteClick()}
+              >
+                Sure?
+              </button>
+            </div>
           </div>
         </div>
       )}
