@@ -226,24 +226,13 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-.numberInputWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
 }
 
 .numberInputWrapper input {
   flex-grow: 1;
   padding-right: 40px;
-.numberInputWrapper input {
-  flex-grow: 1;
-  padding-right: 40px;
 }
 
-.selectIcon {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
 .selectIcon {
   position: absolute;
   right: 10px;
@@ -255,30 +244,14 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
-.optionInputBoxWrapper {
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 }
 
 .optionBoxWrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
-.optionBoxWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
-.optionBox {
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background-color: #edf1f5;
-  border-radius: 20px;
 .optionBox {
   padding: 32px;
   display: flex;
@@ -312,10 +285,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-.optionInputBox {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .optionInput {
@@ -338,11 +307,6 @@ body {
   align-items: center;
 }
 
-.optionImageCard {
-  width: 124px;
-  height: 124px;
-  border-radius: 20%;
-  object-fit: cover;
 .optionImageCard {
   width: 124px;
   height: 124px;
