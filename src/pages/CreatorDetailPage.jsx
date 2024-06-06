@@ -121,7 +121,7 @@ function CreatorDetailPage() {
 
               <div className="userCardInfo">
                 <h1 className="pageTitle">{currentCreator.name}</h1>
-                <p className="title secondaryColor">
+                <p className="bodyLarge secondaryColor">
                   {currentCreator.description}
                 </p>
                 <div className="creatorSubInfo">
