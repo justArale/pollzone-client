@@ -392,7 +392,7 @@ function CreateProjectPage() {
           </div>
 
           <div className="profilEditButtonsSmall profilEditButtonsLarge">
-            <button type="" className="button buttonSecondaryLarge buttonFont">
+            <button className="button buttonSecondaryLarge buttonFont buttenNoDrop">
               Save for later
             </button>
             <button
