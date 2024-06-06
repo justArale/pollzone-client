@@ -348,7 +348,8 @@ function ProjectDetailPage() {
             <div className="voteInfoBox">
               {user &&
               currentProject.creator &&
-              user._id === currentProject.creator._id ? (
+              user._id === currentProject.creator._id &&
+              !new Date(currentProject.startDate) > new Date() ? (
                 <h3 className="sectionTitle">Results</h3>
               ) : isVotingClosed ? (
                 <h3 className="sectionTitle">Results</h3>
