@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/auth.context";
 import "../components/Dashboard.css";
+import addIcon from "../assets/icons/add.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -82,7 +83,7 @@ function DashboardPage() {
             <h1 className="pageTitle">My Projects</h1>
             <Link to="/projects/create" className="noUnderline">
               <button className="button buttonPrimaryLarge buttonFont buttonFontReverse">
-                + Create New Project
+                <img src={addIcon} alt="addIcon" /> Create New Project
               </button>
             </Link>
           </div>

@@ -4,6 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 73vw;
 }
 
 .pageWrapper {
@@ -65,16 +66,15 @@
   width: auto;
 }
 
-@media (max-width: 480px) {
+/* Responsive styles */
+@media (max-width: 768px) {
   .headerBar {
-    padding: 0 10px;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  .linkNavbar {
-    font-size: var(--font-size-smallest);
-  }
-
-  .logo {
-    height: 20px;
+  .pageWrapper {
+    flex-direction: column;
+    gap: 10px;
   }
 }

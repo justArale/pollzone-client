@@ -88,8 +88,7 @@
   }
 
   .allCreatorCard {
-    width: calc(50% - 20px);
-    margin-bottom: 20px;
+    width: 100%;
   }
 
   .filterContainer {
@@ -99,13 +98,5 @@
 
   .labelCategory {
     margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 375px) {
-  .allCreatorCard {
-    width: 100%;
-    padding: 20px;
-    margin: 20px 0;
   }
 }
