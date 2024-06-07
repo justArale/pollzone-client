@@ -24,9 +24,34 @@
   font-weight: var(--font-weight-semiBold);
 }
 
-/* @media (max-width: 470px) {
+/* Responsive Styles */
+
+@media (max-width: 768px) {
+  .projectHeadline .headline {
+    font-size: var(--font-size-large);
+  }
+
+  .projectHeadline .bodyLarge {
+    font-size: var(--font-size-small);
+  }
+
   .aboutCard,
   .optionInfoBox {
     width: 100%;
   }
-} */
+}
+
+@media (max-width: 480px) {
+  .aboutDetails {
+    gap: 24px;
+    padding: 12px;
+  }
+
+  .projectHeadline .headline {
+    font-size: var(--font-size-medium);
+  }
+
+  .projectHeadline .bodyLarge {
+    font-size: var(--font-size-small);
+  }
+}
