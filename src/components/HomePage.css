@@ -43,3 +43,19 @@
   padding: 32px;
   background-color: var(--box-color);
 }
+
+@media (max-width: 790px) {
+  .headerDescription {
+    width: calc(100% - 80px);
+    height: auto;
+    font-size: var(--font-size-ml);
+  }
+
+  .pageTitle {
+    font-size: var(--font-size-ml);
+  }
+
+  .boxWrapper {
+    grid-template-columns: 1fr;
+  }
+}

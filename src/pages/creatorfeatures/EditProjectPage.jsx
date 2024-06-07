@@ -340,7 +340,11 @@ function EditProjectPage() {
                       className="button awareButtonSmall buttonFont buttonFontReverse"
                       onClick={() => removeOption(index)}
                     >
-                      <img src={deleteIcon} alt="deleteIcon" className="addIcon" />
+                      <img
+                        src={deleteIcon}
+                        alt="deleteIcon"
+                        className="addIcon"
+                      />
                       Remove
                     </button>
                   </div>
