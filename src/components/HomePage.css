@@ -52,7 +52,7 @@
   }
 
   .pageTitle {
-    font-size: var(--font-size-ml);
+    font-size: var(--font-size-large) !important;
   }
 
   .boxWrapper {
