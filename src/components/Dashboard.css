@@ -113,6 +113,13 @@
   margin: 5px 0;
 }
 
+@media (max-width: 1024px) {
+  .projectCard,
+  .favCreatorCard {
+    width: calc(50% - 20px);
+  }
+}
+
 @media (max-width: 790px) {
   .projectsContainer {
     gap: 16px;
