@@ -224,35 +224,28 @@
 }
 
 @media (max-width: 768px) {
-  .PollDetails {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   .optionsContainer {
     flex-direction: column;
   }
 
+  .voteInfoBox {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
   .optionCard {
     width: 100%;
+  }
+
+  .optionInfoBox {
+    width: 53vw;
   }
 }
 
 @media (max-width: 480px) {
-  .PollDetails {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
   .projectHeader {
     font-size: var(--font-size-large);
-  }
-
-  .optionCard {
-    width: 100%;
-    padding: 20px;
-    margin: 20px 0;
   }
 
   .optionTitle {

@@ -1,6 +1,5 @@
 .page {
   height: 100%;
-  width: 73vw;
   display: flex;
   flex-direction: column;
   gap: 48px;

@@ -77,14 +77,4 @@
     flex-direction: column;
     gap: 10px;
   }
-
-  .linkNavbar {
-    font-size: var(--font-size-small);
-  }
-}
-
-@media (max-width: 480px) {
-  .pageWrapper {
-    gap: 8px;
-  }
 }
