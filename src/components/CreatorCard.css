@@ -55,3 +55,69 @@
 .spanElementProjectEnd {
   font-weight: var(--font-weight-normal);
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .containerCreatePage {
+    width: 100vw !important;
+  }
+
+  .button {
+    font-size: var(--font-size-medium);
+  }
+
+  .profilEditButtonsSmall {
+    flex-direction: column;
+    width: 100%;
+    align-items: none;
+  }
+
+  .numberInputWrapper {
+    flex-direction: column;
+  }
+
+  .optionInputBox {
+    flex-direction: column;
+  }
+
+  .buttonContainer {
+    width: 100%;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .editAvatar {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .optionImageContainer {
+    width: 100%;
+  }
+
+  .optionImageBox {
+    width: 100%;
+  }
+
+  .editProfilWrapper {
+    width: 100vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .button {
+    font-size: var(--font-size-small);
+  }
+
+  .profilEditButtonsSmall {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .optionBox {
+    flex-direction: column;
+    width: 100%;
+  }
+}
