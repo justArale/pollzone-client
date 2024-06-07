@@ -70,13 +70,13 @@
 }
 
 /* Responsive styles */
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
   .allProjectsContainer {
     flex-wrap: wrap;
   }
 
-  .allCreatorCard {
-    width: 100%;
+  .allProjectsCard {
+    width: calc(50% - 20px);
   }
 }
 
@@ -93,24 +93,11 @@
   }
 
   .allProjectsCard {
-    width: calc(50% - 20px);
-    margin-bottom: 20px;
+    width: 100%;
   }
 
   .filterContainer {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .labelCategory {
-    margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .allProjectsCard {
-    width: 100%;
-    padding: 20px;
-    margin: 20px 0;
   }
 }
