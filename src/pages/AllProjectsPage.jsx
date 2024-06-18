@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "../components/AllProjectsPage.css"; // Import the CSS file
+import "../components/AllProjectsPage.css";
+import "../components/Skeleton.css";
 import CreatorCard from "../components/CreatorCard";
 import defaultImage from "../assets/images/Avatar.svg";
 
@@ -10,12 +11,14 @@ const API_URL = import.meta.env.VITE_API_URL;
 function AllProjectsPage() {
   const [allProjects, setAllProjects] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getAllProjects = () => {
     axios
       .get(`${API_URL}/api/projects`)
       .then((response) => {
         setAllProjects(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         const errorDescription =
@@ -31,8 +34,10 @@ function AllProjectsPage() {
   return (
     <div className="allProjectsContainer">
       {errorMessage && <p>{errorMessage}</p>}
-      {allProjects &&
-        allProjects.map((project) => (
+      {allProjects.map((project) =>
+        isLoading ? (
+          <div className="skeleton skeletonProjects" key={project._id}></div>
+        ) : (
           <Link
             to={`/projects/${project.creator._id}/${project._id}`}
             className="allProjectsCard"
@@ -56,7 +61,8 @@ function AllProjectsPage() {
               <h2 className="title">{project.title}</h2>
             </div>
           </Link>
-        ))}
+        )
+      )}
     </div>
   );
 }

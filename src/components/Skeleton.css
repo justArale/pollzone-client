@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+.skeletonProjects {
+  height: 200px;
+}
+
 .skeleton::after {
   content: "";
   display: block;
