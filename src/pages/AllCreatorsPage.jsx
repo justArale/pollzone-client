@@ -26,6 +26,7 @@ function AllCreatorsPage() {
         const errorDescription =
           error.response?.data?.message || "An error occurred";
         setErrorMessage(errorDescription);
+        setIsLoading(false);
       });
   };
 
