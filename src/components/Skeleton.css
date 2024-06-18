@@ -1,0 +1,62 @@
+.skeleton {
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  height: 136px;
+  width: calc(33% - 20px);
+  overflow: hidden;
+}
+
+.skeletonProjects {
+  height: 200px;
+}
+
+.skeleton::after {
+  content: "";
+  display: block;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: loading 1.5s infinite;
+}
+
+.skeleton-text {
+  background-color: #e0e0e0;
+  height: 1.5em;
+  width: 100%;
+  margin-bottom: 0.1em;
+  border-radius: 8px;
+}
+
+.skeleton-text.short {
+  width: 50%;
+}
+
+.skeleton-text::after {
+  content: "";
+  display: block;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "../components/AllCreatorsPage.css"; // Import the CSS file
+import "../components/AllCreatorsPage.css";
+import "../components/Skeleton.css";
 import defaultImage from "../assets/images/Avatar.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -11,6 +12,7 @@ function AllCreatorsPage() {
   const [filteredCreators, setFilteredCreators] = useState([]);
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const getAllCreators = () => {
     axios
@@ -18,11 +20,13 @@ function AllCreatorsPage() {
       .then((response) => {
         setAllCreators(response.data);
         setFilteredCreators(response.data); // Initially, show all creators
+        setIsLoading(false);
       })
       .catch((error) => {
         const errorDescription =
           error.response?.data?.message || "An error occurred";
         setErrorMessage(errorDescription);
+        setIsLoading(false);
       });
   };
 
@@ -76,29 +80,33 @@ function AllCreatorsPage() {
       </div>
 
       <div className="allCreatorContainer">
-        {filteredCreators.map((creator) => (
-          <Link
-            to={`/creators/${creator._id}`}
-            className="allCreatorCard"
-            key={creator._id}
-          >
-            <div className="creatorCardInfo">
-              <img
-                src={creator.image || defaultImage}
-                alt={`${creator.name}'s profile`}
-              />
-              <div>
-                <h2 className="title primaryColor">{creator.name}</h2>
-                <p className="body secondaryColor">
-                  Follower: {creator.fans.length}
-                </p>
-                <p className="body secondaryColor">
-                  Total Polls: {creator.projects.length}
-                </p>
+        {filteredCreators.map((creator) =>
+          isLoading ? (
+            <div className="skeleton" key={creator._id}></div>
+          ) : (
+            <Link
+              to={`/creators/${creator._id}`}
+              className="allCreatorCard"
+              key={creator._id}
+            >
+              <div className="creatorCardInfo">
+                <img
+                  src={creator.image || defaultImage}
+                  alt={`${creator.name}'s profile`}
+                />
+                <div>
+                  <h2 className="title primaryColor">{creator.name}</h2>
+                  <p className="body secondaryColor">
+                    Follower: {creator.fans.length}
+                  </p>
+                  <p className="body secondaryColor">
+                    Total Polls: {creator.projects.length}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          )
+        )}
       </div>
     </div>
   );
